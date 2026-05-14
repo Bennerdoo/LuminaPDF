@@ -67,16 +67,16 @@
   --border: 229 231 235;
 
   /* Colors for Mantine integration */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
+  --color-primary-50: var(--paper);
+  --color-primary-100: var(--paper-dark);
+  --color-primary-200: #e0d5c0;
+  --color-primary-300: var(--brass);
+  --color-primary-400: var(--red-muted);
+  --color-primary-500: var(--red);
+  --color-primary-600: var(--red-muted);
+  --color-primary-700: var(--ink-soft);
+  --color-primary-800: var(--ink);
+  --color-primary-900: var(--ink);
 
   /* Success (green) */
   --color-green-50: #f0fdf4;
@@ -168,26 +168,26 @@
   --font-weight-bold: 700;
 
   /* Light theme semantic colors */
-  --bg-surface: #ffffff;
-  --bg-raised: #f9fafb;
-  --bg-muted: #f3f4f6;
-  --bg-background: #f9fafb;
-  --bg-toolbar: #ffffff;
-  --bg-file-manager: #f5f6f8;
-  --bg-file-list: #ffffff;
-  --btn-open-file: #0a8bff;
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+  --bg-surface: var(--paper-dark);
+  --bg-raised: var(--paper-dark);
+  --bg-muted: var(--paper-dark);
+  --bg-background: var(--paper);
+  --bg-toolbar: var(--paper-dark);
+  --bg-file-manager: var(--paper);
+  --bg-file-list: var(--paper-dark);
+  --btn-open-file: var(--red);
+  --text-primary: var(--ink);
+  --text-secondary: var(--ink-soft);
+  --text-muted: var(--ink-soft);
   /* Always-dark text (for use on light backgrounds like alerts) - does not change in dark mode */
-  --text-always-dark: #1f2937;
-  --text-always-dark-muted: #6b7280;
-  --border-subtle: #e5e7eb;
-  --border-default: #e2e8f0;
-  --border-strong: #9ca3af;
-  --hover-bg: #f9fafb;
-  --active-bg: #f3f4f6;
-  --automation-entry-hover-bg: var(--color-gray-100);
+  --text-always-dark: var(--ink);
+  --text-always-dark-muted: var(--ink-soft);
+  --border-subtle: rgba(26, 20, 18, 0.1);
+  --border-default: rgba(26, 20, 18, 0.2);
+  --border-strong: var(--ink);
+  --hover-bg: rgba(184, 151, 42, 0.1); /* Subtle brass hover */
+  --active-bg: rgba(184, 151, 42, 0.2);
+  --automation-entry-hover-bg: var(--paper-dark);
 
   /* Icon colors for light mode */
   --icon-user-bg: #9ca3af;
@@ -507,26 +507,26 @@
   --color-yellow-900: #fef9c3;
 
   /* Dark theme semantic colors */
-  --bg-surface: #2a2f36;
-  --bg-raised: #1f2329;
-  --bg-muted: #1f2329;
-  --bg-background: #2a2f36;
-  --bg-toolbar: #1f2329;
-  --bg-file-manager: #1f2329;
-  --bg-file-list: #2a2f36;
-  --btn-open-file: #0a8bff;
-  --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --text-muted: #9ca3af;
+  --bg-surface: var(--ink);
+  --bg-raised: var(--ink-soft);
+  --bg-muted: var(--ink-soft);
+  --bg-background: var(--ink);
+  --bg-toolbar: var(--ink-soft);
+  --bg-file-manager: var(--ink-soft);
+  --bg-file-list: var(--ink);
+  --btn-open-file: var(--red);
+  --text-primary: var(--paper);
+  --text-secondary: var(--paper-dark);
+  --text-muted: var(--paper-dark);
   /* Always-dark text (for use on light backgrounds like alerts) - does not change in dark mode */
-  --text-always-dark: #1f2937;
-  --text-always-dark-muted: #6b7280;
-  --border-subtle: #2a2f36;
-  --border-default: #3a4047;
-  --border-strong: #4b5563;
-  --hover-bg: #374151;
-  --active-bg: #4b5563;
-  --automation-entry-hover-bg: var(--color-gray-200);
+  --text-always-dark: var(--ink);
+  --text-always-dark-muted: var(--ink-soft);
+  --border-subtle: rgba(245, 240, 232, 0.1);
+  --border-default: rgba(245, 240, 232, 0.2);
+  --border-strong: var(--paper-dark);
+  --hover-bg: rgba(184, 151, 42, 0.1);
+  --active-bg: rgba(184, 151, 42, 0.2);
+  --automation-entry-hover-bg: var(--ink-soft);
 
   /* Icon colors for dark mode */
   --icon-user-bg: #2a2f36;

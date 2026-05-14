@@ -58,7 +58,8 @@ export const useConfigNavSections = (
     }
   }
 
-  // Add Admin sections if user is admin OR if login is disabled (but mark as disabled)
+  // Add Admin sections - DISABLED for now
+  /*
   if (isAdmin || !loginEnabled) {
     const requiresLogin = !loginEnabled;
     const enableLoginTooltip = t(
@@ -237,8 +238,10 @@ export const useConfigNavSections = (
       ],
     });
   }
+  */
 
-  // Add Developer section if login is enabled
+  // Add Developer section - DISABLED for now
+  /*
   if (loginEnabled) {
     const developerSection: ConfigNavSection = {
       title: t("settings.developer.title", "Developer"),
@@ -256,6 +259,7 @@ export const useConfigNavSections = (
     const insertIndex = isAdmin ? 2 : 1;
     sections.splice(insertIndex, 0, developerSection);
   }
+  */
 
   return sections;
 };
@@ -301,7 +305,8 @@ export const createConfigNavSections = (
     }
   }
 
-  // Add Admin sections if user is admin OR if login is disabled (but mark as disabled)
+  // Add Admin sections - DISABLED for now
+  /*
   if (isAdmin || !loginEnabled) {
     const requiresLogin = !loginEnabled;
 
@@ -480,8 +485,10 @@ export const createConfigNavSections = (
       ],
     });
   }
+  */
 
-  // Add Developer section if login is enabled
+  // Add Developer section - DISABLED for now
+  /*
   if (loginEnabled) {
     const developerSection: ConfigNavSection = {
       title: "Developer",
@@ -499,6 +506,7 @@ export const createConfigNavSections = (
     const insertIndex = isAdmin ? 2 : 1;
     sections.splice(insertIndex, 0, developerSection);
   }
+  */
 
   return sections;
 };

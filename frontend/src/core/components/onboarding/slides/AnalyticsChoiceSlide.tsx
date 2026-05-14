@@ -18,37 +18,23 @@ export default function AnalyticsChoiceSlide({
     key: "analytics-choice",
     title: i18n.t(
       "analytics.title",
-      "Do you want to help make Stirling PDF better?",
+      "Do you want to help make Lumina PDF better?",
     ),
     body: (
       <div className={styles.bodyCopyInner}>
         <Trans
           i18nKey="analytics.paragraph1"
-          defaults="Stirling PDF has opt-in analytics to help us improve the product. We do not track any personal information or file contents."
+          defaults="Lumina PDF has opt-in analytics to help us improve the product. We do not track any personal information or file contents."
           components={{ strong: <strong /> }}
         />
         <br />
         <Trans
           i18nKey="analytics.paragraph2"
-          defaults="Please consider enabling analytics to help Stirling-PDF grow and to allow us to understand our users better."
+          defaults="Please consider enabling analytics to help Lumina-PDF grow and to allow us to understand our users better."
           components={{ strong: <strong /> }}
         />
         <br />
-        <div style={{ textAlign: "right", marginTop: 0 }}>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() =>
-              window.open(
-                "https://docs.stirlingpdf.com/analytics-telemetry/",
-                "_blank",
-              )
-            }
-            rightSection={<OpenInNewIcon style={{ fontSize: 16 }} />}
-          >
-            {i18n.t("analytics.learnMore", "Learn more about our analytics")}
-          </Button>
-        </div>
+
         {analyticsError && (
           <div style={{ color: "var(--mantine-color-red-6)", marginTop: 12 }}>
             {analyticsError}

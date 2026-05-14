@@ -57,6 +57,13 @@ export const mantineTheme = createTheme({
   // Primary color
   primaryColor: "primary",
 
+  // Typography
+  fontFamily: "var(--font-body)",
+  headings: {
+    fontFamily: "var(--font-display)",
+    fontWeight: "700",
+  },
+
   // Color palette
   colors: {
     primary,
@@ -74,13 +81,14 @@ export const mantineTheme = createTheme({
     xl: "var(--space-xl)",
   },
 
-  // Border radius system
+  // Border radius system - Sharp corners for antiquarian look
+  defaultRadius: 0,
   radius: {
-    xs: "var(--radius-xs)",
-    sm: "var(--radius-sm)",
-    md: "var(--radius-md)",
-    lg: "var(--radius-lg)",
-    xl: "var(--radius-xl)",
+    xs: "0",
+    sm: "0",
+    md: "0",
+    lg: "0",
+    xl: "0",
   },
 
   // Shadow system
@@ -96,7 +104,7 @@ export const mantineTheme = createTheme({
   other: {
     crop: {
       overlayBorder: "var(--color-primary-500)",
-      overlayBackground: "rgba(59, 130, 246, 0.1)", // Blue with 10% opacity
+      overlayBackground: "rgba(200, 50, 30, 0.1)", // Red with 10% opacity
       handleColor: "var(--color-primary-500)",
       handleBorder: "var(--bg-surface)",
     },
@@ -105,10 +113,15 @@ export const mantineTheme = createTheme({
   // Component customizations
   components: {
     Button: {
+      defaultProps: {
+        radius: 0,
+      },
       styles: {
         root: {
           fontWeight: "var(--font-weight-medium)",
           transition: "all 0.2s ease",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
         },
       },
       variants: {
@@ -128,6 +141,9 @@ export const mantineTheme = createTheme({
     } as any,
 
     Paper: {
+      defaultProps: {
+        radius: 0,
+      },
       styles: {
         root: {
           backgroundColor: "var(--bg-surface)",
@@ -137,6 +153,9 @@ export const mantineTheme = createTheme({
     },
 
     Card: {
+      defaultProps: {
+        radius: 0,
+      },
       styles: {
         root: {
           backgroundColor: "var(--bg-surface)",
@@ -151,6 +170,7 @@ export const mantineTheme = createTheme({
           backgroundColor: "var(--bg-surface)",
           borderColor: "var(--border-default)",
           color: "var(--text-primary)",
+          borderRadius: 0,
           "&:focus": {
             borderColor: "var(--color-primary-500)",
             boxShadow: "0 0 0 1px var(--color-primary-500)",
@@ -159,6 +179,9 @@ export const mantineTheme = createTheme({
         label: {
           color: "var(--text-secondary)",
           fontWeight: "var(--font-weight-medium)",
+          fontFamily: "var(--font-mono)",
+          textTransform: "uppercase",
+          fontSize: "0.7rem",
         },
       }),
     },
@@ -169,6 +192,7 @@ export const mantineTheme = createTheme({
           backgroundColor: "var(--bg-surface)",
           borderColor: "var(--border-default)",
           color: "var(--text-primary)",
+          borderRadius: 0,
           "&:focus": {
             borderColor: "var(--color-primary-500)",
             boxShadow: "0 0 0 1px var(--color-primary-500)",
@@ -177,6 +201,9 @@ export const mantineTheme = createTheme({
         label: {
           color: "var(--text-secondary)",
           fontWeight: "var(--font-weight-medium)",
+          fontFamily: "var(--font-mono)",
+          textTransform: "uppercase",
+          fontSize: "0.7rem",
         },
       }),
     },
@@ -187,6 +214,7 @@ export const mantineTheme = createTheme({
           backgroundColor: "var(--bg-surface)",
           borderColor: "var(--border-default)",
           color: "var(--text-primary)",
+          borderRadius: 0,
           "&:focus": {
             borderColor: "var(--color-primary-500)",
             boxShadow: "0 0 0 1px var(--color-primary-500)",
@@ -195,6 +223,9 @@ export const mantineTheme = createTheme({
         label: {
           color: "var(--text-secondary)",
           fontWeight: "var(--font-weight-medium)",
+          fontFamily: "var(--font-mono)",
+          textTransform: "uppercase",
+          fontSize: "0.7rem",
         },
       }),
     },
@@ -205,6 +236,7 @@ export const mantineTheme = createTheme({
           backgroundColor: "var(--bg-surface)",
           borderColor: "var(--border-default)",
           color: "var(--text-primary)",
+          borderRadius: 0,
           "&:focus": {
             borderColor: "var(--color-primary-500)",
             boxShadow: "0 0 0 1px var(--color-primary-500)",
@@ -213,11 +245,15 @@ export const mantineTheme = createTheme({
         label: {
           color: "var(--text-secondary)",
           fontWeight: "var(--font-weight-medium)",
+          fontFamily: "var(--font-mono)",
+          textTransform: "uppercase",
+          fontSize: "0.7rem",
         },
         dropdown: {
           backgroundColor: "var(--bg-surface)",
           borderColor: "var(--border-subtle)",
           boxShadow: "var(--shadow-lg)",
+          borderRadius: 0,
         },
         option: {
           color: "var(--text-primary)",
@@ -227,43 +263,16 @@ export const mantineTheme = createTheme({
       },
     },
 
-    MultiSelect: {
-      styles: {
-        input: {
-          backgroundColor: "var(--bg-surface)",
-          borderColor: "var(--border-default)",
-          color: "var(--text-primary)",
-          "&:focus": {
-            borderColor: "var(--color-primary-500)",
-            boxShadow: "0 0 0 1px var(--color-primary-500)",
-          },
-        },
-        label: {
-          color: "var(--text-secondary)",
-          fontWeight: "var(--font-weight-medium)",
-        },
-        dropdown: {
-          backgroundColor: "var(--bg-surface)",
-          borderColor: "var(--border-subtle)",
-          boxShadow: "var(--shadow-lg)",
-        },
-        option: {
-          color: "var(--text-primary)",
-          "--combobox-option-hover": "var(--hover-bg)",
-          "--combobox-option-selected": "var(--color-primary-100)",
-        } as any,
-      },
-    },
     Tooltip: {
       styles: {
         tooltip: {
-          backgroundColor: "var( --tooltip-title-bg)",
-          color: "var( --tooltip-title-color)",
-          border: "1px solid var(--tooltip-borderp)",
+          backgroundColor: "var(--paper-dark)",
+          color: "var(--ink)",
+          border: "1px solid var(--ink)",
           fontSize: "0.75rem",
           fontWeight: "500",
           boxShadow: "var(--shadow-md)",
-          borderRadius: "var(--radius-sm)",
+          borderRadius: 0,
         },
       },
     },
@@ -272,6 +281,7 @@ export const mantineTheme = createTheme({
       styles: {
         input: {
           borderColor: "var(--border-default)",
+          borderRadius: 0,
           "&:checked": {
             backgroundColor: "var(--color-primary-500)",
             borderColor: "var(--color-primary-500)",
@@ -283,33 +293,13 @@ export const mantineTheme = createTheme({
       },
     },
 
-    Slider: {
-      styles: {
-        track: {
-          backgroundColor: "var(--bg-muted)",
-        },
-        bar: {
-          backgroundColor: "var(--color-primary-500)",
-        },
-        thumb: {
-          backgroundColor: "var(--color-primary-500)",
-          borderColor: "var(--color-primary-500)",
-        },
-        mark: {
-          borderColor: "var(--border-default)",
-        },
-        markLabel: {
-          color: "var(--text-muted)",
-        },
-      },
-    },
-
     Modal: {
       styles: {
         content: {
           backgroundColor: "var(--bg-surface)",
           border: "1px solid var(--border-subtle)",
           boxShadow: "var(--shadow-xl)",
+          borderRadius: 0,
         },
         header: {
           backgroundColor: "var(--bg-surface)",
@@ -318,6 +308,8 @@ export const mantineTheme = createTheme({
         title: {
           color: "var(--text-primary)",
           fontWeight: "var(--font-weight-semibold)",
+          fontFamily: "var(--font-display)",
+          fontStyle: "italic",
         },
       },
     },
@@ -328,6 +320,7 @@ export const mantineTheme = createTheme({
           backgroundColor: "var(--bg-surface)",
           border: "1px solid var(--border-subtle)",
           boxShadow: "var(--shadow-lg)",
+          borderRadius: 0,
         },
         title: {
           color: "var(--text-primary)",
@@ -337,22 +330,6 @@ export const mantineTheme = createTheme({
         },
       },
     },
-
-    SegmentedControl: {
-      styles: {
-        root: {
-          backgroundColor: "var(--bg-muted)",
-          border: "1px solid var(--border-subtle)",
-        },
-        control: {
-          color: "var(--text-secondary)",
-          "&[dataActive]": {
-            backgroundColor: "var(--bg-surface)",
-            color: "var(--text-primary)",
-            boxShadow: "var(--shadow-sm)",
-          },
-        },
-      },
-    },
   },
 });
+

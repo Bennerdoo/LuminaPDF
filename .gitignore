@@ -95,7 +95,7 @@ app/core/src/main/resources/static/vendor/
 
 # Code Recommenders
 .recommenders/
-
+v
 # Annotation Processing
 .apt_generated/
 .apt_generated_test/

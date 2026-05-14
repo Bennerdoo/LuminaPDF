@@ -31,8 +31,6 @@ const useGoogleProvider = (): Provider => {
     icon: "/Login/google.svg",
     type: "oauth2",
     scope: t("provider.oauth2.google.scope", "Sign-in authentication"),
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/OAuth%20SSO%20Configuration",
     fields: [
       {
         key: "clientId",
@@ -89,8 +87,6 @@ const useGitHubProvider = (): Provider => {
     icon: "/Login/github.svg",
     type: "oauth2",
     scope: t("provider.oauth2.github.scope", "Sign-in authentication"),
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/OAuth%20SSO%20Configuration",
     fields: [
       {
         key: "clientId",
@@ -147,8 +143,6 @@ const useKeycloakProvider = (): Provider => {
     type: "oauth2",
     scope: t("provider.oauth2.keycloak.scope", "SSO"),
     businessTier: false,
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/OAuth%20SSO%20Configuration",
     fields: [
       {
         key: "issuer",
@@ -218,8 +212,6 @@ const useGenericOAuth2Provider = (): Provider => {
     type: "oauth2",
     scope: t("provider.oauth2.generic.scope", "SSO"),
     businessTier: false,
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/OAuth%20SSO%20Configuration",
     fields: [
       {
         key: "enabled",
@@ -334,8 +326,6 @@ const useSMTPProvider = (): Provider => {
     icon: "mail-rounded",
     type: "oauth2",
     scope: t("provider.smtp.scope", "Email Notifications"),
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/System%20and%20Security/#email-configuration",
     fields: [
       {
         key: "enabled",
@@ -421,7 +411,7 @@ const useTelegramProvider = (): Provider => {
         ),
         description: t(
           "admin.settings.telegram.enabled.description",
-          "Allow users to interact with Stirling PDF through your configured Telegram bot.",
+          "Allow users to interact with Lumina PDF through your configured Telegram bot.",
         ),
         defaultValue: false,
       },
@@ -662,8 +652,6 @@ const useSAML2Provider = (): Provider => {
     type: "saml2",
     scope: t("provider.saml2.scope", "SSO (SAML)"),
     businessTier: true,
-    documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/SAML%20SSO%20Configuration/",
     fields: [
       {
         key: "enabled",

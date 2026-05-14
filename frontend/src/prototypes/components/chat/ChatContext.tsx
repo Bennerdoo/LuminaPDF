@@ -62,7 +62,7 @@ type AiWorkflowOutcome =
   | "cannot_continue";
 
 interface AiWorkflowResultFile {
-  /** Stirling file ID — download with /api/v1/general/files/{fileId}. */
+  /** Lumina file ID — download with /api/v1/general/files/{fileId}. */
   fileId: string;
   fileName: string;
   contentType: string;
@@ -241,7 +241,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const messagesRef = useRef<ChatMessage[]>(state.messages);
   messagesRef.current = state.messages;
 
-  // Download a File from the Stirling files endpoint.
+  // Download a File from the Lumina files endpoint.
   const downloadFile = useCallback(
     async (descriptor: AiWorkflowResultFile): Promise<File> => {
       const response = await apiClient.get<Blob>(

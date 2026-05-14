@@ -526,6 +526,7 @@ export function CreditExhaustedModal({
                 ))}
               </Stack>
 
+              {/* Contact Sales - DISABLED for now
               <Button
                 component="a"
                 href="mailto:contact@stirlingpdf.com?subject=Enterprise Plan Inquiry"
@@ -541,10 +542,12 @@ export function CreditExhaustedModal({
               >
                 {t("credits.modal.contactSales", "Contact Sales")}
               </Button>
+              */}
             </Stack>
           </Card>
         </Group>
 
+        {/* Self Host Prompt - DISABLED for now
         <Text size="sm" ta="center" c="dimmed" mt="md">
           {t("credits.modal.selfHostPrompt", "Want to self host?")}{" "}
           <Text
@@ -567,6 +570,7 @@ export function CreditExhaustedModal({
             {t("credits.modal.selfHostLink", "Review the docs and plans")}
           </Text>
         </Text>
+        */}
       </Stack>
     </Modal>
   );

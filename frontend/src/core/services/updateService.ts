@@ -82,8 +82,8 @@ export class UpdateService {
       return (
         DOWNLOAD_BASE_URL +
         (machineInfo.activeSecurity
-          ? "Stirling-PDF-with-login.jar"
-          : "Stirling-PDF.jar")
+          ? "Lumina-PDF-with-login.jar"
+          : "Lumina-PDF.jar")
       );
     }
 
@@ -185,7 +185,7 @@ export class UpdateService {
    */
   async getCurrentVersionFromGitHub(): Promise<string> {
     const url =
-      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/master/build.gradle";
+      "https://raw.githubusercontent.com/Stirling-Tools/Lumina-PDF/master/build.gradle";
 
     try {
       const response = await fetch(url);

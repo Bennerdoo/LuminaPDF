@@ -878,11 +878,11 @@ description = "İxtiyari xüsusiyyətləri və funksionallığı konfiqurasiya e
 title = "Xüsusiyyətlər"
 
 [admin.settings.features.serverCertificate]
-description = "\"Stirling-PDF ilə imzala\" funksiyası üçün server-tərəfli sertifikat generasiyasını konfiqurasiya edin"
+description = "\"Lumina-PDF ilə imzala\" funksiyası üçün server-tərəfli sertifikat generasiyasını konfiqurasiya edin"
 label = "Server Sertifikatı"
 
 [admin.settings.features.serverCertificate.enabled]
-description = "\"Stirling-PDF ilə imzala\" seçimi üçün server-tərəfli sertifikatı aktiv et"
+description = "\"Lumina-PDF ilə imzala\" seçimi üçün server-tərəfli sertifikatı aktiv et"
 label = "Server Sertifikatını aktiv et"
 
 [admin.settings.features.serverCertificate.organizationName]
@@ -1030,7 +1030,7 @@ description = "Kuki siyasətinin URL-i və ya fayl adı"
 label = "Kuki Siyasəti"
 
 [admin.settings.legal.disclaimer]
-message = "Bu hüquqi sənədləri fərdiləşdirməklə, GDPR və digər AB məlumatların qorunması tələbləri daxil olmaqla, tətbiq olunan bütün qanun və qaydalara uyğunluğu təmin etmək üçün tam məsuliyyəti öz üzərinizə götürürsünüz. Yalnız aşağıdakı hallarda bu ayarları dəyişin: (1) şəxsi/xüsusi instansiya işlədirsiniz, (2) AB yurisdiksiyasından kənardasınız və yerli hüquqi öhdəliklərinizi anlayırsınız, və ya (3) müvafiq hüquqi məsləhət almısınız və bütün istifadəçi məlumatları və hüquqi uyğunluq üçün təkbaşına məsuliyyəti qəbul edirsiniz. Stirling-PDF və onun tərtibatçıları hüquqi öhdəliklərinizə görə heç bir məsuliyyət daşımır."
+message = "Bu hüquqi sənədləri fərdiləşdirməklə, GDPR və digər AB məlumatların qorunması tələbləri daxil olmaqla, tətbiq olunan bütün qanun və qaydalara uyğunluğu təmin etmək üçün tam məsuliyyəti öz üzərinizə götürürsünüz. Yalnız aşağıdakı hallarda bu ayarları dəyişin: (1) şəxsi/xüsusi instansiya işlədirsiniz, (2) AB yurisdiksiyasından kənardasınız və yerli hüquqi öhdəliklərinizi anlayırsınız, və ya (3) müvafiq hüquqi məsləhət almısınız və bütün istifadəçi məlumatları və hüquqi uyğunluq üçün təkbaşına məsuliyyəti qəbul edirsiniz. Lumina-PDF və onun tərtibatçıları hüquqi öhdəliklərinizə görə heç bir məsuliyyət daşımır."
 title = "Hüquqi Məsuliyyət Xəbərdarlığı"
 
 [admin.settings.legal.impressum]
@@ -1402,7 +1402,7 @@ description = "Aktiv edildikdə, yalnız siyahıdakı istifadəçi ID-ləri botd
 label = "Xüsusi istifadəçi ID-lərinə icazə ver"
 
 [admin.settings.telegram.enabled]
-description = "İstifadəçilərin Stirling PDF ilə konfiqurasiya etdiyiniz Telegram botu vasitəsilə qarşılıqlı əlaqə qurmasına icazə verin."
+description = "İstifadəçilərin Lumina PDF ilə konfiqurasiya etdiyiniz Telegram botu vasitəsilə qarşılıqlı əlaqə qurmasına icazə verin."
 label = "Telegram botunu aktiv et"
 
 [admin.settings.telegram.feedback]
@@ -1479,7 +1479,7 @@ settingsOverview = "Bu <strong>Ayarlar Paneli</strong>dir. Admin ayarları kateq
 systemCustomization = "UI-ni fərdiləşdirməyin geniş yolları var: <strong>Sistem Ayarları</strong> tətbiqin adını və dilləri dəyişməyə imkan verir, <strong>Xüsusiyyətlər</strong> server sertifikatlarının idarəsi üçün istifadə olunur və <strong>Endpoint-lər</strong> istifadəçiləriniz üçün konkret alətləri aktiv/deaktiv etməyə imkan verir."
 teamsAndUsers = "Buradan <strong>Komandaları</strong> və fərdi istifadəçiləri idarə edin. Yeni istifadəçiləri e-poçtla, paylaşılabilən linklə dəvət edə və ya onlar üçün özünüz xüsusi hesablar yarada bilərsiniz."
 welcome = "<strong>Admin Turuna</strong> xoş gəlmisiniz! Gəlin, sistem administratorları üçün əlçatan güclü müəssisə xüsusiyyətləri və ayarları araşdıraq."
-wrapUp = "Admin turu bu qədər! Stirling PDF-i təşkilatlar üçün güclü və fərdiləşdirilə bilən həll edən müəssisə funksiyalarını gördünüz. Bu tura istənilən vaxt <strong>Kömək</strong> menyusundan daxil olun."
+wrapUp = "Admin turu bu qədər! Lumina PDF-i təşkilatlar üçün güclü və fərdiləşdirilə bilən həll edən müəssisə funksiyalarını gördünüz. Bu tura istənilən vaxt <strong>Kömək</strong> menyusundan daxil olun."
 
 [adminUserSettings]
 actions = "Fəaliyyətlər"
@@ -1516,11 +1516,11 @@ webOnlyUser = "Yalnız Veb İstifadəçisi"
 disable = "Analitikanı deaktivləşdir"
 enable = "Analitikanı aktivləşdir"
 learnMore = "Daha ətraflı öyrənin"
-paragraph1 = "Stirling PDF bizə məhsulu inkişaf etdirməyə kömək etmək üçün analitikaya üstünlük verib. Biz heç bir şəxsi məlumatı və ya fayl məzmununu izləmirik."
+paragraph1 = "Lumina PDF bizə məhsulu inkişaf etdirməyə kömək etmək üçün analitikaya üstünlük verib. Biz heç bir şəxsi məlumatı və ya fayl məzmununu izləmirik."
 paragraph2 = "Zəhmət olmasa, Stringling-PDF-ə inkişaf etməkdə və istifadəçilərimizi daha yaxşı anlamaqda yardım etmək üçün analitikanı aktivləşdirməyi nəzərə alın."
 privacyAssurance = "Heç bir şəxsi məlumatınızı və ya fayllarınızın məzmununu izləmirik."
 settings = "Analitikanın parametrlərini config/settings.yml faylından dəyişə bilərsiniz."
-title = "Stirling PDF-i daha yaxşı etmək istəyirsinizmi?"
+title = "Lumina PDF-i daha yaxşı etmək istəyirsinizmi?"
 
 [annotation]
 annotationStyle = "Annotasiya üslubu"
@@ -1899,7 +1899,7 @@ tags = "pdf,ayır,sənəd,nizamla"
 description = "Sənədlərinizi çap edin, daxil edin, skan edin, yükləyin və bizə icazə verin. Əl işinin çeşidlənməsinə ehtiyac yoxdur."
 dividerDownload2 = "'Auto Splitter Divider (with instructions).pdf'-ı yükləyin"
 duplexMode = "Dupleks rejimi (Ön və arxa skanlama)"
-formPrompt = "Stirling-PDF ə Səhifə bölücüləri olan PDF-i təqdim edin:"
+formPrompt = "Lumina-PDF ə Səhifə bölücüləri olan PDF-i təqdim edin:"
 header = "PDF-i avtomatik bölmə"
 submit = "Təsdiq edin"
 tags = "QR-əsaslı,ayrı,skan-seqment,nizamla"
@@ -1908,7 +1908,7 @@ title = "PDF-i avtomatik bölmə"
 [autoSplitPDF.selectText]
 1 = "Aşağıdan bəzi ayırıcı vərəqləri çap edin (qara və ağ yaxşıdır)."
 2 = "Aralarına ayırıcı vərəq daxil edərək bütün sənədlərinizi bir anda skan edin."
-3 = "Tək böyük skan edilmiş PDF faylını yükləyin və Stirling PDF-in qalanını idarə etməsinə icazə verin."
+3 = "Tək böyük skan edilmiş PDF faylını yükləyin və Lumina PDF-in qalanını idarə etməsinə icazə verin."
 4 = "Ayırıcı səhifələr avtomatik aşkarlanır və silinir, səliqəli yekun sənədə zəmanət verir."
 
 [backendHealth]
@@ -2467,7 +2467,7 @@ bullet1 = "PEM, PKCS12, JKS və server sertifikatı formatlarını dəstəkləyi
 bullet2 = "PDF-də imzanı göstərmək və ya gizlətmək seçimi"
 bullet3 = "Səbəb, məkan və imzalayanın adını əlavə edin"
 bullet4 = "Görünən imzaların yerləşdiriləcəyi səhifəni seçin"
-bullet5 = "Sadə 'Stirling-PDF ilə imzala' seçimi üçün server sertifikatından istifadə edin"
+bullet5 = "Sadə 'Lumina-PDF ilə imzala' seçimi üçün server sertifikatından istifadə edin"
 text = "PDF-i imzalamaq üçün rəqəmsal sertifikat lazımdır (məsələn, PEM, PKCS12 və ya JKS). İmzanı sənəddə görünən etmək və ya yalnız təhlükəsizlik məqsədi ilə görünməz saxlamaq seçiminiz var."
 title = "İmzaların əlavə edilməsi"
 
@@ -2983,15 +2983,15 @@ upgradeButton = "Hesabı yüksəlt"
 chartAriaLabel = "Kredit istifadəsi: daxili {{includedTotal}}-dən {{includedUsed}}, alınmış {{purchasedTotal}}-dən {{purchasedUsed}}"
 copyKeyAriaLabel = "API açarını kopyala"
 creditsRemaining = "Qalan kreditlər"
-description = "Stirling-in PDF alətləri paketinə çıxış üçün API açarınız. Layihənizə kopyalayın və ya yenisini yaratmaq üçün yeniləyin."
-docsDescription = "Stirling PDF ilə inteqrasiya haqqında daha çox öyrənin:"
+description = "Lumina-in PDF alətləri paketinə çıxış üçün API açarınız. Layihənizə kopyalayın və ya yenisini yaratmaq üçün yeniləyin."
+docsDescription = "Lumina PDF ilə inteqrasiya haqqında daha çox öyrənin:"
 docsLink = "API Sənədləri"
 docsTitle = "API Sənədləri"
 generateError = "API açarınızı yarada bilmədik."
 goToAccount = "Hesaba keç"
 guestInfo = "Qonaq istifadəçilərə API açarları verilmir. Tətbiqlərinizdə istifadə etmək üçün API açarı almaq üçün hesab yaradın."
 includedCredits = "Daxili kreditlər"
-intro = "API açarınızdan istifadə edərək Stirling PDF-in emal imkanlarına proqramlı şəkildə çıxış əldə edin."
+intro = "API açarınızdan istifadə edərək Lumina PDF-in emal imkanlarına proqramlı şəkildə çıxış əldə edin."
 label = "API Açarı"
 lastApiUse = "Son API istifadəsi"
 nextReset = "Növbəti Sıfırlama"
@@ -3035,7 +3035,7 @@ system = "Sistem konfiqurasiyası"
 [connectionMode.status]
 localOffline = "Oflayn rejim işləyir"
 localOnline = "Oflayn rejim işləyir"
-saas = "Stirling Cloud-a qoşuldu"
+saas = "Lumina Cloud-a qoşuldu"
 selfhostedChecking = "Öz serverinizə qoşuldu (yoxlanılır...)"
 selfhostedOffline = "Öz serveriniz əlçatmazdır"
 selfhostedOnline = "Öz serverinizə qoşuldu"
@@ -3165,7 +3165,7 @@ showPreferencesBtn = "Seçimləri idarə et"
 title = "Çərəzlərdən necə istifadə edirik"
 
 [cookieBanner.popUp.description]
-1 = "Stirling PDF-i sizin üçün daha yaxşı işlətmək üçün çərəzlərdən və digər texnologiyalardan istifadə edirik — alətlərimizi yaxşılaşdırmağa və sevəcəyiniz funksiyalar yaratmağa kömək edir."
+1 = "Lumina PDF-i sizin üçün daha yaxşı işlətmək üçün çərəzlərdən və digər texnologiyalardan istifadə edirik — alətlərimizi yaxşılaşdırmağa və sevəcəyiniz funksiyalar yaratmağa kömək edir."
 2 = "If you’d rather not, clicking 'No Thanks' will only enable the essential cookies needed to keep things running smoothly."
 
 [cookieBanner.preferencesModal]
@@ -3178,12 +3178,12 @@ subtitle = "Kukilərdən istifadə"
 title = "Razılıq Seçimləri Mərkəzi"
 
 [cookieBanner.preferencesModal.analytics]
-description = "Bu kukilər alətlərimizin necə istifadə olunduğunu anlamağa kömək edir ki, icmamızın ən çox dəyər verdiyi xüsusiyyətlərin yaradılmasına fokuslanaq. Arxayın olun — Stirling PDF işlədiyiniz sənədlərin məzmununu izləyə bilməz və heç vaxt izləməyəcək."
+description = "Bu kukilər alətlərimizin necə istifadə olunduğunu anlamağa kömək edir ki, icmamızın ən çox dəyər verdiyi xüsusiyyətlərin yaradılmasına fokuslanaq. Arxayın olun — Lumina PDF işlədiyiniz sənədlərin məzmununu izləyə bilməz və heç vaxt izləməyəcək."
 title = "Analitika"
 
 [cookieBanner.preferencesModal.description]
-1 = "Stirling PDF təcrübənizi yaxşılaşdırmaq və alətlərimizin necə istifadə olunduğunu anlamaq üçün kukilər və oxşar texnologiyalardan istifadə edir. Bu, performansı yaxşılaşdırmağa, sizin üçün vacib funksiyaları inkişaf etdirməyə və istifadəçilərimizə davamlı dəstək göstərməyə kömək edir."
-2 = "Stirling PDF istifadə etdiyiniz sənədlərin məzmununu izləyə və ya ona çıxış əldə edə bilməz və heç vaxt etməyəcək."
+1 = "Lumina PDF təcrübənizi yaxşılaşdırmaq və alətlərimizin necə istifadə olunduğunu anlamaq üçün kukilər və oxşar texnologiyalardan istifadə edir. Bu, performansı yaxşılaşdırmağa, sizin üçün vacib funksiyaları inkişaf etdirməyə və istifadəçilərimizə davamlı dəstək göstərməyə kömək edir."
+2 = "Lumina PDF istifadə etdiyiniz sənədlərin məzmununu izləyə və ya ona çıxış əldə edə bilməz və heç vaxt etməyəcək."
 3 = "Məxfilik və etimadınız gördüyümüz işin mərkəzindədir."
 
 [cookieBanner.preferencesModal.necessary]
@@ -3352,7 +3352,7 @@ unexpectedError = "Fayl emal edilərkən xəta baş verdi. Zəhmət olmasa yenid
 [defaultApp]
 description = "Bunu sonra sistem ayarlarında dəyişə bilərsiniz."
 dismiss = "Gözardı et"
-message = "Stirling PDF-i standart PDF redaktorunuz kimi təyin etmək istəyirsiniz?"
+message = "Lumina PDF-i standart PDF redaktorunuz kimi təyin etmək istəyirsiniz?"
 notNow = "İndi yox"
 setDefault = "Standart et"
 title = "Standart PDF tətbiqi kimi təyin et"
@@ -3362,15 +3362,15 @@ message = "Standart PDF işləyicisini təyin etmək alınmadı"
 title = "Xəta"
 
 [defaultApp.prompt]
-message = "PDF fayllarını açmaq üçün Stirling PDF-i standart tətbiqiniz edin."
+message = "PDF fayllarını açmaq üçün Lumina PDF-i standart tətbiqiniz edin."
 title = "Standart PDF redaktoru kimi təyin et"
 
 [defaultApp.settingsOpened]
-message = "Zəhmət olmasa sistem ayarlarında Stirling PDF-i seçin"
+message = "Zəhmət olmasa sistem ayarlarında Lumina PDF-i seçin"
 title = "Ayarlar açıldı"
 
 [defaultApp.success]
-message = "Stirling PDF artıq standart PDF redaktorunuzdur"
+message = "Lumina PDF artıq standart PDF redaktorunuzdur"
 title = "Standart tətbiq təyin edildi"
 
 [editTableOfContents]
@@ -3510,9 +3510,9 @@ visitsTooltip = "Müraciətlər: {0} (ümuminin {1}%‑i)"
 
 [enterpriseEdition]
 button = "Pro versiyaya keç"
-ssoAdvert = "Daha çox istifadəçi-idarəetmə xüsusiyyətləri axtarırsınız? Stirling PDF Pro-nu nəzərdən keçirin"
+ssoAdvert = "Daha çox istifadəçi-idarəetmə xüsusiyyətləri axtarırsınız? Lumina PDF Pro-nu nəzərdən keçirin"
 warning = "Bu xüsusiyyət yalnız pro istifadəçilər üçün əlçatandır."
-yamlAdvert = "Stirling PDF Pro YAML konfiqurasiya fayllarını və digər SSO xüsusiyyətlərini dəstəkləyir."
+yamlAdvert = "Lumina PDF Pro YAML konfiqurasiya fayllarını və digər SSO xüsusiyyətlərini dəstəkləyir."
 
 [error]
 _value = "Xəta"
@@ -3948,7 +3948,7 @@ invisible = "Görünməz (yalnız metadata)"
 location = "Məkan:"
 logo = "Loqo:"
 logoHidden = "Loqo yoxdur"
-logoShown = "Stirling PDF loqosu göstərilir"
+logoShown = "Lumina PDF loqosu göstərilir"
 participantCount = "{{count}} iştirakçı ardıcıllıqla imzalayacaq"
 participants = "İştirakçılar"
 reason = "Səbəb:"
@@ -4000,7 +4000,7 @@ title = "Ardıcıllıqla İmzalama"
 dismiss = "Banneri bağla"
 message = "İşinizi saxlamaq, daha çox funksiyaya çıxış əldə etmək və layihəni dəstəkləmək üçün pulsuz hesab yaradın."
 signUp = "Pulsuz qeydiyyatdan keç"
-title = "Siz Stirling PDF-i qonaq kimi istifadə edirsiniz!"
+title = "Siz Lumina PDF-i qonaq kimi istifadə edirsiniz!"
 
 [home]
 alphabetical = "Əlifba sırası"
@@ -4174,7 +4174,7 @@ tags = "birləşdir,bir araya gətir,birləşdir"
 title = "Birləşdir"
 
 [home.mobile]
-brandAlt = "Stirling PDF loqosu"
+brandAlt = "Lumina PDF loqosu"
 openFiles = "Faylları aç"
 swipeHint = "Görünüşləri dəyişmək üçün sola və ya sağa sürüşdürün"
 tools = "Alətlər"
@@ -4209,7 +4209,7 @@ tags = "təşkil et,yenidən düz,yer dəyişdir"
 title = "Səhifələri Sırala"
 
 [home.pdfTextEditor]
-desc = "Qruplaşdırılmış mətn redaktəsi və PDF yenidən yaradılması ilə Stirling PDF JSON ixraclarını nəzərdən keçirin və redaktə edin"
+desc = "Qruplaşdırılmış mətn redaktəsi və PDF yenidən yaradılması ilə Lumina PDF JSON ixraclarını nəzərdən keçirin və redaktə edin"
 tags = "edit text,modify text,change text,edit content,update text,rewrite,correct,amend,redline,revise,text editor,content editor"
 title = "PDF Mətn Redaktoru"
 
@@ -4415,14 +4415,14 @@ passwordTooShort = "Parol ən azı 6 simvoldan ibarət olmalıdır"
 signIn = "Daxil olun"
 validating = "Dəvət yoxlanılır..."
 validationError = "Dəvət keçidinin doğrulanması alınmadı"
-welcome = "Stirling PDF-ə xoş gəldiniz"
+welcome = "Lumina PDF-ə xoş gəldiniz"
 welcomeSubtitle = "Başlamaq üçün hesab qurulumunu tamamlayın"
 welcomeTitle = "Siz dəvət olunmusunuz!"
 
 [landing]
 addFiles = "Fayllar əlavə et"
 heroSubtitle = "Başlamaq üçün mövcud PDF-i sürüyüb buraxın və ya əlavə edin."
-heroTitle = "Stirling PDF"
+heroTitle = "Lumina PDF"
 mobileUpload = "Mobil cihazdan yüklə"
 openFromComputer = "Komputerdən aç"
 uploadFromComputer = "Kompüterdən yüklə"
@@ -4448,7 +4448,7 @@ title = "3-cü Tərəf Lisenziyalar"
 version = "Versiya"
 
 [localMode]
-toolUnavailable = "Bu alət hesab tələb edir. İstifadə etmək üçün Stirling Cloud-a daxil olun və ya öz serverinizə qoşulun."
+toolUnavailable = "Bu alət hesab tələb edir. İstifadə etmək üçün Lumina Cloud-a daxil olun və ya öz serverinizə qoşulun."
 
 [localMode.banner]
 message = "Bütün alətləri açmaq üçün daxil olun."
@@ -4524,7 +4524,7 @@ signinTitle = "Zəhmət olmasa, daxil olun"
 signInWith = "Bununla daxil ol"
 signOut = "Hesabdan çıx"
 ssoSignIn = "Single Sign-on vasitəsilə daxil olun"
-subtitle = "Stirling PDF-ə yenidən daxil olun"
+subtitle = "Lumina PDF-ə yenidən daxil olun"
 title = "Daxil olun"
 toManySessions = "Həddindən artıq aktiv sessiyanız var"
 unexpectedError = "Gözlənilməz xəta: {{message}}"
@@ -4543,7 +4543,7 @@ subtitle = "PDF-ləri məxfiləşdirmək, imzalamaq, oxumaq və onlarla işləm�
 title = "İstədiyiniz məlumatı göstərmək/qorumaq üçün PDF-ləri redaktə edin"
 
 [login.slides.overview]
-alt = "Stirling PDF icmalı"
+alt = "Lumina PDF icmalı"
 subtitle = "PDF-lər üçün məxfilik-öncəli bulud paketi: sənədləri çevirməyə, imzalamağa, məzmunu məxfiləşdirməyə və idarə etməyə, üstəlik 50+ güclü alət."
 title = "PDF ehtiyaclarınız üçün tək ünvan."
 
@@ -4709,7 +4709,7 @@ message = "Təsdiqləmə uğurlu olmadı. Bu pəncərəni bağlayıb yenidən c�
 title = "Təsdiqləmə uğursuz oldu"
 
 [oauth.success]
-message = "Bu pəncərəni bağlayıb Stirling PDF-ə qayıda bilərsiniz."
+message = "Bu pəncərəni bağlayıb Lumina PDF-ə qayıda bilərsiniz."
 title = "Təsdiqləmə uğurlu oldu"
 
 [ocr]
@@ -4833,7 +4833,7 @@ runButton = "Alət tənzimləndikdən sonra, bu düymə seçilmiş bütün PDF-l
 selectControls = "<strong>Sağ Panel</strong> aktiv PDF-lərinizi tez seçmək/seçimi ləğv etmək üçün düymələr, eləcə də tətbiqin mövzusunu və dilini dəyişmək üçün düymələr ehtiva edir."
 selectCropTool = "Gəlin, <strong>Kəsmə</strong> alətini seçərək alətlərdən birinin istifadəsini nümayiş etdirək."
 startTour = "Tura başla"
-startTourDescription = "Stirling PDF-in əsas xüsusiyyətləri üzrə bələdçili tura başlayın"
+startTourDescription = "Lumina PDF-in əsas xüsusiyyətləri üzrə bələdçili tura başlayın"
 toolInterface = "Bu, <strong>Kəsmə</strong> alətinin interfeysidir. Gördüyünüz kimi, hələ işləmək üçün PDF faylı əlavə etmədiyimiz üçün burada çox şey yoxdur."
 viewer = "<strong>Görüntüləyici</strong> PDF-lərinizi oxumağa və şərh etməyə imkan verir."
 viewSwitcher = "PDF-lərinizi necə görüntüləmək istədiyinizi seçmək üçün bu idarəetmələrdən istifadə edin."
@@ -4849,22 +4849,22 @@ skipForNow = "Hələlik ötür"
 skipTheTour = "Turu keç"
 
 [onboarding.desktopInstall]
-body = "Stirling masaüstü tətbiq kimi ən yaxşı işləyir. Onu oflayn istifadə edə, sənədlərə daha sürətli baxa və düzəlişləri yerli olaraq kompüterinizdə edə bilərsiniz."
+body = "Lumina masaüstü tətbiq kimi ən yaxşı işləyir. Onu oflayn istifadə edə, sənədlərə daha sürətli baxa və düzəlişləri yerli olaraq kompüterinizdə edə bilərsiniz."
 title = "Yüklə"
 titleWithOs = "{{osLabel}} üçün yüklə"
 
 [onboarding.freeTrial]
 afterTrialWithoutPayment = "Sınaq müddətiniz bitdikdən sonra pulsuz səviyyə ilə davam edəcəksiniz. Pro girişini saxlamaq üçün ödəniş üsulu əlavə edin."
 afterTrialWithPayment = "Sınaq bitdikdə Pro abunəliyiniz avtomatik başlayacaq."
-body = "Sınaq müddətində Stirling PDF Pro funksiyalarına tam girişiniz var. Limitsiz çevirmələrdən, daha böyük fayl ölçülərindən və prioritet emaldan yararlanın."
+body = "Sınaq müddətində Lumina PDF Pro funksiyalarına tam girişiniz var. Limitsiz çevirmələrdən, daha böyük fayl ölçülərindən və prioritet emaldan yararlanın."
 daysRemaining = "{{days}} gün qalıb"
 daysRemainingSingular = "{{days}} gün qalıb"
 title = "30 günlük Pro sınağınız"
 trialEnds = "Sınaq bitir: {{date}}"
 
 [onboarding.planOverview]
-adminBodyLoginDisabled = "Giriş rejimini aktivləşdirdikdən sonra istifadəçiləri idarə edə, ayarları konfiqurasiya edə və serverin vəziyyətini izləyə bilərsiniz. Serverinizdə ilk <strong>{{freeTierLimit}}</strong> nəfər Stirling-dən pulsuz istifadə edir."
-adminBodyLoginEnabled = "Admin kimi istifadəçiləri idarə edə, ayarları konfiqurasiya edə və serverin vəziyyətini izləyə bilərsiniz. Serverinizdə ilk <strong>{{freeTierLimit}}</strong> nəfər Stirling-dən pulsuz istifadə edir."
+adminBodyLoginDisabled = "Giriş rejimini aktivləşdirdikdən sonra istifadəçiləri idarə edə, ayarları konfiqurasiya edə və serverin vəziyyətini izləyə bilərsiniz. Serverinizdə ilk <strong>{{freeTierLimit}}</strong> nəfər Lumina-dən pulsuz istifadə edir."
+adminBodyLoginEnabled = "Admin kimi istifadəçiləri idarə edə, ayarları konfiqurasiya edə və serverin vəziyyətini izləyə bilərsiniz. Serverinizdə ilk <strong>{{freeTierLimit}}</strong> nəfər Lumina-dən pulsuz istifadə edir."
 adminTitle = "Admin icmalı"
 userBody = "Komanda yoldaşlarını dəvət edin, rollar təyin edin və sənədlərinizi bir təhlükəsiz iş mühitində səliqəli saxlayın. Tək istifadədən böyüməyə hazır olduqda giriş rejimini aktivləşdirin."
 userTitle = "Plan icmalı"
@@ -4873,16 +4873,16 @@ userTitle = "Plan icmalı"
 message = "Tətbiq son vaxtlar əhəmiyyətli dəyişikliklərdən keçib. Server administratorunun müdaxiləsi tələb oluna bilər. Davam etmək üçün rolunuzu təsdiqləyin."
 
 [onboarding.serverLicense]
-freeBody = "Bizim <strong>Open-Core</strong> lisenziyası hər server üçün pulsuz olaraq maksimum <strong>{{freeTierLimit}}</strong> istifadəçiyə icazə verir. Fasiləsiz miqyaslanmaq və yeni <strong>PDF mətn redaktəsi alətimizə</strong> erkən çıxış əldə etmək üçün Stirling Server planını tövsiyə edirik — tam redaktə və <strong>limitsiz yerlər</strong> $99/server/ay."
+freeBody = "Bizim <strong>Open-Core</strong> lisenziyası hər server üçün pulsuz olaraq maksimum <strong>{{freeTierLimit}}</strong> istifadəçiyə icazə verir. Fasiləsiz miqyaslanmaq və yeni <strong>PDF mətn redaktəsi alətimizə</strong> erkən çıxış əldə etmək üçün Lumina Server planını tövsiyə edirik — tam redaktə və <strong>limitsiz yerlər</strong> $99/server/ay."
 freeTitle = "Server lisenziyası"
-overLimitBody = "Lisenziyalaşmamız hər server üçün pulsuz olaraq maksimum <strong>{{freeTierLimit}}</strong> istifadəçiyə icazə verir. Sizdə <strong>{{overLimitUserCopy}}</strong> Stirling istifadəçisi var. Fasiləsiz davam etmək üçün Stirling Server planına yüksəldin - <strong>limitsiz yerlər</strong>, PDF mətn redaktəsi və tam admin nəzarəti cəmi $99/server/ay."
+overLimitBody = "Lisenziyalaşmamız hər server üçün pulsuz olaraq maksimum <strong>{{freeTierLimit}}</strong> istifadəçiyə icazə verir. Sizdə <strong>{{overLimitUserCopy}}</strong> Lumina istifadəçisi var. Fasiləsiz davam etmək üçün Lumina Server planına yüksəldin - <strong>limitsiz yerlər</strong>, PDF mətn redaktəsi və tam admin nəzarəti cəmi $99/server/ay."
 overLimitTitle = "Server lisenziyası tələb olunur"
 seePlans = "Planlara baxın →"
 skip = "Hələlik ötür"
 upgrade = "İndi yüksəlt →"
 
 [onboarding.tourOverview]
-body = "Stirling PDF V2 onlarca alət və yenilənmiş tərtibatla gəlir. Sürətli turla nələrin dəyişdiyini və lazım olan funksiyaları harada tapacağınızı görün."
+body = "Lumina PDF V2 onlarca alət və yenilənmiş tərtibatla gəlir. Sürətli turla nələrin dəyişdiyini və lazım olan funksiyaları harada tapacağınızı görün."
 title = "Tur icmalı"
 
 [onboarding.welcomeModal]
@@ -4891,11 +4891,11 @@ dontShowAgain = "Bir də göstərmə"
 helpHint = "Bu tura istənilən vaxt sol altdakı <strong>Kömək</strong> düyməsindən daxil ola bilərsiniz."
 maybeLater = "Bəlkə sonra"
 startTour = "Tura başla"
-title = "Stirling PDF-ə xoş gəlmisiniz!"
+title = "Lumina PDF-ə xoş gəlmisiniz!"
 
 [onboarding.welcomeSlide]
-body = "Stirling PDF artıq hər ölçüdə komanda üçün hazırdır. Bu yeniləmə yeni düzən, güclü admin imkanları və ən çox tələb olunan xüsusiyyətimizi ehtiva edir - <strong>Mətni redaktə et</strong>."
-title = "Stirling-ə xoş gəlmisiniz"
+body = "Lumina PDF artıq hər ölçüdə komanda üçün hazırdır. Bu yeniləmə yeni düzən, güclü admin imkanları və ən çox tələb olunan xüsusiyyətimizi ehtiva edir - <strong>Mətni redaktə et</strong>."
+title = "Lumina-ə xoş gəlmisiniz"
 
 [onboarding.whatsNew]
 activeFilesView = "Açıq olan hər şeyə baxmaq və işləyəcəyinizi seçmək üçün Aktiv Fayllardan istifadə edin."
@@ -5699,7 +5699,7 @@ included = "Daxildir"
 name = "Pulsuz"
 
 [plan.licenseWarning]
-body = "Sizdə {{total}} istifadəçi var, lakin pulsuz səviyyə hər server üçün yalnız {{limit}}-ni dəstəkləyir. Stirling PDF-in fasiləsiz işləməsi üçün yüksəldin."
+body = "Sizdə {{total}} istifadəçi var, lakin pulsuz səviyyə hər server üçün yalnız {{limit}}-ni dəstəkləyir. Lumina PDF-in fasiləsiz işləməsi üçün yüksəldin."
 cta = "Planlara bax"
 overLimit = "{{limit}}-dən çox"
 title = "Pulsuz self-hosted limiti çatıb"
@@ -6678,8 +6678,8 @@ hideTools = "Mövcud olmayan alətləri gizlət ▴"
 messageNoFallback = "Serveriniz onlayn olana qədər alətlər mövcud deyil."
 messageWithFallback = "Bəzi alətlər server bağlantısı tələb edir."
 showTools = "Mövcud olmayan alətləri göstər ▾"
-title = "Sizin Stirling-PDF serveriniz əlçatmazdır"
-toolNotAvailableLocally = "Sizin Stirling-PDF serveriniz oflayndır və \"{{endpoint}}\" yerli arxa xidmətində mövcud deyil."
+title = "Sizin Lumina-PDF serveriniz əlçatmazdır"
+toolNotAvailableLocally = "Sizin Lumina-PDF serveriniz oflayndır və \"{{endpoint}}\" yerli arxa xidmətində mövcud deyil."
 
 [session]
 expired = "Sessiyanızın vaxtı bitdi. Səhifəni yeniləyin və yenidən cəhd edin."
@@ -6736,7 +6736,7 @@ user = "Daxil olub:"
 
 [settings.connection.mode]
 local = "Yalnız yerli"
-saas = "Stirling Cloud"
+saas = "Lumina Cloud"
 selfhosted = "Öz serverində"
 
 [settings.developer]
@@ -6751,7 +6751,7 @@ autoUnzipFileLimitDescription = "ZIP-dən çıxarılacaq maksimum fayl sayı"
 autoUnzipFileLimitTooltip = "Yalnız ZIP bu qədər və ya daha az fayl ehtiva edirsə çıxarın. Daha böyük ZIP-ləri çıxarmaq üçün dəyəri artırın."
 autoUnzipTooltip = "API əməliyyatlarından qaytarılan ZIP fayllarını avtomatik çıxarın. ZIP fayllarını toxunulmaz saxlamaq üçün bunu deaktiv edin. Bu, avtomatlaşdırma iş axınlarına təsir etmir."
 defaultPdfEditor = "Standart PDF redaktoru"
-defaultPdfEditorActive = "Stirling PDF standart PDF redaktorunuzdur"
+defaultPdfEditorActive = "Lumina PDF standart PDF redaktorunuzdur"
 defaultPdfEditorChecking = "Yoxlanılır..."
 defaultPdfEditorInactive = "Başqa tətbiq standart kimi təyin edilib"
 defaultPdfEditorSet = "Artıq standartdır"
@@ -6838,7 +6838,7 @@ usageAnalytics = "İstifadə analitikası"
 [settings.planBilling]
 currentPlan = "Cari plan"
 loading = "Hesab-faktura məlumatları yüklənir..."
-notAvailable = "Plan və Hesab-faktura yalnız Stirling Cloud-a (SaaS rejimi) qoşulduqda mövcuddur."
+notAvailable = "Plan və Hesab-faktura yalnız Lumina Cloud-a (SaaS rejimi) qoşulduqda mövcuddur."
 title = "Plan və Hesab-faktura"
 
 [settings.planBilling.billing]
@@ -6948,13 +6948,13 @@ teams = "Komandalar"
 title = "İş sahəsi"
 
 [setup]
-description = "Stirling PDF-dən necə istifadə edəcəyinizi seçərək başlayın"
-welcome = "Stirling PDF-ə xoş gəlmisiniz"
+description = "Lumina PDF-dən necə istifadə edəcəyinizi seçərək başlayın"
+welcome = "Lumina PDF-ə xoş gəlmisiniz"
 
 [setup.login]
 connectingTo = "Qoşulur:"
 hideInstructions = "Təlimatları gizlət"
-instructions = "Stirling PDF serverinizdə girişi aktivləşdirmək üçün:"
+instructions = "Lumina PDF serverinizdə girişi aktivləşdirmək üçün:"
 instructionsEnvVar = "Mühit dəyişənini təyin edin:"
 instructionsOrYml = "Və ya settings.yml faylında:"
 instructionsRestart = "Dəyişikliklərin qüvvəyə minməsi üçün serveri yenidən başladın."
@@ -6988,16 +6988,16 @@ label = "İstifadəçi adı"
 placeholder = "İstifadəçi adınızı daxil edin"
 
 [setup.mode.saas]
-description = "Stirling hesabınızla daxil olun"
-title = "Stirling Cloud"
+description = "Lumina hesabınızla daxil olun"
+title = "Lumina Cloud"
 
 [setup.mode.selfhosted]
-description = "Öz Stirling PDF serverinizə qoşulun"
+description = "Öz Lumina PDF serverinizə qoşulun"
 title = "Öz serveriniz"
 
 [setup.saas]
-subtitle = "Stirling hesabınızla daxil olun"
-title = "Stirling-ə daxil olun"
+subtitle = "Lumina hesabınızla daxil olun"
+title = "Lumina-ə daxil olun"
 
 [setup.selfhosted]
 changeServerLocked = "Təşkilatınız bu tətbiqi konkret serverlə məhdudlaşdırıb"
@@ -7036,11 +7036,11 @@ step3 = "Serveri yenidən başladın"
 title = "Giriş aktiv deyil"
 
 [setup.server.type]
-saas = "Stirling PDF SaaS"
+saas = "Lumina PDF SaaS"
 selfhosted = "Öz serveriniz"
 
 [setup.server.url]
-description = "Öz Stirling PDF serverinizin tam URL ünvanını daxil edin"
+description = "Öz Lumina PDF serverinizin tam URL ünvanını daxil edin"
 label = "Server URL"
 
 [setup.step1]
@@ -7265,7 +7265,7 @@ passwordsDoNotMatch = "Parollar uyğun gəlmir"
 passwordTooShort = "Parol ən azı 6 simvol olmalıdır"
 pleaseFillAllFields = "Zəhmət olmasa bütün sahələri doldurun"
 signUp = "Qeydiyyatdan keç"
-subtitle = "Başlamaq üçün Stirling PDF-ə qoşulun"
+subtitle = "Başlamaq üçün Lumina PDF-ə qoşulun"
 title = "Hesab yaradın"
 unexpectedError = "Gözlənilməz xəta: {{message}}"
 useEmailInstead = "Əvəzində e-poçt istifadə et"
@@ -7552,7 +7552,7 @@ download = "Endir"
 downloaded = "Endirilib"
 downloadFailed = "Bu faylı endirmək mümkün deyil."
 downloadsCount = "Endirmələr: {{count}}"
-emailWarningBody = "Bu e-poçt ünvanına bənzəyir. Bu şəxs Stirling PDF istifadəçisi deyilsə, fayla çata bilməyəcək."
+emailWarningBody = "Bu e-poçt ünvanına bənzəyir. Bu şəxs Lumina PDF istifadəçisi deyilsə, fayla çata bilməyəcək."
 emailWarningConfirm = "Yenə də paylaş"
 emailWarningTitle = "E-poçt ünvanı"
 errorTitle = "Paylaşma alınmadı"
@@ -7582,7 +7582,7 @@ manageTitle = "Paylaşmanın idarə edilməsi"
 noActivity = "Hələ fəaliyyət yoxdur."
 noLinks = "Hələ aktiv paylaşma linki yoxdur."
 noSharedUsers = "Hələ heç bir istifadəçinin girişi yoxdur."
-openInApp = "Open in Stirling PDF"
+openInApp = "Open in Lumina PDF"
 ownerLabel = "Sahib"
 ownerOnly = "Paylaşımı yalnız sahibi idarə edə bilər."
 ownerUnknown = "Naməlum"
@@ -7643,28 +7643,28 @@ trialing = "Sınaq"
 
 [survey]
 button = "Sorğuda iştirak edin"
-changes = "Stirling-PDF son sorğudan bəri dəyişdi! Daha çox məlumat əldə etmək üçün lütfən, buradakı blog yazımızı yoxlayın:"
+changes = "Lumina-PDF son sorğudan bəri dəyişdi! Daha çox məlumat əldə etmək üçün lütfən, buradakı blog yazımızı yoxlayın:"
 changes2 = "Bu dəyişikliklərlə biz ödənişli biznes dəstəyi və maliyyə alırıq"
-description = "Stirling-PDF-də izləmə yoxdur, ona görə də Stirling-PDF-ni təkmilləşdirmək üçün istifadəçilərimizi eşitmək istəyirik!"
+description = "Lumina-PDF-də izləmə yoxdur, ona görə də Lumina-PDF-ni təkmilləşdirmək üçün istifadəçilərimizi eşitmək istəyirik!"
 disabled = "(Sorğu pop-up növbəti yeniləmələrdə deaktiv ediləcək, lakin səhifənin altında mövcuddur)"
 dontShowAgain = "Bir daha göstərmə"
 nav = "Sorğu"
-please = "Lütfən, Stirling-PDF-nin gələcəyi ilə bağlı məlumat əldə etmək üçün sorğumuzda iştirak edin!"
-title = "Stirling-PDF sorğusu"
+please = "Lütfən, Lumina-PDF-nin gələcəyi ilə bağlı məlumat əldə etmək üçün sorğumuzda iştirak edin!"
+title = "Lumina-PDF sorğusu"
 
 [survey.meeting]
-1 = "Əgər Stirling PDF-i işdə istifadə edirsinizsə, sizinlə danışmaq istərdik. 15 dəqiqəlik istifadəçi araşdırması sessiyası qarşılığında texniki dəstək sessiyaları təklif edirik."
+1 = "Əgər Lumina PDF-i işdə istifadə edirsinizsə, sizinlə danışmaq istərdik. 15 dəqiqəlik istifadəçi araşdırması sessiyası qarşılığında texniki dəstək sessiyaları təklif edirik."
 2 = "Bu fürsət:"
 3 = "Yerləşdirmə, inteqrasiyalar və ya nasazlıqların aradan qaldırılması ilə bağlı kömək alın"
 4 = "Performans, kənar hallar və funksiya boşluqları barədə birbaşa rəy verin"
-5 = "Stirling PDF-i real dünya müəssisə istifadəsi üçün daha da təkmilləşdirməyimizə kömək edin"
+5 = "Lumina PDF-i real dünya müəssisə istifadəsi üçün daha da təkmilləşdirməyimizə kömək edin"
 6 = "Maraqlısınızsa, komandamızla birbaşa vaxt təyin edə bilərsiniz. (Yalnız ingiliscə danışılır)"
-7 = "Sizin istifadə hallarınızı öyrənmək və Stirling PDF-i daha da yaxşı etmək üçün səbirsizliklə gözləyirik!"
+7 = "Sizin istifadə hallarınızı öyrənmək və Lumina PDF-i daha da yaxşı etmək üçün səbirsizliklə gözləyirik!"
 button = "Görüş təyin et"
 notInterested = "Biznes deyilsiniz və/və ya görüşlə maraqlanmırsınız?"
 
 [swagger]
-desc = "Stirling PDF API endpoint-lərini görüntüləyin və test edin"
+desc = "Lumina PDF API endpoint-lərini görüntüləyin və test edin"
 header = "API sənədləşməsi"
 tags = "api,sənədləşmə,swagger,endpointlər,inkişaf"
 title = "API sənədləşməsi"
@@ -7801,7 +7801,7 @@ favorites = "Seçilmişlər"
 heading = "Bütün alətlər (tam ekran görünüşü)"
 noResults = "Lazımi aləti tapmaq üçün axtarışı tənzimləyin və ya təsvirləri dəyişin."
 recommended = "Tövsiyə olunur"
-selfHostedOffline = "Sizin Stirling-PDF serverinizi tələb edir (hazırda oflayn):"
+selfHostedOffline = "Sizin Lumina-PDF serverinizi tələb edir (hazırda oflayn):"
 showDetails = "Təfərrüatları göstər"
 unavailable = "Server administratoru tərəfindən deaktiv edilib:"
 unavailableDependency = "Mövcud deyil - serverdə tələb olunan alət yoxdur:"
@@ -7810,7 +7810,7 @@ unfavorite = "Seçilmişlərdən çıxar"
 [toolPanel.modePrompt]
 chooseFullscreen = "Tam ekran rejimindən istifadə edin"
 chooseSidebar = "Yan panel rejimindən istifadə edin"
-description = "Hər iki tərtibatı önizləyin və Stirling PDF alətlərini necə araşdırmaq istədiyinizi qərarlaşdırın."
+description = "Hər iki tərtibatı önizləyin və Lumina PDF alətlərini necə araşdırmaq istədiyinizi qərarlaşdırın."
 dismiss = "Bəlkə sonra"
 fullscreenDescription = "Birini seçənədək iş sahəsini örtən kataloqda bütün alətlərə baxın."
 fullscreenTitle = "Tam ekran rejimi - (köhnə)"
@@ -7904,7 +7904,7 @@ attentionBody = "Daha çox məlumat üçün admin daxil olmalıdır. Zəhmət ol
 attentionBodyAdmin = "Bu serverin uyğunluğunu qorumaq üçün lisenziya tələblərini nəzərdən keçirin."
 attentionTitle = "Bu server admin diqqəti tələb edir"
 dismiss = "Baneri gizlət"
-message = "Limitsiz istifadəçi və qabaqcıl xüsusiyyətlərlə Stirling PDF-dən maksimum yararlanın"
+message = "Limitsiz istifadəçi və qabaqcıl xüsusiyyətlərlə Lumina PDF-dən maksimum yararlanın"
 seeInfo = "Məlumata bax"
 title = "Server planına yüksəldin"
 upgradeButton = "İndi yüksəlt"
@@ -8026,7 +8026,7 @@ continued = "Davamı"
 downloads = "Yükləmələr"
 entryLabel = "İmza xülasəsi"
 filesEvaluated = "{{count}} fayl qiymətləndirildi"
-footer = "Stirling PDF vasitəsilə təsdiqlənib"
+footer = "Lumina PDF vasitəsilə təsdiqlənib"
 generatedAt = "Yaradılma vaxtı"
 noPdf = "PDF hesabatı uğurlu doğrulamadan sonra əlçatan olacaq."
 page = "Səhifə"

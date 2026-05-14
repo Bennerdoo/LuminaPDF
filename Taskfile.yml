@@ -3,7 +3,7 @@ version: '3'
 output: prefixed
 
 vars:
-  FIND_FREE_PORT_PS: powershell -NoProfile -File scripts\find-free-port.ps1 -Preferred
+  FIND_FREE_PORT_PS: powershell -ExecutionPolicy Bypass -NoProfile -Command ./scripts/find-free-port.ps1 -Preferred
   FIND_FREE_PORT_SH: bash scripts/find-free-port.sh
 
 includes:
@@ -46,8 +46,8 @@ tasks:
     vars:
       PORTS:
         sh: '{{if eq OS "windows"}}{{.FIND_FREE_PORT_PS}} 8080,5173{{else}}{{.FIND_FREE_PORT_SH}} 8080 5173{{end}}'
-      BACKEND_PORT: '{{index (splitList "\n" .PORTS) 0}}'
-      FRONTEND_PORT: '{{index (splitList "\n" .PORTS) 1}}'
+      BACKEND_PORT: '{{index (splitList "\n" (replace "\r" "" .PORTS)) 0}}'
+      FRONTEND_PORT: '{{index (splitList "\n" (replace "\r" "" .PORTS)) 1}}'
     deps:
       - task: backend:dev
         vars:
@@ -63,9 +63,9 @@ tasks:
     vars:
       PORTS:
         sh: '{{if eq OS "windows"}}{{.FIND_FREE_PORT_PS}} 8080,5173,5001{{else}}{{.FIND_FREE_PORT_SH}} 8080 5173 5001{{end}}'
-      BACKEND_PORT: '{{index (splitList "\n" .PORTS) 0}}'
-      FRONTEND_PORT: '{{index (splitList "\n" .PORTS) 1}}'
-      ENGINE_PORT: '{{index (splitList "\n" .PORTS) 2}}'
+      BACKEND_PORT: '{{index (splitList "\n" (replace "\r" "" .PORTS)) 0}}'
+      FRONTEND_PORT: '{{index (splitList "\n" (replace "\r" "" .PORTS)) 1}}'
+      ENGINE_PORT: '{{index (splitList "\n" (replace "\r" "" .PORTS)) 2}}'
     deps:
       - task: engine:dev
         vars:

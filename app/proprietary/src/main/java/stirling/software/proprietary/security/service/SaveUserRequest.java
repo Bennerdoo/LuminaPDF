@@ -1,6 +1,7 @@
 package stirling.software.proprietary.security.service;
 
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 
 import stirling.software.common.model.enumeration.Role;
@@ -34,17 +35,17 @@ import stirling.software.proprietary.security.model.AuthenticationType;
 @Builder(builderClassName = "Builder")
 public class SaveUserRequest {
     private final String username;
-    @Builder.Default private final String password = null;
-    @Builder.Default private final String ssoProviderId = null;
-    @Builder.Default private final String ssoProvider = null;
-    @Builder.Default private final AuthenticationType authenticationType = AuthenticationType.WEB;
-    @Builder.Default private final Long teamId = null;
-    @Builder.Default private final Team team = null;
-    @Builder.Default private final String role = Role.USER.getRoleId();
-    @Builder.Default private final boolean firstLogin = false;
-    @Builder.Default private final boolean enabled = true;
-    @Builder.Default private final boolean requireMfa = false;
-    @Builder.Default private final boolean mfaEnabled = false;
-    @Builder.Default private final String mfaSecret = null;
-    @Builder.Default private final Long mfaLastUsedStep = null;
+    @Default private final String password = null;
+    @Default private final String ssoProviderId = null;
+    @Default private final String ssoProvider = null;
+    @Default private final AuthenticationType authenticationType = AuthenticationType.WEB;
+    @Default private final Long teamId = null;
+    @Default private final Team team = null;
+    @Default private final String role = Role.USER.getRoleId();
+    @Default private final boolean firstLogin = false;
+    @Default private final boolean enabled = true;
+    @Default private final boolean requireMfa = false;
+    @Default private final boolean mfaEnabled = false;
+    @Default private final String mfaSecret = null;
+    @Default private final Long mfaLastUsedStep = null;
 }

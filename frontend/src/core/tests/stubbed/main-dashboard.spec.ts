@@ -121,7 +121,7 @@ test.describe("2. Main Dashboard / Home Page", () => {
       });
 
       const githubLink = page
-        .locator('a[href*="github.com/Stirling-Tools/Stirling-PDF"]')
+        .locator('a[href*="github.com/Stirling-Tools/Lumina-PDF"]')
         .first();
       await expect(githubLink).toBeVisible();
 

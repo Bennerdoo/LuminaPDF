@@ -144,35 +144,7 @@ const LanguagePicker: React.FC<LanguagePickerProps> = ({
     );
   }
 
-  const footer = (
-    <>
-      <div className="flex flex-col items-center gap-1 text-center">
-        <Text size="xs" c="dimmed" className="text-center">
-          {t(
-            "ocr.languagePicker.additionalLanguages",
-            "Looking for additional languages?",
-          )}
-        </Text>
-        <Text
-          size="xs"
-          style={{
-            color: "#3b82f6",
-            cursor: "pointer",
-            textDecoration: "underline",
-            textAlign: "center",
-          }}
-          onClick={() =>
-            window.open(
-              "https://docs.stirlingpdf.com/Configuration/OCR",
-              "_blank",
-            )
-          }
-        >
-          {t("ocr.languagePicker.viewSetupGuide", "View setup guide →")}
-        </Text>
-      </div>
-    </>
-  );
+  const footer = null;
 
   return (
     <DropdownListWithFooter

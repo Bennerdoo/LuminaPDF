@@ -37,6 +37,7 @@ import { useAccountLogout } from "@app/extensions/accountLogout";
 import { useAuth } from "@app/auth/UseSession";
 
 export default function Onboarding() {
+  return null;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();

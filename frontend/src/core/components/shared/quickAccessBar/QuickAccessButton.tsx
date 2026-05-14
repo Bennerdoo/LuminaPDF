@@ -69,7 +69,7 @@ const QuickAccessButton: React.FC<QuickAccessButtonProps> = ({
           backgroundColor: bgColor,
           color: textColor,
           border: "none",
-          borderRadius: "8px",
+          borderRadius: "0",
           textDecoration: "none",
           opacity: disabled ? 0.5 : 1,
           cursor: disabled ? "not-allowed" : "pointer",

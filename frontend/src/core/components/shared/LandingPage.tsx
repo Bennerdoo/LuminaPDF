@@ -80,7 +80,7 @@ const LandingPage = () => {
         <LandingDocumentStack />
 
         <h1 className="landing-title">
-          {t("landing.heroTitle", "Stirling PDF")}
+          {t("landing.heroTitle", "Lumina PDF")}
         </h1>
         <p className="landing-subtitle">
           {t(

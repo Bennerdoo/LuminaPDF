@@ -52,7 +52,7 @@ export default function OnboardingModalSlide({
           <div className={styles.iconWrapper}>
             <img
               src={`${BASE_PATH}/modern-logo/logo512.png`}
-              alt="Stirling icon"
+              alt="Lumina icon"
               className={styles.downloadIcon}
             />
           </div>

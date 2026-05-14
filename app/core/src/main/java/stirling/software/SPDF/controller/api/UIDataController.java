@@ -79,8 +79,7 @@ public class UIDataController {
     @GetMapping("/home")
     @Operation(summary = "Get home page data")
     public ResponseEntity<HomeData> getHomeData() {
-        String showSurvey = System.getenv("SHOW_SURVEY");
-        boolean showSurveyValue = showSurvey == null || "true".equalsIgnoreCase(showSurvey);
+        boolean showSurveyValue = false;
 
         HomeData data = new HomeData();
         data.setShowSurveyFromDocker(showSurveyValue);

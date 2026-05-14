@@ -135,6 +135,7 @@ const GeneralSection: React.FC<GeneralSectionProps> = ({
         </div>
       )}
 
+      {/* Admin Banner - DISABLED for now
       {!hideAdminBanner && loginDisabled && !bannerDismissed && (
         <Paper
           withBorder
@@ -197,7 +198,7 @@ const GeneralSection: React.FC<GeneralSectionProps> = ({
               )}
             </Text>
             <Anchor
-              href="https://docs.stirlingpdf.com/Configuration/System%20and%20Security/"
+              href="terms.html"
               target="_blank"
               size="sm"
               style={{ color: "var(--mantine-color-blue-6)" }}
@@ -211,8 +212,9 @@ const GeneralSection: React.FC<GeneralSectionProps> = ({
           </Stack>
         </Paper>
       )}
+      */}
 
-      {/* Update Check Section */}
+      {/* Update Check Section - DISABLED for now
       {!hideUpdateSection && config?.appVersion && (
         <Paper withBorder p="md" radius="md">
           <Stack gap="md">
@@ -354,6 +356,7 @@ const GeneralSection: React.FC<GeneralSectionProps> = ({
           </Stack>
         </Paper>
       )}
+      */}
 
       <Paper withBorder p="md" radius="md">
         <Stack gap="md">

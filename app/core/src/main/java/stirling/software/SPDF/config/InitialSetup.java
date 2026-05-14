@@ -62,15 +62,19 @@ public class InitialSetup {
     public void initLegalUrls() throws IOException {
         // Initialize Terms and Conditions
         String termsUrl = applicationProperties.getLegal().getTermsAndConditions();
-        if (StringUtils.isEmpty(termsUrl)) {
-            String defaultTermsUrl = "https://www.stirlingpdf.com/terms";
+        if (StringUtils.isEmpty(termsUrl)
+                || "https://www.stirlingpdf.com/terms".equals(termsUrl)
+                || "https://stirlingpdf.com/terms".equals(termsUrl)) {
+            String defaultTermsUrl = "terms.html";
             GeneralUtils.saveKeyToSettings("legal.termsAndConditions", defaultTermsUrl);
             applicationProperties.getLegal().setTermsAndConditions(defaultTermsUrl);
         }
         // Initialize Privacy Policy
         String privacyUrl = applicationProperties.getLegal().getPrivacyPolicy();
-        if (StringUtils.isEmpty(privacyUrl)) {
-            String defaultPrivacyUrl = "https://www.stirlingpdf.com/privacy-policy";
+        if (StringUtils.isEmpty(privacyUrl)
+                || "https://www.stirlingpdf.com/privacy-policy".equals(privacyUrl)
+                || "https://stirlingpdf.com/privacy-policy".equals(privacyUrl)) {
+            String defaultPrivacyUrl = "privacy.html";
             GeneralUtils.saveKeyToSettings("legal.privacyPolicy", defaultPrivacyUrl);
             applicationProperties.getLegal().setPrivacyPolicy(defaultPrivacyUrl);
         }

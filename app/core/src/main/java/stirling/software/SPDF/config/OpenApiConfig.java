@@ -29,10 +29,9 @@ public class OpenApiConfig {
 
     private final ApplicationProperties applicationProperties;
 
-    private static final String DEFAULT_TITLE = "Stirling PDF API";
+    private static final String DEFAULT_TITLE = "Lumina PDF API";
     private static final String DEFAULT_DESCRIPTION =
-            "API documentation for all Server-Side processing.\n"
-                    + "Please note some functionality might be UI only and missing from here.";
+            "API documentation for all Server-Side processing.";
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -47,15 +46,14 @@ public class OpenApiConfig {
                         .version(version)
                         .license(
                                 new License()
-                                        .name("Open-Core - MIT Licensed")
-                                        .url(
-                                                "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/refs/heads/main/LICENSE"))
-                        .termsOfService("https://www.stirlingpdf.com/terms")
+                                        .name("MIT Licensed")
+                                        .url("https://opensource.org/licenses/MIT"))
+                        .termsOfService("terms.html")
                         .contact(
                                 new Contact()
-                                        .name("Stirling Software")
-                                        .url("https://www.stirlingpdf.com")
-                                        .email("contact@stirlingpdf.com"))
+                                        .name("Lumina PDF Support")
+                                        .url("https://github.com/Bennerdo/docmaster")
+                                        .email("support@luminapdf.local"))
                         .description(DEFAULT_DESCRIPTION);
 
         OpenAPI openAPI = new OpenAPI().info(info).openapi("3.0.3");

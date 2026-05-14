@@ -1,6 +1,5 @@
 apply plugin: 'org.springframework.boot'
 
-import org.apache.tools.ant.taskdefs.condition.Os
 
 configurations {
     developmentOnly
