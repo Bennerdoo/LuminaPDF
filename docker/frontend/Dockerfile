@@ -16,7 +16,7 @@ COPY frontend .
 RUN npx vite build
 
 # Production stage
-FROM nginx:alpine@sha256:b0f7830b6bfaa1258f45d94c240ab668ced1b3651c8a222aefe6683447c7bf55
+FROM nginx:alpine@sha256:feb6f75a08aa55b44576f98c15b8859819ecf54f3e4d2157f42c2d01cb58a3d2
 
 # Copy built files from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
