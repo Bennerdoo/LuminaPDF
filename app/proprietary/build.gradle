@@ -65,7 +65,7 @@ dependencies {
         exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
         exclude group: 'com.google.code.gson', module: 'gson'
     }
-    implementation 'com.google.code.gson:gson:2.13.2'
+    implementation 'com.google.code.gson:gson:2.14.0'
 
     api 'io.micrometer:micrometer-registry-prometheus'
 
