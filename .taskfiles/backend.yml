@@ -1,0 +1,103 @@
+version: '3'
+
+# All gradle invocations use a cross-platform variable to work
+# uniformly on Linux/macOS and Windows without relying on WSL/bash.
+
+vars:
+  GRADLEW: '{{if eq OS "windows"}}gradlew.bat{{else}}./gradlew{{end}}'
+
+tasks:
+  dev:
+    desc: "Start backend dev server"
+    ignore_error: true
+    vars:
+      PORT: '{{.PORT | default "8080"}}'
+      AIENGINE_URL: '{{.AIENGINE_URL | default ""}}'
+    env:
+      SERVER_PORT: '{{.PORT}}'
+      AIENGINE_URL: '{{.AIENGINE_URL}}'
+      AIENGINE_ENABLED: '{{if .AIENGINE_URL}}true{{else}}false{{end}}'
+      SECURITY_ENABLE_LOGIN: 'false'
+      LEGAL_TERMSANDCONDITIONS: 'terms.html'
+      LEGAL_PRIVACYPOLICY: 'privacy.html'
+    cmds:
+      - '{{.GRADLEW}} :stirling-pdf:bootRun'
+
+  dev:bundled:
+    desc: "Clean + bootRun with frontend bundled into the backend (single :8080 server)"
+    ignore_error: true
+    cmds:
+      - '{{.GRADLEW}} clean bootRun -PbuildWithFrontend=true'
+
+  build:
+    desc: "Full backend build"
+    cmds:
+      - '{{.GRADLEW}} clean build'
+
+  build:fast:
+    desc: "Build without tests"
+    cmds:
+      - '{{.GRADLEW}} clean build -x test'
+
+  build:ci:
+    desc: "Build for CI (formatting checked separately)"
+    cmds:
+      - '{{.GRADLEW}} build -PnoSpotless'
+
+  test:
+    desc: "Run backend tests"
+    cmds:
+      - '{{.GRADLEW}} test'
+
+  format:
+    desc: "Auto-fix code formatting"
+    cmds:
+      - '{{.GRADLEW}} spotlessApply'
+
+  format:check:
+    desc: "Check code formatting"
+    cmds:
+      - '{{.GRADLEW}} spotlessCheck'
+
+  fix:
+    desc: "Auto-fix backend"
+    cmds:
+      - task: format
+
+  swagger:
+    desc: "Generate OpenAPI docs"
+    cmds:
+      - '{{.GRADLEW}} :stirling-pdf:copySwaggerDoc'
+    sources:
+      - app/core/src/main/java/**/*.java
+      - app/proprietary/src/main/java/**/*.java
+      - app/common/src/main/java/**/*.java
+    generates:
+      - SwaggerDoc.json
+
+  check:
+    desc: "Backend quality gate"
+    cmds:
+      - task: format:check
+      - task: test
+
+  version:
+    desc: "Print project version"
+    silent: true
+    cmds:
+      - '{{.GRADLEW}} printVersion --quiet | tail -1'
+
+  licenses:check:
+    desc: "Check dependency licenses"
+    cmds:
+      - '{{.GRADLEW}} checkLicense --no-parallel'
+
+  licenses:generate:
+    desc: "Check and generate dependency license report"
+    cmds:
+      - '{{.GRADLEW}} checkLicense generateLicenseReport --no-parallel'
+
+  clean:
+    desc: "Clean build artifacts"
+    cmds:
+      - '{{.GRADLEW}} clean'

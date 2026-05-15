@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+:root {
+  /* Stampforger Design Tokens */
+  --ink: #1a1412;
+  --ink-soft: #3d3330;
+  --paper: #f5f0e8;
+  --paper-dark: #ece5d6;
+  --red: #c8321e;
+  --red-muted: #9e2718;
+  --brass: #b8972a;
+
+  /* Typography Scale */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Lora', serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+}
+
+h1, h2, h3, h4, h5, h6, .display-font {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+code, pre, .mono-font {
+  font-family: var(--font-mono);
+}
+
+/* Antiquarian Utility Classes */
+.bg-paper { background-color: var(--paper); }
+.bg-paper-dark { background-color: var(--paper-dark); }
+.text-ink { color: var(--ink); }
+.text-ink-soft { color: var(--ink-soft); }
+.text-red { color: var(--red); }
+.text-brass { color: var(--brass); }
+.border-ink { border-color: var(--ink); }
+
+/* Suppress font visibility warnings for PDF.js embedded fonts */
+@font-face {
+  font-family: "Adwaita Mono";
+  src: local("Adwaita Mono");
+  font-display: optional;
+}
+
+@font-face {
+  font-family: "Nimbus Mono PS";
+  src: local("Nimbus Mono PS");
+  font-display: optional;
+}
+
+/* UI Layout Variables */
+:root {
+  --footer-height: 2rem;
+}
+
+/* Footer link styling */
+.footer-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+.footer-link:hover {
+  color: var(--red);
+}
+
+.stirling-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.stirling-link:hover {
+  color: var(--red);
+  text-decoration-style: solid;
+}
+
+/* Viewer file tabs */
+.viewer-file-tab {
+  justify-content: flex-start;
+  border-radius: 0 !important;
+}
+
+.viewer-file-tab[data-active] {
+  background-color: var(--paper-dark);
+  border-bottom: 2px solid var(--brass) !important;
+}
+
