@@ -188,4 +188,3 @@ id_ed25519.pub
 # node_modules
 node_modules/
 
-scripts/**/*

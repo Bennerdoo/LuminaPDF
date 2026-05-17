@@ -150,14 +150,7 @@ v
 *.tar.gz
 *.rar
 *.db
-build
-app/core/build
-app/common/build
-app/proprietary/build
-common/build
-proprietary/build
-lumina-pdf/build
-frontend/src-tauri/provisioner/target
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
