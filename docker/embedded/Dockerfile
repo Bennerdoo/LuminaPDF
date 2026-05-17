@@ -41,6 +41,7 @@ COPY . .
 
 ARG PROTOTYPES_BUILD=false
 RUN DISABLE_ADDITIONAL_FEATURES=false \
+    NODE_OPTIONS="--max-old-space-size=2048" \
     gradle clean build \
       -PbuildWithFrontend=true \
       -PprototypesMode=${PROTOTYPES_BUILD} \
