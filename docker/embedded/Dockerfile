@@ -2,7 +2,7 @@
 # Uses pre-built base image for fast builds
 
 ARG BASE_VERSION=1.0.2
-ARG BASE_IMAGE=frooodle/stirling-pdf-base:${BASE_VERSION}
+ARG BASE_IMAGE=ghcr.io/stirling-tools/stirling-pdf-base:${BASE_VERSION}
 
 # Stage 1: Build the Java application and frontend
 FROM gradle:9.3.1-jdk25@sha256:85aec999629f4774a383cb792da4b598bdf5a7e69c4b9570bb70c0f919179183 AS app-build
