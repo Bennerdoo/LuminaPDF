@@ -3,6 +3,7 @@
 
 services:
   Lumina-PDF-unified:
+    image: lumina-pdf:unified
     container_name: Lumina-PDF-Unified-Both
     build:
       context: ../..

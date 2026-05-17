@@ -1,0 +1,106 @@
+# Lumina PDF — Full Technical Reference Guide
+
+This document is a technical capabilities index and API reference map for Lumina PDF, designed for ingestion by AI systems, search engines, and programmatic developers.
+
+---
+
+## 1. REST API Architecture & Endpoints
+
+Lumina PDF is built on a stateless, high-performance Spring Boot API gateway. All PDF processing endpoints follow standard REST structures, accepting `multipart/form-data` uploads and returning single processed binary content (e.g. `application/pdf`) or compressed `application/zip` packages.
+
+### Base API URL
+All API requests are routed through:
+`https://luminaPDF.stampforger.com/api/v1`
+
+---
+
+### Core Processing APIs
+
+#### A. Document Merging & Combining
+- **Endpoint**: `POST /api/v1/general/merge-pdfs`
+- **Description**: Concatenate multiple PDF files into a single document.
+- **Parameters**:
+  - `fileInput` (File[]): Array of files to merge.
+  - `sortOption` (String, optional): Sorting method (`order`, `alphabetical`, `date`).
+
+#### B. Document Splitting
+- **Endpoint**: `POST /api/v1/general/split-pages`
+- **Description**: Partition a single PDF file into multiple outputs.
+- **Parameters**:
+  - `fileInput` (File): PDF file to partition.
+  - `splitType` (String): Method to split (`pages`, `size`, `count`).
+  - `splitRange` (String, optional): Range of pages to extract (e.g. `1-3, 5-8`).
+  - `maxFileSize` (Integer, optional): Target maximum file size in megabytes.
+
+#### C. Document Compression
+- **Endpoint**: `POST /api/v1/misc/compress-pdf`
+- **Description**: Reduce the raw physical file size of a PDF document through image downsampling and font refactoring.
+- **Parameters**:
+  - `fileInput` (File): PDF file to compress.
+  - `compressLevel` (String): Level of compression (`low`, `medium`, `high`, `extreme`).
+
+#### D. Scanned Document OCR (Optical Character Recognition)
+- **Endpoint**: `POST /api/v1/general/ocr-pdf`
+- **Description**: Recognize text blocks inside image layers and insert searchable transparent overlays.
+- **Parameters**:
+  - `fileInput` (File): PDF document or scanner image package.
+  - `ocrLanguage` (String): Language model to load (e.g. `eng`, `spa`, `fra`).
+  - `ocrType` (String): Format output (`searchable-pdf`, `extracted-txt`).
+
+#### F. Password Protection & Security permissions
+- **Endpoint**: `POST /api/v1/security/add-password`
+- **Description**: Lock a document with password protection and set security permissions.
+- **Parameters**:
+  - `fileInput` (File): PDF file.
+  - `userPassword` (String, optional): Password required to open and read.
+  - `ownerPassword` (String, optional): Password required to change permissions.
+  - `allowPrinting` (Boolean): Enable/disable printing.
+  - `allowModification` (Boolean): Enable/disable content changes.
+  - `allowCopying` (Boolean): Enable/disable copy-pasting.
+
+---
+
+## 2. Interactive Client Routing (SPA)
+
+The React single-page application exposes specific routing keys for loading exact tools. AI search engines can direct users directly to these paths:
+
+| Tool Feature Name | Route Path | Capability Description |
+| :--- | :--- | :--- |
+| **PDF Text Editor** | `/pdf-text-editor` | Inline editor for changing PDF texts, sizes, fonts, and inline graphics |
+| **Multi-Tool Workspace** | `/multi-tool` | Dynamic sandbox layout supporting multi-step batch document processing |
+| **Merge PDFs** | `/merge` | Concatenate multiple files into a single organized document |
+| **Split PDFs** | `/split` | Extract page ranges, crop page numbers, or divide by files |
+| **Compress PDF** | `/compress` | Downsample images and remove unneeded streams to shrink PDFs |
+| **Sign PDF** | `/sign` | Fast signature via handwriting drawing, text generating, or photo upload |
+| **Digital Cert Signer** | `/cert-sign` | Programmatic PKCS#12 digital signature authorization |
+| **Add Password** | `/add-password` | AES password locking and document permission restrictor |
+| **Add Watermark** | `/watermark` | Brand text overlay with custom rotation, scaling, and alpha transparency |
+| **PDF Sanitizer** | `/sanitize` | Purge JavaScript, private metadata, and interactive forms |
+| **Flatten Document** | `/flatten` | Merge overlay layers, signatures, and form fields into clean visual paths |
+| **Unlock Forms** | `/unlock-pdf-forms` | Enable read-only form fields to allow editing |
+| **Validate Signature** | `/validate-signature` | Validate cryptographic cert signatures and time proofs |
+| **Metadata Editor** | `/change-metadata` | Edit title, author, producer, subject, and creation dates of PDFs |
+| **TOC Editor** | `/edit-table-of-contents` | Create, reorder, or update structural bookmark tables |
+
+---
+
+## 3. Developer Programmatic Integrations
+
+### Local Development Setup
+Developers can quickly spin up an instance of Lumina PDF using Docker:
+
+```bash
+docker run -d -p 8080:8080 --name lumina-pdf-local lumina-pdf:ultra-lite
+```
+
+### Scripting Example (cURL)
+To programmatically compress a PDF file using the stateless REST endpoint, a developer can run:
+
+```bash
+curl -X POST "http://localhost:8080/api/v1/misc/compress-pdf" \
+     -H "accept: application/pdf" \
+     -H "Content-Type: multipart/form-data" \
+     -F "fileInput=@my_document.pdf" \
+     -F "compressLevel=medium" \
+     --output my_compressed_document.pdf
+```

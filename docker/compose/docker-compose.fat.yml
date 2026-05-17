@@ -1,5 +1,6 @@
 services:
   Lumina-PDF:
+    image: lumina-pdf:fat
     build:
       context: ../..
       dockerfile: docker/embedded/Dockerfile.fat

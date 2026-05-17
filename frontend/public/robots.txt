@@ -1,3 +1,62 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for LuminaPDF - Optimizing for Search and AI Engines
+
+# Allow traditional search engines
+User-agent: Googlebot
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: Bingbot
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+# Explicitly welcome AI search agents and LLM scrapers
+User-agent: GPTBot
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: ChatGPT-User
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: ClaudeBot
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: Claude-Web
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: PerplexityBot
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: Google-Extended
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: Applebot-Extended
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+User-agent: cohere-ai
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+# Default catch-all for other search agents
 User-agent: *
-Disallow:
+Disallow: /api/
+Disallow: /configs/
+Disallow: /logs/
+
+# Link to XML Sitemap
+Sitemap: https://luminaPDF.stampforger.com/sitemap.xml

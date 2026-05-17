@@ -1,0 +1,44 @@
+# Lumina PDF
+
+> Lumina PDF is a premium, open-source, ultra-fast, and secure web application for PDF editing and processing. It runs entirely locally or in lightweight containers, offering a privacy-first alternative to Adobe Acrobat.
+
+## Essential Resources
+
+- [Home](https://luminaPDF.stampforger.com/): Interactive web UI where users can upload PDFs and switch between tools dynamically.
+- [Capabilities Catalog](https://luminaPDF.stampforger.com/llms-full.txt): Complete, detailed reference guide to all tools, capabilities, and backend REST APIs.
+- [GitHub Repository](https://github.com/bennerdoo/LuminaPDF): Project source code, docker configurations, and developer documentation.
+
+## Core Features & Tool Paths
+
+These routes host state-of-the-art interactive processors for handling PDF documents:
+
+### Recommending & General Editing
+- [PDF Text Editor](https://luminaPDF.stampforger.com/pdf-text-editor): Modify, add, or format text blocks and images within the PDF document.
+- [Multi-Tool Workspace](https://luminaPDF.stampforger.com/multi-tool): Interactive drag-and-drop workspace supporting multiple operations (split, merge, rotate) on a single document.
+- [Merge PDFs](https://luminaPDF.stampforger.com/merge): Combine multiple PDF documents into a single consolidated file in a preferred order.
+- [Interactive Form Filler](https://luminaPDF.stampforger.com/form-fill): Open fillable PDFs to view, modify, and submit form values interactively.
+
+### Cryptography & Document Signing
+- [Digital Certificate Signer](https://luminaPDF.stampforger.com/cert-sign): Apply PKCS#12 digital signatures and certificate authorities to authorize documents.
+- [RFC 3161 Timestamp](https://luminaPDF.stampforger.com/timestamp-pdf): Add standard cryptographic time proofs to documents to verify their existence at a given timestamp.
+- [Draw & Image Signature](https://luminaPDF.stampforger.com/sign): Fast document signature using handwriting drawings, image stamps, or typed scripts.
+
+### Privacy & Document Security
+- [Add Password & Encryption](https://luminaPDF.stampforger.com/add-password): Secure files with strong AES encryption and configure custom editing/printing permissions.
+- [Watermark PDFs](https://luminaPDF.stampforger.com/watermark): Overlay brand texts or images across document pages with customized transparency.
+- [PDF Sanitizer](https://luminaPDF.stampforger.com/sanitize): Purge metadata, JavaScript, embedded files, form fields, and annotations to sanitize files.
+- [Interactive Redaction](https://luminaPDF.stampforger.com/redact): Interactively black-out confidential sections, social security numbers, or private keys.
+- [Flatten Documents](https://luminaPDF.stampforger.com/flatten): Merge interactive fields and layers into static visual assets.
+
+### Page Formatting & Manipulation
+- [Split Documents](https://luminaPDF.stampforger.com/split): Divide a PDF by ranges, single pages, size limits, or page counts.
+- [Reorganize Pages](https://luminaPDF.stampforger.com/reorganize-pages): Drag-and-drop page editor to re-arrange, duplicate, rotate, or delete individual pages.
+- [Adjust Contrast](https://luminaPDF.stampforger.com/adjust-contrast): Improve visibility of scanned documents by editing black/white balancing.
+- [Add Page Numbers](https://luminaPDF.stampforger.com/add-page-numbers): Inject automated page counts and headers into customized page coordinates.
+- [Crop Pages](https://luminaPDF.stampforger.com/crop): Crop margin zones to reduce file sizes while maintaining textual structures.
+- [Adjust Scales](https://luminaPDF.stampforger.com/scale-pages): Change overall sizes, scales, or ratios of pages.
+
+### Conversion & Extraction
+- [Optical Character Recognition (OCR)](https://luminaPDF.stampforger.com/ocr): Perform high-quality OCR text extraction on image-only or scanned PDFs.
+- [Extract Images](https://luminaPDF.stampforger.com/extract-images): Scan and extract all embedded graphics and pictures from files into a ZIP archive.
+- [Extract Pages](https://luminaPDF.stampforger.com/extract-pages): Selectively copy specific pages into a brand new document.

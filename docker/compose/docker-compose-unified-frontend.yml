@@ -3,6 +3,7 @@
 
 services:
   Lumina-PDF-backend:
+    image: lumina-pdf:backend
     container_name: Lumina-PDF-Backend
     build:
       context: ../..
@@ -34,6 +35,7 @@ services:
           memory: 4G
 
   Lumina-PDF-frontend:
+    image: lumina-pdf:frontend
     container_name: Lumina-PDF-Frontend
     build:
       context: ../..

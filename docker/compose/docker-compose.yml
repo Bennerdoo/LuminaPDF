@@ -1,5 +1,6 @@
 services:
   Lumina-PDF:
+    image: lumina-pdf:latest
     build:
       context: ../..
       dockerfile: docker/embedded/Dockerfile

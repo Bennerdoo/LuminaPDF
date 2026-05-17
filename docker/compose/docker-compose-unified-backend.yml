@@ -3,6 +3,7 @@
 
 services:
   Lumina-PDF-backend-only:
+    image: lumina-pdf:backend
     container_name: Lumina-PDF-Backend-Only
     build:
       context: ../..
