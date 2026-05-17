@@ -1,22 +1,22 @@
-import { StirlingFile, StirlingFileStub } from "@app/types/fileContext";
+import { luminaFile, luminaFileStub } from "@app/types/fileContext";
 import {
   createChildStub,
   generateProcessedFileMetadata,
 } from "@app/contexts/file/fileActions";
-import { createStirlingFile } from "@app/types/fileContext";
+import { createluminaFile } from "@app/types/fileContext";
 import { ToolId } from "@app/types/toolId";
 
 /**
- * Create StirlingFiles and StirlingFileStubs from exported files
+ * Create luminaFiles and luminaFileStubs from exported files
  * Used when saving page editor changes to create version history
  */
-export async function createStirlingFilesAndStubs(
+export async function createluminaFilesAndStubs(
   files: File[],
-  parentStub: StirlingFileStub,
+  parentStub: luminaFileStub,
   toolId: ToolId,
-): Promise<{ stirlingFiles: StirlingFile[]; stubs: StirlingFileStub[] }> {
-  const stirlingFiles: StirlingFile[] = [];
-  const stubs: StirlingFileStub[] = [];
+): Promise<{ luminaFiles: luminaFile[]; stubs: luminaFileStub[] }> {
+  const luminaFiles: luminaFile[] = [];
+  const stubs: luminaFileStub[] = [];
 
   for (const file of files) {
     const processedFileMetadata = await generateProcessedFileMetadata(file);
@@ -28,10 +28,10 @@ export async function createStirlingFilesAndStubs(
       processedFileMetadata,
     );
 
-    const stirlingFile = createStirlingFile(file, childStub.id);
-    stirlingFiles.push(stirlingFile);
+    const luminaFile = createluminaFile(file, childStub.id);
+    luminaFiles.push(luminaFile);
     stubs.push(childStub);
   }
 
-  return { stirlingFiles, stubs };
+  return { luminaFiles, stubs };
 }

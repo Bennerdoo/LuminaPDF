@@ -155,7 +155,7 @@ echo -e "${YELLOW}▶ Waiting for Keycloak (SAML)...${NC}"
 MAX_WAIT=180
 WAITED=0
 while [ $WAITED -lt $MAX_WAIT ]; do
-    if curl -sf http://localhost:9080/realms/stirling-saml/protocol/saml/descriptor 2>/dev/null | grep -q "EntityDescriptor"; then
+    if curl -sf http://localhost:9080/realms/lumina-saml/protocol/saml/descriptor 2>/dev/null | grep -q "EntityDescriptor"; then
         echo -e "${GREEN}✓ Keycloak is ready${NC}"
         break
     fi
@@ -189,7 +189,7 @@ fi
 echo ""
 echo -e "${YELLOW}▶ Fetching Keycloak SAML signing certificate...${NC}"
 CERT_PATH="${SCRIPT_DIR}/keycloak-saml-cert.pem"
-CERT_BODY="$(curl -sf http://localhost:9080/realms/stirling-saml/protocol/saml/descriptor \
+CERT_BODY="$(curl -sf http://localhost:9080/realms/lumina-saml/protocol/saml/descriptor \
     | awk 'BEGIN{RS="<[^>]*X509Certificate>|</[^>]*X509Certificate>"} NR==2{gsub(/[[:space:]]+/,""); print; exit}')"
 if [ -n "$CERT_BODY" ]; then
     {

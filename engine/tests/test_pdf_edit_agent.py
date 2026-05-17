@@ -5,9 +5,9 @@ from dataclasses import dataclass
 
 import pytest
 
-from stirling.agents import PdfEditAgent, PdfEditParameterSelector, PdfEditPlanSelection
-from stirling.agents.pdf_edit import PdfEditPlanOutput
-from stirling.contracts import (
+from lumina.agents import PdfEditAgent, PdfEditParameterSelector, PdfEditPlanSelection
+from lumina.agents.pdf_edit import PdfEditPlanOutput
+from lumina.contracts import (
     AiFile,
     EditCannotDoResponse,
     EditClarificationRequest,
@@ -21,8 +21,8 @@ from stirling.contracts import (
     SupportedCapability,
     ToolOperationStep,
 )
-from stirling.models import OPERATIONS, FileId, ParamToolModel
-from stirling.models.tool_models import (
+from lumina.models import OPERATIONS, FileId, ParamToolModel
+from lumina.models.tool_models import (
     Angle,
     EditTextOperation,
     EditTextParams,
@@ -30,7 +30,7 @@ from stirling.models.tool_models import (
     RotatePdfParams,
     ToolEndpoint,
 )
-from stirling.services.runtime import AppRuntime
+from lumina.services.runtime import AppRuntime
 
 
 @dataclass(frozen=True)
@@ -225,7 +225,7 @@ async def test_pdf_edit_agent_returns_need_content_without_building_plan(runtime
 
 @pytest.mark.anyio
 async def test_pdf_edit_agent_builds_selection_agent_matching_content_availability(runtime: AppRuntime) -> None:
-    from stirling.agents.pdf_edit import PdfEditSelectionAgent
+    from lumina.agents.pdf_edit import PdfEditSelectionAgent
 
     agent = PdfEditAgent(runtime)
     captured: list[bool] = []
@@ -268,7 +268,7 @@ async def test_pdf_edit_agent_builds_selection_agent_matching_content_availabili
 async def test_pdf_edit_selection_agent_excludes_need_content_from_schema_when_not_allowed(
     runtime: AppRuntime,
 ) -> None:
-    from stirling.agents.pdf_edit import PdfEditSelectionAgent
+    from lumina.agents.pdf_edit import PdfEditSelectionAgent
 
     can_request = PdfEditSelectionAgent(runtime, "base", allow_need_content=True)
     cannot_request = PdfEditSelectionAgent(runtime, "base", allow_need_content=False)

@@ -97,7 +97,7 @@ To add a 3rd UNO server:
 ```yaml
   unoserver3:
     container_name: UNO-Server-3
-    image: ghcr.io/stirling-tools/stirling-unoserver:latest
+    image: ghcr.io/lumina-tools/lumina-unoserver:latest
     # ... same config as unoserver1/2
 ```
 
@@ -188,7 +188,7 @@ PROCESS_EXECUTOR_UNOSERVERENDPOINTS_0_PROTOCOL: "https"
 To see detailed endpoint selection logs:
 ```yaml
 environment:
-  LOGGING_LEVEL_STIRLING_SOFTWARE_COMMON_UTIL_PROCESSEXECUTOR: DEBUG
+  LOGGING_LEVEL_lumina_SOFTWARE_COMMON_UTIL_PROCESSEXECUTOR: DEBUG
 ```
 
 ## What This Demonstrates

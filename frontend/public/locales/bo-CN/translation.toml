@@ -598,7 +598,7 @@ description = "གནས་སྐབས་ཀྱི་ཡིག་ཆ་གས�
 label = "ཊེམ་པི་ཡིག་ཆ་དོ་དམ།"
 
 [admin.settings.advanced.tempFileManagement.baseTmpDir]
-description = "གནས་སྐབས་ཡིག་ཆའི་གཞི་རྩའི་སྣོད་ཐོ། (སྔོན་སྒྲིག་ཆེད་དུ་སྟོང་པར་བཞག་པ་: java.io.tmpdir/stirling-pdf)"
+description = "གནས་སྐབས་ཡིག་ཆའི་གཞི་རྩའི་སྣོད་ཐོ། (སྔོན་སྒྲིག་ཆེད་དུ་སྟོང་པར་བཞག་པ་: java.io.tmpdir/lumina-pdf)"
 label = "གཞི་རྟེན་ཊེམ་པི་སྣོད་ཐོ།"
 
 [admin.settings.advanced.tempFileManagement.cleanupIntervalMinutes]
@@ -3362,7 +3362,7 @@ message = "སྔོན་སྒྲིག་PDFའཛིན་སྐྱོང་
 title = "ནོར་འཁྲུལ"
 
 [defaultApp.prompt]
-message = "ཁྱེད་རང་གི་སྔོན་སྒྲིག་མཉེན་ཆས་PDFཡིག་ཆ་ཁ་ཕྱེ་བའི་ཆེད་དུ་PDF stirling PDF བཟོས།"
+message = "ཁྱེད་རང་གི་སྔོན་སྒྲིག་མཉེན་ཆས་PDFཡིག་ཆ་ཁ་ཕྱེ་བའི་ཆེད་དུ་PDF lumina PDF བཟོས།"
 title = "སྔོན་སྒྲིག་PDFརྩོམ་སྒྲིག་པ་ལྟར་སྒྲིག་དགོས།"
 
 [defaultApp.settingsOpened]

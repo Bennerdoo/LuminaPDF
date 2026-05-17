@@ -14,7 +14,7 @@ test.describe("1. Authentication and Login", () => {
       await expect(
         page
           .locator(
-            'img[alt*="Stirling"], img[src*="stirling"], img[src*="logo"]',
+            'img[alt*="lumina"], img[src*="lumina"], img[src*="logo"]',
           )
           .first(),
       ).toBeVisible();
@@ -104,8 +104,8 @@ test.describe("1. Authentication and Login", () => {
       // then re-add the cookie consent cookie so the banner doesn't block after redirect
       await page.context().clearCookies();
       await page.evaluate(() => {
-        localStorage.removeItem("stirling_jwt");
-        localStorage.removeItem("stirling_refresh_token");
+        localStorage.removeItem("lumina_jwt");
+        localStorage.removeItem("lumina_refresh_token");
       });
       await page.context().addCookies([
         {

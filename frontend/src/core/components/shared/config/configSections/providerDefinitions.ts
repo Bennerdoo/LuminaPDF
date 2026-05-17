@@ -680,7 +680,7 @@ const useSAML2Provider = (): Provider => {
           "provider.saml2.registrationId.description",
           "The name of your Service Provider (SP) app name",
         ),
-        defaultValue: "stirling",
+        defaultValue: "lumina",
       },
       {
         key: "idpMetadataUri",
@@ -705,7 +705,7 @@ const useSAML2Provider = (): Provider => {
           "The URL for initiating SSO",
         ),
         placeholder:
-          "https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_stirlingpdf_1/externalKey/sso/saml",
+          "https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_luminapdf_1/externalKey/sso/saml",
       },
       {
         key: "idpSingleLogoutUrl",
@@ -719,7 +719,7 @@ const useSAML2Provider = (): Provider => {
           "The URL for initiating SLO",
         ),
         placeholder:
-          "https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_stirlingpdf_1/externalKey/slo/saml",
+          "https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_luminapdf_1/externalKey/slo/saml",
       },
       {
         key: "idpIssuer",
@@ -797,7 +797,7 @@ const useGoogleDriveProvider = (): Provider => {
     type: "googledrive",
     scope: t("provider.googledrive.scope", "File Import"),
     documentationUrl:
-      "https://docs.stirlingpdf.com/Configuration/Google%20Drive%20File%20Picker/",
+      "https://docs.luminapdf.com/Configuration/Google%20Drive%20File%20Picker/",
     fields: [
       {
         key: "enabled",

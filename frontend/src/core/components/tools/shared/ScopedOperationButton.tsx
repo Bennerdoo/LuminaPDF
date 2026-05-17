@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import OperationButton, {
   OperationButtonProps,
 } from "@app/components/tools/shared/OperationButton";
-import { StirlingFile } from "@app/types/fileContext";
+import { luminaFile } from "@app/types/fileContext";
 import { useAllFiles } from "@app/contexts/FileContext";
 import { useViewer } from "@app/contexts/ViewerContext";
 import { useNavigationState } from "@app/contexts/NavigationContext";
 
 export interface ScopedOperationButtonProps extends OperationButtonProps {
-  selectedFiles: StirlingFile[];
+  selectedFiles: luminaFile[];
   disableScopeHints?: boolean;
 }
 

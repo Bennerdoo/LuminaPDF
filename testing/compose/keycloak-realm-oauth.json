@@ -1,6 +1,6 @@
 {
-  "id": "stirling-oauth",
-  "realm": "stirling-oauth",
+  "id": "lumina-oauth",
+  "realm": "lumina-oauth",
   "displayName": "Lumina PDF OAuth Test",
   "displayNameHtml": "<div class=\"kc-logo-text\"><span>Lumina PDF OAuth</span></div>",
   "enabled": true,
@@ -34,10 +34,16 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user"],
+      "realmRoles": [
+        "user"
+      ],
       "attributes": {
-        "phone": ["+1234567890"],
-        "organization": ["Test Corp"]
+        "phone": [
+          "+1234567890"
+        ],
+        "organization": [
+          "Test Corp"
+        ]
       }
     },
     {
@@ -54,10 +60,17 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user", "admin"],
+      "realmRoles": [
+        "user",
+        "admin"
+      ],
       "attributes": {
-        "phone": ["+1987654321"],
-        "organization": ["Test Corp IT"]
+        "phone": [
+          "+1987654321"
+        ],
+        "organization": [
+          "Test Corp IT"
+        ]
       }
     }
   ],
@@ -360,7 +373,9 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "eventsEnabled": false,
-  "eventsListeners": ["jboss-logging"],
+  "eventsListeners": [
+    "jboss-logging"
+  ],
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,

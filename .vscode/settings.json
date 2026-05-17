@@ -69,7 +69,7 @@
     "jakarta",
     "lombok",
     "me",
-    "stirling",
+    "lumina",
   ],
   "java.project.resourceFilters": [
     ".devcontainer/",
@@ -120,7 +120,7 @@
   // Enables import of the Gradle wrapper.
   "java.import.gradle.wrapper.enabled": true,
   "spring.initializr.defaultLanguage": "Java",
-  "spring.initializr.defaultGroupId": "stirling.software.SPDF",
+  "spring.initializr.defaultGroupId": "lumina.software.SPDF",
   "spring.initializr.defaultArtifactId": "SPDF",
   "java.jdt.ls.lombokSupport.enabled": true,
   "html.format.wrapLineLength": 127,

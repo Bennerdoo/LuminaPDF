@@ -21,7 +21,7 @@ const provisionerExe = join(
   "provisioner",
   "target",
   "release",
-  "stirling-provisioner.exe",
+  "lumina-provisioner.exe",
 );
 if (!existsSync(provisionerExe)) {
   throw new Error(`Provisioner binary not found at ${provisionerExe}`);
@@ -30,7 +30,7 @@ if (!existsSync(provisionerExe)) {
 const wixDir = join(tauriDir, "windows", "wix");
 mkdirSync(wixDir, { recursive: true });
 
-const destExe = join(wixDir, "stirling-provision.exe");
+const destExe = join(wixDir, "lumina-provision.exe");
 copyFileSync(provisionerExe, destExe);
 
 // --- Thumbnail handler DLL ---
@@ -47,10 +47,10 @@ const thumbDll = join(
   "thumbnail-handler",
   "target",
   "release",
-  "stirling_thumbnail_handler.dll",
+  "lumina_thumbnail_handler.dll",
 );
 if (!existsSync(thumbDll)) {
   throw new Error(`Thumbnail handler DLL not found at ${thumbDll}`);
 }
 
-copyFileSync(thumbDll, join(wixDir, "stirling_thumbnail_handler.dll"));
+copyFileSync(thumbDll, join(wixDir, "lumina_thumbnail_handler.dll"));

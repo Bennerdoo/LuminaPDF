@@ -16,7 +16,7 @@ import { detectFileExtension } from "@app/utils/fileUtils";
 import FileEditorThumbnail from "@app/components/fileEditor/FileEditorThumbnail";
 import AddFileCard from "@app/components/fileEditor/AddFileCard";
 import FilePickerModal from "@app/components/shared/FilePickerModal";
-import { FileId, StirlingFile } from "@app/types/fileContext";
+import { FileId, luminaFile } from "@app/types/fileContext";
 import { alert } from "@app/components/toast";
 import { downloadFile } from "@app/services/downloadService";
 import { useFileEditorRightRailButtons } from "@app/components/fileEditor/fileEditorRightRailButtons";
@@ -24,7 +24,7 @@ import { useToolWorkflow } from "@app/contexts/ToolWorkflowContext";
 
 interface FileEditorProps {
   onOpenPageEditor?: () => void;
-  onMergeFiles?: (files: StirlingFile[]) => void;
+  onMergeFiles?: (files: luminaFile[]) => void;
   toolMode?: boolean;
   supportedExtensions?: string[];
 }
@@ -50,8 +50,8 @@ const FileEditor = ({
   const { clearAllFileErrors } = fileContextActions;
 
   // Extract needed values from state (memoized to prevent infinite loops)
-  const activeStirlingFileStubs = useMemo(
-    () => selectors.getStirlingFileStubs(),
+  const activeluminaFileStubs = useMemo(
+    () => selectors.getluminaFileStubs(),
     [state.files.byId, state.files.ids],
   );
   const selectedFileIds = state.ui.selectedFileIds;
@@ -120,7 +120,7 @@ const FileEditor = ({
   const contextSelectedIdsRef = useRef<FileId[]>([]);
   contextSelectedIdsRef.current = contextSelectedIds;
 
-  // Use activeStirlingFileStubs directly - no conversion needed
+  // Use activeluminaFileStubs directly - no conversion needed
   const localSelectedIds = contextSelectedIds;
 
   const handleSelectAllFiles = useCallback(() => {
@@ -181,7 +181,7 @@ const FileEditor = ({
           // After auto-selection, enforce maxAllowed if needed
           if (Number.isFinite(maxAllowed)) {
             const nowSelectedIds = selectors
-              .getSelectedStirlingFileStubs()
+              .getSelectedluminaFileStubs()
               .map((r) => r.id);
             if (nowSelectedIds.length > maxAllowed) {
               setSelectedFiles(nowSelectedIds.slice(-maxAllowed));
@@ -203,7 +203,7 @@ const FileEditor = ({
     (fileId: FileId) => {
       const currentSelectedIds = contextSelectedIdsRef.current;
 
-      const targetRecord = activeStirlingFileStubs.find((r) => r.id === fileId);
+      const targetRecord = activeluminaFileStubs.find((r) => r.id === fileId);
       if (!targetRecord) return;
 
       const contextFileId = fileId; // No need to create a new ID
@@ -244,7 +244,7 @@ const FileEditor = ({
       setSelectedFiles,
       toolMode,
       _setStatus,
-      activeStirlingFileStubs,
+      activeluminaFileStubs,
       selectedTool?.maxFiles,
     ],
   );
@@ -259,7 +259,7 @@ const FileEditor = ({
   // File reordering handler for drag and drop
   const handleReorderFiles = useCallback(
     (sourceFileId: FileId, targetFileId: FileId, selectedFileIds: FileId[]) => {
-      const currentIds = activeStirlingFileStubs.map((r) => r.id);
+      const currentIds = activeluminaFileStubs.map((r) => r.id);
 
       // Find indices
       const sourceIndex = currentIds.findIndex((id) => id === sourceFileId);
@@ -329,13 +329,13 @@ const FileEditor = ({
       const moveCount = filesToMove.length;
       showStatus(`${moveCount > 1 ? `${moveCount} files` : "File"} reordered`);
     },
-    [activeStirlingFileStubs, reorderFiles, _setStatus],
+    [activeluminaFileStubs, reorderFiles, _setStatus],
   );
 
   // File operations using context
   const handleCloseFile = useCallback(
     (fileId: FileId) => {
-      const record = activeStirlingFileStubs.find((r) => r.id === fileId);
+      const record = activeluminaFileStubs.find((r) => r.id === fileId);
       const file = record ? selectors.getFile(record.id) : null;
       if (record && file) {
         // Remove file from context but keep in storage (close, don't delete)
@@ -350,7 +350,7 @@ const FileEditor = ({
       }
     },
     [
-      activeStirlingFileStubs,
+      activeluminaFileStubs,
       selectors,
       removeFiles,
       setSelectedFiles,
@@ -360,7 +360,7 @@ const FileEditor = ({
 
   const handleDownloadFile = useCallback(
     async (fileId: FileId) => {
-      const record = activeStirlingFileStubs.find((r) => r.id === fileId);
+      const record = activeluminaFileStubs.find((r) => r.id === fileId);
       const file = record ? selectors.getFile(record.id) : null;
       console.log("[FileEditor] handleDownloadFile called:", {
         fileId,
@@ -383,7 +383,7 @@ const FileEditor = ({
         // Mark file as clean after successful save to disk
         if (result.savedPath) {
           console.log("[FileEditor] Marking file as clean:", fileId);
-          fileActions.updateStirlingFileStub(fileId, {
+          fileActions.updateluminaFileStub(fileId, {
             localFilePath: record.localFilePath ?? result.savedPath,
             isDirty: false,
           });
@@ -395,12 +395,12 @@ const FileEditor = ({
         }
       }
     },
-    [activeStirlingFileStubs, selectors, fileActions],
+    [activeluminaFileStubs, selectors, fileActions],
   );
 
   const handleUnzipFile = useCallback(
     async (fileId: FileId) => {
-      const record = activeStirlingFileStubs.find((r) => r.id === fileId);
+      const record = activeluminaFileStubs.find((r) => r.id === fileId);
       const file = record ? selectors.getFile(record.id) : null;
       if (record && file) {
         try {
@@ -412,7 +412,7 @@ const FileEditor = ({
 
           if (result.success && result.extractedStubs.length > 0) {
             // Add extracted file stubs to FileContext
-            await fileActions.addStirlingFileStubs(result.extractedStubs);
+            await fileActions.addluminaFileStubs(result.extractedStubs);
 
             // Remove the original ZIP file
             removeFiles([fileId], false);
@@ -443,12 +443,12 @@ const FileEditor = ({
         }
       }
     },
-    [activeStirlingFileStubs, selectors, fileActions, removeFiles],
+    [activeluminaFileStubs, selectors, fileActions, removeFiles],
   );
 
   const handleViewFile = useCallback(
     (fileId: FileId) => {
-      const index = activeStirlingFileStubs.findIndex((r) => r.id === fileId);
+      const index = activeluminaFileStubs.findIndex((r) => r.id === fileId);
       if (index !== -1) {
         setActiveFileId(fileId as string);
         setActiveFileIndex(index);
@@ -456,7 +456,7 @@ const FileEditor = ({
       }
     },
     [
-      activeStirlingFileStubs,
+      activeluminaFileStubs,
       setActiveFileId,
       setActiveFileIndex,
       navActions.setWorkbench,
@@ -493,7 +493,7 @@ const FileEditor = ({
         <LoadingOverlay visible={state.ui.isProcessing} />
 
         <Box p="md">
-          {activeStirlingFileStubs.length === 0 ? (
+          {activeluminaFileStubs.length === 0 ? (
             <Center h="60vh">
               <Stack align="center" gap="md">
                 <Text size="lg" c="dimmed">
@@ -517,20 +517,20 @@ const FileEditor = ({
               }}
             >
               {/* Add File Card - only show when files exist */}
-              {activeStirlingFileStubs.length > 0 && (
+              {activeluminaFileStubs.length > 0 && (
                 <AddFileCard
                   key="add-file-card"
                   onFileSelect={handleFileUpload}
                 />
               )}
 
-              {activeStirlingFileStubs.map((record, index) => {
+              {activeluminaFileStubs.map((record, index) => {
                 return (
                   <FileEditorThumbnail
                     key={record.id}
                     file={record}
                     index={index}
-                    totalFiles={activeStirlingFileStubs.length}
+                    totalFiles={activeluminaFileStubs.length}
                     selectedFiles={localSelectedIds}
                     selectionMode={selectionMode}
                     onToggleFile={toggleFile}

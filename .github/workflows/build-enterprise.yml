@@ -77,11 +77,11 @@ jobs:
         # The compose stacks set KC_HOSTNAME=kubernetes.docker.internal so
         # Keycloak issues redirect URIs against that host. Docker Desktop
         # auto-resolves it; GHA runners don't. Map it to 127.0.0.1 so the
-        # browser-driven OAuth flow lands back on Stirling-PDF correctly.
+        # browser-driven OAuth flow lands back on lumina-PDF correctly.
         run: |
           echo "127.0.0.1 kubernetes.docker.internal" | sudo tee -a /etc/hosts
 
-      # Helper function used by all phases — boots `:stirling-pdf:bootRun`
+      # Helper function used by all phases — boots `:lumina-pdf:bootRun`
       # with the React frontend baked in (-PbuildWithFrontend=true) so the
       # SPA serves on :8080 and OAuth/SAML callbacks land on the same host
       # that the browser is interacting with.
@@ -102,7 +102,7 @@ jobs:
             echo '    kill "$(cat /tmp/backend.pid)" 2>/dev/null || true'
             echo '    rm -f /tmp/backend.pid'
             echo '  fi'
-            echo '  pkill -f "gradlew :stirling-pdf:bootRun" 2>/dev/null || true'
+            echo '  pkill -f "gradlew :lumina-pdf:bootRun" 2>/dev/null || true'
             echo '  for i in $(seq 1 30); do'
             echo '    curl -fsS http://localhost:8080/api/v1/info/status >/dev/null 2>&1 || return 0'
             echo '    sleep 1'
@@ -120,14 +120,14 @@ jobs:
         run: |
           for i in $(seq 1 60); do
             bash validate-oauth-test.sh 2>/dev/null && exit 0 || true
-            # validate script also pings stirling on :8080 — accept just the
-            # keycloak realm as our gate here, stirling boots in the next step
-            curl -fsS http://localhost:9080/realms/stirling-oauth >/dev/null 2>&1 && exit 0
+            # validate script also pings lumina on :8080 — accept just the
+            # keycloak realm as our gate here, lumina boots in the next step
+            curl -fsS http://localhost:9080/realms/lumina-oauth >/dev/null 2>&1 && exit 0
             sleep 5
           done
           docker compose -f docker-compose-keycloak-oauth.yml logs --tail=200 keycloak-oauth
           exit 1
-      - name: Boot Stirling-PDF (frontend baked in, OAuth env)
+      - name: Boot lumina-PDF (frontend baked in, OAuth env)
         env:
           SECURITY_ENABLELOGIN: "true"
           SECURITY_LOGINMETHOD: "all"
@@ -136,14 +136,14 @@ jobs:
           # Keycloak issues redirect URIs against KC_HOSTNAME, which the
           # compose default sets to kubernetes.docker.internal. Match here
           # (resolves to localhost via /etc/hosts mapping above).
-          SECURITY_OAUTH2_CLIENT_KEYCLOAK_ISSUER: "http://kubernetes.docker.internal:9080/realms/stirling-oauth"
-          SECURITY_OAUTH2_CLIENT_KEYCLOAK_CLIENTID: "stirling-pdf-client"
+          SECURITY_OAUTH2_CLIENT_KEYCLOAK_ISSUER: "http://kubernetes.docker.internal:9080/realms/lumina-oauth"
+          SECURITY_OAUTH2_CLIENT_KEYCLOAK_CLIENTID: "lumina-pdf-client"
           SECURITY_OAUTH2_CLIENT_KEYCLOAK_CLIENTSECRET: "test-client-secret-change-in-production"
           SECURITY_OAUTH2_CLIENT_KEYCLOAK_USEASUSERNAME: "email"
           SECURITY_OAUTH2_CLIENT_KEYCLOAK_SCOPES: "openid,profile,email"
         run: |
           source /tmp/helpers.sh
-          nohup ./gradlew :stirling-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
+          nohup ./gradlew :lumina-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
           echo $! > /tmp/backend.pid
           wait_for_backend
       - name: Run enterprise OAuth Playwright tests
@@ -164,7 +164,7 @@ jobs:
         working-directory: testing/compose
         run: |
           for i in $(seq 1 60); do
-            curl -fsS http://localhost:9080/realms/stirling-saml >/dev/null 2>&1 && exit 0
+            curl -fsS http://localhost:9080/realms/lumina-saml >/dev/null 2>&1 && exit 0
             sleep 5
           done
           docker compose -f docker-compose-keycloak-saml.yml logs --tail=200 keycloak-saml
@@ -179,9 +179,9 @@ jobs:
             -keyout saml-private-key.key \
             -out saml-public-cert.crt \
             -days 3650 -nodes \
-            -subj "/CN=stirling-pdf-saml-sp" >/dev/null 2>&1
+            -subj "/CN=lumina-pdf-saml-sp" >/dev/null 2>&1
           # Fetch Keycloak's SAML signing cert from the realm descriptor
-          CERT_BODY=$(curl -sf http://localhost:9080/realms/stirling-saml/protocol/saml/descriptor \
+          CERT_BODY=$(curl -sf http://localhost:9080/realms/lumina-saml/protocol/saml/descriptor \
             | awk 'BEGIN{RS="<[^>]*X509Certificate>|</[^>]*X509Certificate>"} NR==2{gsub(/[[:space:]]+/,""); print; exit}')
           {
             echo "-----BEGIN CERTIFICATE-----"
@@ -192,7 +192,7 @@ jobs:
           test -s saml-public-cert.crt
           test -s keycloak-saml-cert.pem
           echo "✓ SAML certs prepared"
-      - name: Boot Stirling-PDF (frontend baked in, SAML env)
+      - name: Boot lumina-PDF (frontend baked in, SAML env)
         env:
           SECURITY_ENABLELOGIN: "true"
           SECURITY_LOGINMETHOD: "all"
@@ -200,11 +200,11 @@ jobs:
           SECURITY_SAML2_AUTOCREATEUSER: "true"
           SECURITY_SAML2_PROVIDER: "keycloak"
           SECURITY_SAML2_REGISTRATIONID: "keycloak"
-          SECURITY_SAML2_IDP_ISSUER: "http://localhost:9080/realms/stirling-saml"
-          SECURITY_SAML2_IDP_ENTITYID: "http://localhost:9080/realms/stirling-saml"
-          SECURITY_SAML2_IDP_METADATAURI: "http://localhost:9080/realms/stirling-saml/protocol/saml/descriptor"
-          SECURITY_SAML2_IDPSINGLELOGINURL: "http://localhost:9080/realms/stirling-saml/protocol/saml"
-          SECURITY_SAML2_IDPSINGLELOGOUTURL: "http://localhost:9080/realms/stirling-saml/protocol/saml"
+          SECURITY_SAML2_IDP_ISSUER: "http://localhost:9080/realms/lumina-saml"
+          SECURITY_SAML2_IDP_ENTITYID: "http://localhost:9080/realms/lumina-saml"
+          SECURITY_SAML2_IDP_METADATAURI: "http://localhost:9080/realms/lumina-saml/protocol/saml/descriptor"
+          SECURITY_SAML2_IDPSINGLELOGINURL: "http://localhost:9080/realms/lumina-saml/protocol/saml"
+          SECURITY_SAML2_IDPSINGLELOGOUTURL: "http://localhost:9080/realms/lumina-saml/protocol/saml"
           SECURITY_SAML2_IDP_CERT: "${{ github.workspace }}/testing/compose/keycloak-saml-cert.pem"
           SECURITY_SAML2_PRIVATEKEY: "${{ github.workspace }}/testing/compose/saml-private-key.key"
           SECURITY_SAML2_SP_CERT: "${{ github.workspace }}/testing/compose/saml-public-cert.crt"
@@ -216,7 +216,7 @@ jobs:
           SECURITY_SAML2_SP_SLS: "http://localhost:8080/logout/saml2/slo"
         run: |
           source /tmp/helpers.sh
-          nohup ./gradlew :stirling-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
+          nohup ./gradlew :lumina-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
           echo $! > /tmp/backend.pid
           wait_for_backend
       - name: Run enterprise SAML Playwright tests
@@ -231,14 +231,14 @@ jobs:
 
       # ───────── License-gated feature tests (no IdP needed) ─────────
       - name: Wipe DB so InitialSecuritySetup re-runs with admin/adminadmin
-        # Earlier phases (OAuth, SAML) create the default admin/stirling user.
+        # Earlier phases (OAuth, SAML) create the default admin/lumina user.
         # InitialSecuritySetup only honours SECURITY_INITIALLOGIN_* when the
         # admin user doesn't already exist, so the persisted DB has to be
         # cleared between phases for the feature env vars to take effect.
         run: |
-          rm -f app/core/configs/stirling-pdf-DB*.mv.db
+          rm -f app/core/configs/lumina-pdf-DB*.mv.db
           rm -rf app/core/configs/backup
-      - name: Boot Stirling-PDF (frontend baked in, premium only)
+      - name: Boot lumina-PDF (frontend baked in, premium only)
         env:
           SECURITY_INITIALLOGIN_USERNAME: admin
           SECURITY_INITIALLOGIN_PASSWORD: adminadmin
@@ -246,7 +246,7 @@ jobs:
           SECURITY_LOGINMETHOD: "all"
         run: |
           source /tmp/helpers.sh
-          nohup ./gradlew :stirling-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
+          nohup ./gradlew :lumina-pdf:bootRun -PbuildWithFrontend=true > /tmp/backend.log 2>&1 &
           echo $! > /tmp/backend.pid
           wait_for_backend
       - name: Run enterprise feature Playwright tests

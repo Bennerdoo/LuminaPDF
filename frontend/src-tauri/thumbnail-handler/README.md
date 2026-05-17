@@ -4,7 +4,7 @@ A lightweight COM DLL that provides PDF page-preview thumbnails in Windows Explo
 
 ## Why this exists
 
-When Lumina-PDF registers as the default PDF handler, Windows associates `.pdf` files with Stirling's ProgID. Without a thumbnail handler on that ProgID, Explorer falls back to showing the application icon (the big S logo) instead of a page preview. This DLL restores thumbnail previews by implementing the Windows Shell `IThumbnailProvider` COM interface.
+When Lumina-PDF registers as the default PDF handler, Windows associates `.pdf` files with lumina's ProgID. Without a thumbnail handler on that ProgID, Explorer falls back to showing the application icon (the big S logo) instead of a page preview. This DLL restores thumbnail previews by implementing the Windows Shell `IThumbnailProvider` COM interface.
 
 ## How it works
 
@@ -53,7 +53,7 @@ To build the DLL standalone:
 ```bash
 cd frontend/src-tauri/thumbnail-handler
 cargo build --release
-# Output: target/release/stirling_thumbnail_handler.dll
+# Output: target/release/lumina_thumbnail_handler.dll
 ```
 
 ## Linux / macOS

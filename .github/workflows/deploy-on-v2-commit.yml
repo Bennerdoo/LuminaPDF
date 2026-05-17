@@ -97,8 +97,8 @@ jobs:
           context: .
           file: ./docker/frontend/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-v2-frontend
-          cache-to: type=gha,mode=max,scope=stirling-v2-frontend
+          cache-from: type=gha,scope=lumina-v2-frontend
+          cache-to: type=gha,mode=max,scope=lumina-v2-frontend
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-frontend-${{ steps.commit-hashes.outputs.frontend_short }}
             ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-frontend-latest
@@ -112,8 +112,8 @@ jobs:
           context: .
           file: ./docker/backend/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-v2-backend
-          cache-to: type=gha,mode=max,scope=stirling-v2-backend
+          cache-from: type=gha,scope=lumina-v2-backend
+          cache-to: type=gha,mode=max,scope=lumina-v2-backend
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-backend-${{ steps.commit-hashes.outputs.backend_short }}
             ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-backend-latest
@@ -134,30 +134,30 @@ jobs:
           version: '3.3'
           services:
             backend:
-              container_name: stirling-v2-backend
+              container_name: lumina-v2-backend
               image: ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-backend-${{ steps.commit-hashes.outputs.backend_short }}
               ports:
                 - "13000:8080"
               volumes:
-                - /stirling/V2/data:/usr/share/tessdata:rw
-                - /stirling/V2/config:/configs:rw
-                - /stirling/V2/logs:/logs:rw
+                - /lumina/V2/data:/usr/share/tessdata:rw
+                - /lumina/V2/config:/configs:rw
+                - /lumina/V2/logs:/logs:rw
               environment:
                 DISABLE_ADDITIONAL_FEATURES: "true"
                 SECURITY_ENABLELOGIN: "false"
                 SYSTEM_DEFAULTLOCALE: en-GB
-                UI_APPNAME: "Stirling-PDF V2"
+                UI_APPNAME: "lumina-PDF V2"
                 UI_HOMEDESCRIPTION: "V2 Frontend/Backend Split"
                 UI_APPNAMENAVBAR: "V2 Deployment"
                 SYSTEM_MAXFILESIZE: "100"
                 METRICS_ENABLED: "true"
                 SYSTEM_GOOGLEVISIBILITY: "false"
-                SWAGGER_SERVER_URL: "https://demo.stirlingpdf.cloud"
-                baseUrl: "https://demo.stirlingpdf.cloud"
+                SWAGGER_SERVER_URL: "https://demo.luminapdf.cloud"
+                baseUrl: "https://demo.luminapdf.cloud"
               restart: on-failure:5
 
             frontend:
-              container_name: stirling-v2-frontend
+              container_name: lumina-v2-frontend
               image: ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-frontend-${{ steps.commit-hashes.outputs.frontend_short }}
               ports:
                 - "3000:80"
@@ -173,9 +173,9 @@ jobs:
 
           # SSH and rename/move atomically to avoid interference
           ssh -i ../private.key -o StrictHostKeyChecking=no ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << ENDSSH
-            mkdir -p /stirling/V2/{data,config,logs}
-            mv /tmp/$UNIQUE_NAME /stirling/V2/docker-compose.yml
-            cd /stirling/V2
+            mkdir -p /lumina/V2/{data,config,logs}
+            mv /tmp/$UNIQUE_NAME /lumina/V2/docker-compose.yml
+            cd /lumina/V2
             docker-compose down || true
             docker-compose pull
             docker-compose up -d

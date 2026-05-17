@@ -14,10 +14,10 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from stirling.api import app
-from stirling.api.dependencies import get_pdf_comment_agent
-from stirling.config import AppSettings, RagBackend, load_settings
-from stirling.contracts.pdf_comments import (
+from lumina.api import app
+from lumina.api.dependencies import get_pdf_comment_agent
+from lumina.config import AppSettings, RagBackend, load_settings
+from lumina.contracts.pdf_comments import (
     PdfCommentInstruction,
     PdfCommentRequest,
     PdfCommentResponse,

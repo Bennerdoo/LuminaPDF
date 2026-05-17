@@ -1,4 +1,4 @@
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { fileStorage } from "@app/services/fileStorage";
 import { zipFileService } from "@app/services/zipFileService";
 import { downloadFile } from "@app/services/downloadService";
@@ -18,18 +18,18 @@ export function downloadBlob(blob: Blob, filename: string): void {
  * @throws Error if file cannot be retrieved from storage
  */
 export async function downloadFileFromStorage(
-  file: StirlingFileStub,
+  file: luminaFileStub,
 ): Promise<void> {
   const lookupKey = file.id;
-  const stirlingFile = await fileStorage.getStirlingFile(lookupKey);
+  const luminaFile = await fileStorage.getluminaFile(lookupKey);
 
-  if (!stirlingFile) {
+  if (!luminaFile) {
     throw new Error(`File "${file.name}" not found in storage`);
   }
 
   await downloadFile({
-    data: stirlingFile,
-    filename: stirlingFile.name,
+    data: luminaFile,
+    filename: luminaFile.name,
     localPath: file.localFilePath,
   });
 }
@@ -39,7 +39,7 @@ export async function downloadFileFromStorage(
  * @param files - Array of files to download
  */
 export async function downloadMultipleFiles(
-  files: StirlingFileStub[],
+  files: luminaFileStub[],
 ): Promise<void> {
   for (const file of files) {
     await downloadFileFromStorage(file);
@@ -52,7 +52,7 @@ export async function downloadMultipleFiles(
  * @param zipFilename - Optional custom ZIP filename (defaults to timestamped name)
  */
 export async function downloadFilesAsZip(
-  files: StirlingFileStub[],
+  files: luminaFileStub[],
   zipFilename?: string,
 ): Promise<void> {
   if (files.length === 0) {
@@ -63,11 +63,11 @@ export async function downloadFilesAsZip(
   const filesToZip: File[] = [];
   for (const fileWithUrl of files) {
     const lookupKey = fileWithUrl.id;
-    const stirlingFile = await fileStorage.getStirlingFile(lookupKey);
+    const luminaFile = await fileStorage.getluminaFile(lookupKey);
 
-    if (stirlingFile) {
-      // StirlingFile is already a File object!
-      filesToZip.push(stirlingFile);
+    if (luminaFile) {
+      // luminaFile is already a File object!
+      filesToZip.push(luminaFile);
     }
   }
 
@@ -96,7 +96,7 @@ export async function downloadFilesAsZip(
  * @param options - Download options
  */
 export async function downloadFiles(
-  files: StirlingFileStub[],
+  files: luminaFileStub[],
   options: {
     forceZip?: boolean;
     zipFilename?: string;

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-SCRIPT_NAME="stirling-diagnostics"
+SCRIPT_NAME="lumina-diagnostics"
 DEFAULT_DAYS=1
 DEFAULT_OUT_DIR="/configs"
 DEFAULT_OUTPUT_DIR="$DEFAULT_OUT_DIR"
@@ -242,8 +242,8 @@ SUMMARY="${OUT_DIR}/summary.txt"
 log "Writing summary..."
 write_kv "created_at" "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" "$SUMMARY"
 write_kv "version_tag" "${VERSION_TAG:-<unset>}" "$SUMMARY"
-if [ -f /etc/stirling_version ]; then
-  write_kv "stirling_version_file" "$(tr -d '\r\n' < /etc/stirling_version)" "$SUMMARY"
+if [ -f /etc/lumina_version ]; then
+  write_kv "lumina_version_file" "$(tr -d '\r\n' < /etc/lumina_version)" "$SUMMARY"
 fi
 write_kv "config_file" "$CONFIG_FILE" "$SUMMARY"
 write_kv "output_dir" "$OUTPUT_DIR" "$SUMMARY"

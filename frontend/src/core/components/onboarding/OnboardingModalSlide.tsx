@@ -100,7 +100,7 @@ export default function OnboardingModalSlide({
         {slideDefinition.hero.type === "logo" && (
           <img
             src={`${BASE_PATH}/branding/LuminaPDFLogoNoTextLightHC.svg`}
-            alt="Stirling logo"
+            alt="lumina logo"
           />
         )}
       </div>

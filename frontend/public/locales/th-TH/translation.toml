@@ -598,7 +598,7 @@ description = "กำหนดค่าการจัดเก็บไฟล�
 label = "การจัดการไฟล์ชั่วคราว"
 
 [admin.settings.advanced.tempFileManagement.baseTmpDir]
-description = "ไดเรกทอรีหลักสำหรับไฟล์ชั่วคราว (ปล่อยว่างเพื่อค่าเริ่มต้น: java.io.tmpdir/stirling-pdf)"
+description = "ไดเรกทอรีหลักสำหรับไฟล์ชั่วคราว (ปล่อยว่างเพื่อค่าเริ่มต้น: java.io.tmpdir/lumina-pdf)"
 label = "ไดเรกทอรีชั่วคราวหลัก"
 
 [admin.settings.advanced.tempFileManagement.cleanupIntervalMinutes]

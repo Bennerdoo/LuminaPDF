@@ -352,8 +352,8 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
           VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'sb_publishable_UHz2SVRF5mvdrPHWkRteyA_yNlZTkYb' }}
-          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.stirlingpdf.com' }}
-          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.stirlingpdf.com' }}
+          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.luminapdf.com' }}
+          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.luminapdf.com' }}
           SM_CODE_SIGNING_CERT_SHA1_HASH: ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}
           CI: true
         with:
@@ -378,8 +378,8 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
           VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'sb_publishable_UHz2SVRF5mvdrPHWkRteyA_yNlZTkYb' }} # gitleaks:allow
-          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.stirlingpdf.com' }}
-          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.stirlingpdf.com' }}
+          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.luminapdf.com' }}
+          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.luminapdf.com' }}
           CI: true
         with:
           projectPath: ./frontend
@@ -421,13 +421,13 @@ jobs:
           if [ "${{ matrix.platform }}" = "windows-latest" ]; then
             # Only ship the MSI installer. The loose exe and WiX toolset exes
             # are not the user-facing installer - the MSI contains the signed inner exe.
-            find . -name "*.msi" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.msi" \;
+            find . -name "*.msi" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.msi" \;
           elif [ "${{ matrix.platform }}" = "macos-15" ]; then
-            find . -name "*.dmg" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.dmg" \;
+            find . -name "*.dmg" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.dmg" \;
           else
-            find . -name "*.deb" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.deb" \;
-            find . -name "*.rpm" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.rpm" \;
-            find . -name "*.AppImage" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.AppImage" \;
+            find . -name "*.deb" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.deb" \;
+            find . -name "*.rpm" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.rpm" \;
+            find . -name "*.AppImage" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.AppImage" \;
           fi
 
       # Verify the MSI AND the inner exe extracted from it are signed.
@@ -437,7 +437,7 @@ jobs:
         shell: pwsh
         run: |
           $allSigned = $true
-          $msiPath = "./dist/Stirling-PDF-${{ matrix.name }}.msi"
+          $msiPath = "./dist/lumina-PDF-${{ matrix.name }}.msi"
 
           # Check MSI (outer wrapper)
           if (Test-Path $msiPath) {
@@ -453,7 +453,7 @@ jobs:
             if (Test-Path $extractDir) { Remove-Item $extractDir -Recurse -Force }
             $proc = Start-Process msiexec.exe -ArgumentList '/a', $msiPath, '/qn', "TARGETDIR=$extractDir" -Wait -PassThru -NoNewWindow
             if ($proc.ExitCode -eq 0) {
-              $innerExe = Get-ChildItem -Path $extractDir -Filter "stirling-pdf.exe" -Recurse -File | Select-Object -First 1
+              $innerExe = Get-ChildItem -Path $extractDir -Filter "lumina-pdf.exe" -Recurse -File | Select-Object -First 1
               if ($innerExe) {
                 $sig = Get-AuthenticodeSignature -FilePath $innerExe.FullName
                 Write-Host "Inner EXE: Status=$($sig.Status), Signer=$($sig.SignerCertificate.Subject)"
@@ -462,7 +462,7 @@ jobs:
                   $allSigned = $false
                 }
               } else {
-                Write-Host "[ERROR] Could not find stirling-pdf.exe inside MSI"
+                Write-Host "[ERROR] Could not find lumina-pdf.exe inside MSI"
                 $allSigned = $false
               }
             } else {
@@ -498,7 +498,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: Stirling-PDF-${{ matrix.name }}
+          name: lumina-PDF-${{ matrix.name }}
           path: ./dist/*
           retention-days: 7
 
@@ -579,9 +579,9 @@ jobs:
 
             // Map of expected artifact names to display info
             const artifactMap = {
-              'Stirling-PDF-windows-x86_64': { icon: '🪟', platform: 'Windows x64', files: '.exe, .msi' },
-              'Stirling-PDF-macos-universal': { icon: '🍎', platform: 'macOS Universal', files: '.dmg' },
-              'Stirling-PDF-linux-x86_64': { icon: '🐧', platform: 'Linux x64', files: '.deb, .rpm, .AppImage' }
+              'lumina-PDF-windows-x86_64': { icon: '🪟', platform: 'Windows x64', files: '.exe, .msi' },
+              'lumina-PDF-macos-universal': { icon: '🍎', platform: 'macOS Universal', files: '.dmg' },
+              'lumina-PDF-linux-x86_64': { icon: '🐧', platform: 'Linux x64', files: '.deb, .rpm, .AppImage' }
             };
 
             let commentBody = `## 📦 Tauri Desktop Builds Ready!\n\n`;

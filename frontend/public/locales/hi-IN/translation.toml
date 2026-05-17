@@ -598,7 +598,7 @@ description = "अस्थायी फ़ाइल स्टोरेज औ�
 label = "अस्थायी फ़ाइल प्रबंधन"
 
 [admin.settings.advanced.tempFileManagement.baseTmpDir]
-description = "अस्थायी फ़ाइलों के लिए बेस डायरेक्टरी (डिफ़ॉल्ट हेतु खाली छोड़ें: java.io.tmpdir/stirling-pdf)"
+description = "अस्थायी फ़ाइलों के लिए बेस डायरेक्टरी (डिफ़ॉल्ट हेतु खाली छोड़ें: java.io.tmpdir/lumina-pdf)"
 label = "बेस टेम्प डायरेक्टरी"
 
 [admin.settings.advanced.tempFileManagement.cleanupIntervalMinutes]

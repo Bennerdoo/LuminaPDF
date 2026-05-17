@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
-    <Property Id="STIRLING_SERVER_URL" Secure="yes" />
-    <Property Id="STIRLING_LOCK_CONNECTION" Secure="yes" />
+    <Property Id="lumina_SERVER_URL" Secure="yes" />
+    <Property Id="lumina_LOCK_CONNECTION" Secure="yes" />
 
     <DirectoryRef Id="TARGETDIR">
       <Directory Id="AppDataFolder" />
@@ -11,10 +11,10 @@
 
     <DirectoryRef Id="INSTALLDIR">
       <Component Id="ProvisionerBinaryComponent" Guid="*">
-        <File Id="ProvisionerExe" Source="$(sys.SOURCEFILEDIR)stirling-provision.exe" KeyPath="yes" />
+        <File Id="ProvisionerExe" Source="$(sys.SOURCEFILEDIR)lumina-provision.exe" KeyPath="yes" />
       </Component>
       <Component Id="ThumbnailHandlerDllComponent" Guid="*">
-        <File Id="ThumbnailHandlerDll" Source="$(sys.SOURCEFILEDIR)stirling_thumbnail_handler.dll" KeyPath="yes" />
+        <File Id="ThumbnailHandlerDll" Source="$(sys.SOURCEFILEDIR)lumina_thumbnail_handler.dll" KeyPath="yes" />
       </Component>
     </DirectoryRef>
 
@@ -22,10 +22,10 @@
     <DirectoryRef Id="TARGETDIR">
       <Component Id="ThumbnailHandlerClsidComponent" Guid="*">
         <RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2D2FBE3A-9A88-4308-A52E-7EF63CA7CF48}">
-          <RegistryValue Type="string" Value="Stirling-PDF Thumbnail Handler" KeyPath="yes" />
+          <RegistryValue Type="string" Value="lumina-PDF Thumbnail Handler" KeyPath="yes" />
         </RegistryKey>
         <RegistryKey Root="HKLM" Key="SOFTWARE\Classes\CLSID\{2D2FBE3A-9A88-4308-A52E-7EF63CA7CF48}\InprocServer32">
-          <RegistryValue Type="string" Value="[INSTALLDIR]stirling_thumbnail_handler.dll" />
+          <RegistryValue Type="string" Value="[INSTALLDIR]lumina_thumbnail_handler.dll" />
           <RegistryValue Type="string" Name="ThreadingModel" Value="Apartment" />
         </RegistryKey>
       </Component>
@@ -64,20 +64,20 @@
     <CustomAction
       Id="SetWriteProvisioningFilePerUser"
       Property="WriteProvisioningFilePerUser"
-      Value="--output &quot;[AppDataFolder]Stirling-PDF\stirling-provisioning.json&quot; --url &quot;[STIRLING_SERVER_URL]&quot; --lock &quot;[STIRLING_LOCK_CONNECTION]&quot;"
+      Value="--output &quot;[AppDataFolder]lumina-PDF\lumina-provisioning.json&quot; --url &quot;[lumina_SERVER_URL]&quot; --lock &quot;[lumina_LOCK_CONNECTION]&quot;"
     />
 
     <CustomAction
       Id="SetWriteProvisioningFileAllUsers"
       Property="WriteProvisioningFileAllUsers"
-      Value="--output &quot;[CommonAppDataFolder]Stirling-PDF\stirling-provisioning.json&quot; --url &quot;[STIRLING_SERVER_URL]&quot; --lock &quot;[STIRLING_LOCK_CONNECTION]&quot;"
+      Value="--output &quot;[CommonAppDataFolder]lumina-PDF\lumina-provisioning.json&quot; --url &quot;[lumina_SERVER_URL]&quot; --lock &quot;[lumina_LOCK_CONNECTION]&quot;"
     />
 
     <InstallExecuteSequence>
-      <Custom Action="SetWriteProvisioningFilePerUser" After="InstallFiles">STIRLING_SERVER_URL &lt;&gt; &quot;&quot; AND (NOT ALLUSERS OR ALLUSERS=0)</Custom>
-      <Custom Action="WriteProvisioningFilePerUser" After="SetWriteProvisioningFilePerUser">STIRLING_SERVER_URL &lt;&gt; &quot;&quot; AND (NOT ALLUSERS OR ALLUSERS=0)</Custom>
-      <Custom Action="SetWriteProvisioningFileAllUsers" After="InstallFiles">STIRLING_SERVER_URL &lt;&gt; &quot;&quot; AND (ALLUSERS=1 OR ALLUSERS=2)</Custom>
-      <Custom Action="WriteProvisioningFileAllUsers" After="SetWriteProvisioningFileAllUsers">STIRLING_SERVER_URL &lt;&gt; &quot;&quot; AND (ALLUSERS=1 OR ALLUSERS=2)</Custom>
+      <Custom Action="SetWriteProvisioningFilePerUser" After="InstallFiles">lumina_SERVER_URL &lt;&gt; &quot;&quot; AND (NOT ALLUSERS OR ALLUSERS=0)</Custom>
+      <Custom Action="WriteProvisioningFilePerUser" After="SetWriteProvisioningFilePerUser">lumina_SERVER_URL &lt;&gt; &quot;&quot; AND (NOT ALLUSERS OR ALLUSERS=0)</Custom>
+      <Custom Action="SetWriteProvisioningFileAllUsers" After="InstallFiles">lumina_SERVER_URL &lt;&gt; &quot;&quot; AND (ALLUSERS=1 OR ALLUSERS=2)</Custom>
+      <Custom Action="WriteProvisioningFileAllUsers" After="SetWriteProvisioningFileAllUsers">lumina_SERVER_URL &lt;&gt; &quot;&quot; AND (ALLUSERS=1 OR ALLUSERS=2)</Custom>
     </InstallExecuteSequence>
   </Fragment>
 </Wix>

@@ -34,14 +34,14 @@ ENV JDK_JAVA_OPTIONS="--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNN
   --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
   --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"
 
-RUN ./gradlew dependencies --no-daemon || true
+RUN gradle dependencies --no-daemon || true
 
 # Copy entire project
 COPY . .
 
 # Build ultra-lite JAR with embedded frontend (minimal features)
 RUN DISABLE_ADDITIONAL_FEATURES=true \
-    ./gradlew clean build \
+    gradle clean build \
       -PbuildWithFrontend=true \
       -x spotlessApply -x spotlessCheck -x test -x sonarqube \
       --no-daemon
@@ -57,13 +57,13 @@ ARG VERSION_TAG
 # Labels
 LABEL org.opencontainers.image.title="Lumina-PDF Ultra-Lite" \
       org.opencontainers.image.description="Lumina-PDF with embedded frontend - Ultra-lite version with minimal dependencies" \
-      org.opencontainers.image.source="https://github.com/Stirling-Tools/Lumina-PDF" \
+      org.opencontainers.image.source="https://github.com/LUMINA-Tools/Lumina-PDF" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.vendor="Stirling-Tools" \
-      org.opencontainers.image.url="https://www.stirlingpdf.com" \
-      org.opencontainers.image.documentation="https://docs.stirlingpdf.com" \
-      maintainer="Stirling-Tools" \
-      org.opencontainers.image.authors="Stirling-Tools" \
+      org.opencontainers.image.vendor="LuminaPDF" \
+      org.opencontainers.image.url="https://www.luminapdf.stampforger.com" \
+      org.opencontainers.image.documentation="https://docs.luminapdf.stampforger.com" \
+      maintainer="Lumina-PDF" \
+      org.opencontainers.image.authors="Lumina-PDF" \
       org.opencontainers.image.version="${VERSION_TAG}" \
       org.opencontainers.image.keywords="PDF, manipulation, ultra-lite, API, Spring Boot, React"
 
@@ -71,16 +71,16 @@ LABEL org.opencontainers.image.title="Lumina-PDF Ultra-Lite" \
 # NOTE: Memory flags (InitialRAMPercentage, MaxRAMPercentage, MaxMetaspaceSize)
 # are computed dynamically by init-without-ocr.sh based on container memory limits.
 ENV VERSION_TAG=$VERSION_TAG \
-    STIRLING_AOT_ENABLE="false" \
-    STIRLING_JVM_PROFILE="balanced" \
+    LUMINA_AOT_ENABLE="false" \
+    LUMINA_JVM_PROFILE="balanced" \
     _JVM_OPTS_BALANCED="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:G1HeapRegionSize=4m -XX:G1PeriodicGCInterval=60000 -XX:+UseStringDeduplication -XX:+UseCompactObjectHeaders -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     _JVM_OPTS_PERFORMANCE="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseShenandoahGC -XX:ShenandoahGCMode=generational -XX:+UseCompactObjectHeaders -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     JAVA_CUSTOM_OPTS="" \
-    HOME=/home/stirlingpdfuser \
+    HOME=/home/LUMINApdfuser \
     PUID=1000 \
     PGID=1000 \
     UMASK=022 \
-    STIRLING_TEMPFILES_DIRECTORY=/tmp/Lumina-PDF \
+    LUMINA_TEMPFILES_DIRECTORY=/tmp/Lumina-PDF \
     TMPDIR=/tmp/Lumina-PDF \
     TEMP=/tmp/Lumina-PDF \
     TMP=/tmp/Lumina-PDF \
@@ -102,13 +102,13 @@ RUN echo "@main https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/a
     mkdir -p $HOME /configs /logs /customFiles /pipeline/watchedFolders /pipeline/finishedFolders /tmp/Lumina-PDF /tmp/Lumina-PDF/heap_dumps && \
     mkdir -p /usr/share/fonts/opentype/noto && \
     # User permissions
-    addgroup -S stirlingpdfgroup && adduser -S stirlingpdfuser -G stirlingpdfgroup && \
-    chown -R stirlingpdfuser:stirlingpdfgroup $HOME /configs /customFiles /pipeline /tmp/Lumina-PDF
+    addgroup -S LUMINApdfgroup && adduser -S LUMINApdfuser -G LUMINApdfgroup && \
+    chown -R LUMINApdfuser:LUMINApdfgroup $HOME /configs /customFiles /pipeline /tmp/Lumina-PDF
 
 # Copy scripts and built artifacts after OS package layer to maximize cache reuse.
 COPY --chown=1000:1000 scripts/init-without-ocr.sh /scripts/init-without-ocr.sh
 COPY --chown=1000:1000 scripts/installFonts.sh /scripts/installFonts.sh
-COPY --chown=1000:1000 scripts/stirling-diagnostics.sh /scripts/stirling-diagnostics.sh
+COPY --chown=1000:1000 scripts/LUMINA-diagnostics.sh /scripts/LUMINA-diagnostics.sh
 
 # Copy built JARs from build stage
 COPY --from=build --chown=1000:1000 \

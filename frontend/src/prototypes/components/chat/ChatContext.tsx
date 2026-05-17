@@ -11,9 +11,9 @@ import apiClient from "@app/services/apiClient";
 import { getAuthHeaders } from "@app/services/apiClientSetup";
 import { createChildStub } from "@app/contexts/file/fileActions";
 import {
-  createNewStirlingFileStub,
-  createStirlingFile,
-  type StirlingFileStub,
+  createNewluminaFileStub,
+  createluminaFile,
+  type luminaFileStub,
 } from "@app/types/fileContext";
 import type { ToolOperation } from "@app/types/file";
 
@@ -263,7 +263,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const importResultFile = useCallback(
     async (
       result: AiWorkflowResponse,
-      sourceStubs: StirlingFileStub[],
+      sourceStubs: luminaFileStub[],
     ): Promise<void> => {
       const descriptors = result.resultFiles?.length
         ? result.resultFiles
@@ -289,10 +289,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       const stubs = files.map((file, i) =>
         isVersionMapping
           ? createChildStub(sourceStubs[i], operation, file)
-          : createNewStirlingFileStub(file),
+          : createNewluminaFileStub(file),
       );
-      const stirlingFiles = files.map((file, i) =>
-        createStirlingFile(file, stubs[i].id),
+      const luminaFiles = files.map((file, i) =>
+        createluminaFile(file, stubs[i].id),
       );
 
       if (sourceStubs.length > 0) {
@@ -301,7 +301,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         // merge/split they're fresh roots.
         await fileActions.consumeFiles(
           sourceStubs.map((s) => s.id),
-          stirlingFiles,
+          luminaFiles,
           stubs,
         );
       } else {

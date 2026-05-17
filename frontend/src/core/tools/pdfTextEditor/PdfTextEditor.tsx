@@ -12,7 +12,7 @@ import {
   useNavigationActions,
   useNavigationState,
 } from "@app/contexts/NavigationContext";
-import { createStirlingFilesAndStubs } from "@app/services/fileStubHelpers";
+import { createluminaFilesAndStubs } from "@app/services/fileStubHelpers";
 import { BaseToolProps, ToolComponent } from "@app/types/tool";
 import { getDefaultWorkbench } from "@app/types/workbench";
 import { CONVERSION_ENDPOINTS } from "@app/constants/convertConstants";
@@ -1430,7 +1430,7 @@ const PdfTextEditor = ({ onComplete, onError }: BaseToolProps) => {
         return;
       }
 
-      const parentStub = selectors.getStirlingFileStub(
+      const parentStub = selectors.getluminaFileStub(
         sourceFileIdRef.current as any,
       );
       if (!parentStub) {
@@ -1631,8 +1631,8 @@ const PdfTextEditor = ({ onComplete, onError }: BaseToolProps) => {
         type: "application/pdf",
       });
 
-      // Create StirlingFile and stub for the output
-      const { stirlingFiles, stubs } = await createStirlingFilesAndStubs(
+      // Create luminaFile and stub for the output
+      const { luminaFiles, stubs } = await createluminaFilesAndStubs(
         [pdfFile],
         parentStub,
         "pdfTextEditor",
@@ -1641,7 +1641,7 @@ const PdfTextEditor = ({ onComplete, onError }: BaseToolProps) => {
       // Replace the original file with the edited version
       await consumeFiles(
         [sourceFileIdRef.current as any],
-        stirlingFiles,
+        luminaFiles,
         stubs,
       );
 

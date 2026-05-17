@@ -331,21 +331,21 @@ capture_file_list() {
         -not -path '/config/*' \
         -not -path '/configs/*' \
         -not -path '/logs/*' \
-        -not -path '*/home/stirlingpdfuser/.config/libreoffice/*' \
-        -not -path '*/home/stirlingpdfuser/.config/calibre/*' \
-        -not -path '*/home/stirlingpdfuser/.java/fonts/*' \
-        -not -path '*/home/stirlingpdfuser/.pdfbox.cache' \
+        -not -path '*/home/luminapdfuser/.config/libreoffice/*' \
+        -not -path '*/home/luminapdfuser/.config/calibre/*' \
+        -not -path '*/home/luminapdfuser/.java/fonts/*' \
+        -not -path '*/home/luminapdfuser/.pdfbox.cache' \
         -not -path '*/tmp/Lumina-PDF/PDFBox*' \
-        -not -path '*/tmp/Lumina-PDF/hsperfdata_stirlingpdfuser/*' \
-        -not -path '*/tmp/hsperfdata_stirlingpdfuser/*' \
+        -not -path '*/tmp/Lumina-PDF/hsperfdata_luminapdfuser/*' \
+        -not -path '*/tmp/hsperfdata_luminapdfuser/*' \
         -not -path '*/tmp/hsperfdata_root/*' \
         -not -path '*/tmp/Lumina-PDF/jetty-*/*' \
         -not -path '*/tmp/Lumina-PDF/lu*' \
         -not -path '*/tmp/Lumina-PDF/tmp*' \
         -not -path '/tmp/lu*' \
         -not -path '*/tmp/*/user/registrymodifications.xcu' \
-        -not -path '/app/stirling.aot' \
-        -not -path '*/tmp/stirling.aotconf' \
+        -not -path '/app/lumina.aot' \
+        -not -path '*/tmp/lumina.aotconf' \
         -not -path '*/tmp/aot-*.log' \
         2>/dev/null | xargs -I{} sh -c 'stat -c \"%n %s %Y\" \"{}\" 2>/dev/null || true' | sort" > "$output_file"
 
@@ -362,21 +362,21 @@ capture_file_list() {
             -not -path '/config/*' \
         -not -path '/configs/*' \
             -not -path '/logs/*' \
-            -not -path '*/home/stirlingpdfuser/.config/libreoffice/*' \
-            -not -path '*/home/stirlingpdfuser/.config/calibre/*' \
-            -not -path '*/home/stirlingpdfuser/.java/fonts/*' \
-            -not -path '*/home/stirlingpdfuser/.pdfbox.cache' \
+            -not -path '*/home/luminapdfuser/.config/libreoffice/*' \
+            -not -path '*/home/luminapdfuser/.config/calibre/*' \
+            -not -path '*/home/luminapdfuser/.java/fonts/*' \
+            -not -path '*/home/luminapdfuser/.pdfbox.cache' \
             -not -path '*/tmp/PDFBox*' \
-            -not -path '*/tmp/hsperfdata_stirlingpdfuser/*' \
+            -not -path '*/tmp/hsperfdata_luminapdfuser/*' \
             -not -path '*/tmp/hsperfdata_root/*' \
-            -not -path '*/tmp/Lumina-PDF/hsperfdata_stirlingpdfuser/*' \
+            -not -path '*/tmp/Lumina-PDF/hsperfdata_luminapdfuser/*' \
             -not -path '*/tmp/Lumina-PDF/jetty-*/*' \
             -not -path '*/tmp/Lumina-PDF/lu*' \
             -not -path '*/tmp/Lumina-PDF/tmp*' \
             -not -path '*/tmp/lu*' \
             -not -path '*/tmp/tmp*' \
-            -not -path '/app/stirling.aot' \
-            -not -path '*/tmp/stirling.aotconf' \
+            -not -path '/app/lumina.aot' \
+            -not -path '*/tmp/lumina.aotconf' \
             -not -path '*/tmp/aot-*.log' \
             2>/dev/null | sort" > "$output_file"
 
@@ -713,7 +713,7 @@ main() {
         fi
         local ultra_lite_build_log="$REPORT_DIR/Build-Ultra-Lite-Docker.build.log"
         if ! docker buildx build --build-arg VERSION_TAG=alpha \
-            -t docker.stirlingpdf.com/stirlingtools/Lumina-PDF:ultra-lite \
+            -t docker.luminapdf.com/Lumina/Lumina-PDF:ultra-lite \
             -f ./docker/embedded/Dockerfile.ultra-lite \
             --load \
             ${DOCKER_CACHE_ARGS_ULTRA_LITE} . 2>&1 | tee "$ultra_lite_build_log"; then
@@ -800,7 +800,7 @@ main() {
         local fat_build_log="$REPORT_DIR/Build-Fat-Docker.build.log"
         if ! docker buildx build --build-arg VERSION_TAG=alpha \
             ${BASE_IMAGE_ARG} \
-            -t docker.stirlingpdf.com/stirlingtools/Lumina-PDF:fat \
+            -t docker.luminapdf.com/Lumina/Lumina-PDF:fat \
             -f ./docker/embedded/Dockerfile.fat \
             --load \
             ${DOCKER_CACHE_ARGS_FAT} . 2>&1 | tee "$fat_build_log"; then

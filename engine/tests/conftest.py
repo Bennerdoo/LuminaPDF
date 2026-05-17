@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
-from stirling.config import AppSettings, RagBackend, load_settings
-from stirling.services import build_runtime
-from stirling.services.runtime import AppRuntime
+from lumina.config import AppSettings, RagBackend, load_settings
+from lumina.services import build_runtime
+from lumina.services.runtime import AppRuntime
 
 
 @pytest.fixture(autouse=True)

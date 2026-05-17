@@ -16,7 +16,7 @@ local.properties
 *.local.json
 version.properties
 
-#### Stirling-PDF Files ###
+#### lumina-PDF Files ###
 pipeline/
 !pipeline/.gitkeep
 customFiles/
@@ -26,8 +26,8 @@ clientWebUI/
 !cucumber/
 !cucumber/exampleFiles/
 !cucumber/exampleFiles/example_html.zip
-exampleYmlFiles/stirling/
-/stirling/
+exampleYmlFiles/lumina/
+/lumina/
 /testing/file_snapshots
 /testing/cucumber/junit/
 /testing/cucumber/report.html
@@ -156,7 +156,7 @@ app/common/build
 app/proprietary/build
 common/build
 proprietary/build
-stirling-pdf/build
+lumina-pdf/build
 frontend/src-tauri/provisioner/target
 
 # Byte-compiled / optimized / DLL files

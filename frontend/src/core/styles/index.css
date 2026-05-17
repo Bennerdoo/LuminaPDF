@@ -108,7 +108,7 @@ code, pre, .mono-font {
   color: var(--red);
 }
 
-.stirling-link {
+.lumina-link {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-style: dotted;
@@ -116,7 +116,7 @@ code, pre, .mono-font {
   transition: color 0.2s ease;
 }
 
-.stirling-link:hover {
+.lumina-link:hover {
   color: var(--red);
   text-decoration-style: solid;
 }

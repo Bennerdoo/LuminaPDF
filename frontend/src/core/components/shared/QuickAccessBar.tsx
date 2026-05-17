@@ -46,7 +46,7 @@ import { uploadHistoryChain } from "@app/services/serverStorageUpload";
 import { fileStorage } from "@app/services/fileStorage";
 import { useFileActions } from "@app/contexts/FileContext";
 import type { FileId } from "@app/types/file";
-import type { StirlingFileStub } from "@app/types/fileContext";
+import type { luminaFileStub } from "@app/types/fileContext";
 import type { SignRequestSummary } from "@app/types/signingSession";
 
 import {
@@ -176,8 +176,8 @@ const QuickAccessBar = forwardRef<HTMLDivElement>((_, ref) => {
   const selectedFileStubs = useMemo(
     () =>
       selectedFileIds
-        .map((id) => selectors.getStirlingFileStub(id))
-        .filter((x): x is StirlingFileStub => Boolean(x)),
+        .map((id) => selectors.getluminaFileStub(id))
+        .filter((x): x is luminaFileStub => Boolean(x)),
     [selectedFileIds, selectors, state.files.byId],
   );
   const selectedAccessFileStub =
@@ -271,7 +271,7 @@ const QuickAccessBar = forwardRef<HTMLDivElement>((_, ref) => {
   }, [config?.frontendUrl]);
 
   const ensureStoredFile = useCallback(
-    async (fileStub: StirlingFileStub): Promise<number> => {
+    async (fileStub: luminaFileStub): Promise<number> => {
       const localUpdatedAt = fileStub.createdAt ?? fileStub.lastModified ?? 0;
       const isUpToDate =
         Boolean(fileStub.remoteStorageId) &&
@@ -288,7 +288,7 @@ const QuickAccessBar = forwardRef<HTMLDivElement>((_, ref) => {
         chain,
       } = await uploadHistoryChain(originalFileId, remoteId);
       for (const stub of chain) {
-        actions.updateStirlingFileStub(stub.id, {
+        actions.updateluminaFileStub(stub.id, {
           remoteStorageId: storedId,
           remoteStorageUpdatedAt: updatedAt,
           remoteOwnedByCurrentUser: true,
@@ -542,7 +542,7 @@ const QuickAccessBar = forwardRef<HTMLDivElement>((_, ref) => {
         );
         token = shareResponse.data?.token;
         if (token) {
-          actions.updateStirlingFileStub(selectedAccessFileStub.id, {
+          actions.updateluminaFileStub(selectedAccessFileStub.id, {
             remoteHasShareLinks: true,
           });
           await fileStorage.updateFileMetadata(selectedAccessFileStub.id, {

@@ -5,10 +5,10 @@ from collections.abc import Iterator
 import pytest
 from fastapi.testclient import TestClient
 
-from stirling.api import app
-from stirling.api.dependencies import get_rag_service
-from stirling.models import FileId
-from stirling.rag import Document, RagService, SqliteVecStore
+from lumina.api import app
+from lumina.api.dependencies import get_rag_service
+from lumina.models import FileId
+from lumina.rag import Document, RagService, SqliteVecStore
 
 
 class StubEmbedder:
@@ -30,7 +30,7 @@ class StubEmbedder:
         source: str = "",
         base_metadata: dict[str, str] | None = None,
     ) -> list[Document]:
-        from stirling.rag.chunker import chunk_text
+        from lumina.rag.chunker import chunk_text
 
         chunks = chunk_text(text, 100, 10)
         docs = []

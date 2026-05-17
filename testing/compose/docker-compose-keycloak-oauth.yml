@@ -1,6 +1,6 @@
 services:
   keycloak-oauth-db:
-    container_name: stirling-keycloak-oauth-db
+    container_name: lumina-keycloak-oauth-db
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: keycloak
@@ -12,10 +12,10 @@ services:
       timeout: 5s
       retries: 10
     networks:
-      - stirling-oauth-test
+      - lumina-oauth-test
 
   keycloak-oauth:
-    container_name: stirling-keycloak-oauth
+    container_name: lumina-keycloak-oauth
     image: quay.io/keycloak/keycloak:24.0
     command:
       - start-dev
@@ -40,17 +40,17 @@ services:
       keycloak-oauth-db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /realms/stirling-oauth HTTP/1.1\\nHost: localhost\\nConnection: close\\n\\n' >&3 && timeout 2 cat <&3 | head -n 1 | grep -q '200'"]
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /realms/lumina-oauth HTTP/1.1\\nHost: localhost\\nConnection: close\\n\\n' >&3 && timeout 2 cat <&3 | head -n 1 | grep -q '200'"]
       interval: 10s
       timeout: 10s
       retries: 30
       start_period: 60s
     networks:
-      - stirling-oauth-test
+      - lumina-oauth-test
 
   lumina-pdf-oauth:
     container_name: lumina-pdf-oauth-test
-    image: docker.stirlingpdf.com/stirlingtools/lumina-pdf:latest
+    image: docker.luminapdf.com/Lumina/lumina-pdf:latest
     build:
       context: ../..
       dockerfile: docker/embedded/Dockerfile
@@ -65,9 +65,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../../../stirling/keycloak-oauth-test/data:/usr/share/tessdata:rw
-      - ../../../stirling/keycloak-oauth-test/config:/configs:rw
-      - ../../../stirling/keycloak-oauth-test/logs:/logs:rw
+      - ../../../lumina/keycloak-oauth-test/data:/usr/share/tessdata:rw
+      - ../../../lumina/keycloak-oauth-test/config:/configs:rw
+      - ../../../lumina/keycloak-oauth-test/logs:/logs:rw
     environment:
       # Basic settings
       DOCKER_ENABLE_SECURITY: "true"
@@ -87,7 +87,7 @@ services:
       SECURITY_OAUTH2_ENABLED: "true"
       SECURITY_OAUTH2_AUTOCREATEUSER: "true"
       # Must match Keycloak's advertised issuer
-      SECURITY_OAUTH2_CLIENT_KEYCLOAK_ISSUER: "http://${KEYCLOAK_HOST:-kubernetes.docker.internal}:9080/realms/stirling-oauth"
+      SECURITY_OAUTH2_CLIENT_KEYCLOAK_ISSUER: "http://${KEYCLOAK_HOST:-kubernetes.docker.internal}:9080/realms/lumina-oauth"
       SECURITY_OAUTH2_CLIENT_KEYCLOAK_CLIENTID: "lumina-pdf-client"
       SECURITY_OAUTH2_CLIENT_KEYCLOAK_CLIENTSECRET: "test-client-secret-change-in-production"
       SECURITY_OAUTH2_CLIENT_KEYCLOAK_USEASUSERNAME: "email"
@@ -119,9 +119,9 @@ services:
       keycloak-oauth:
         condition: service_healthy
     networks:
-      - stirling-oauth-test
+      - lumina-oauth-test
     restart: on-failure:5
 
 networks:
-  stirling-oauth-test:
+  lumina-oauth-test:
     driver: bridge

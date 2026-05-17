@@ -1,16 +1,16 @@
 import React from "react";
 import { Box, Text, Collapse, Group } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import FileListItem from "@app/components/fileManager/FileListItem";
 
 interface FileHistoryGroupProps {
-  leafFile: StirlingFileStub;
-  historyFiles: StirlingFileStub[];
+  leafFile: luminaFileStub;
+  historyFiles: luminaFileStub[];
   isExpanded: boolean;
-  onDownloadSingle: (file: StirlingFileStub) => void;
-  onFileDoubleClick: (file: StirlingFileStub) => void;
-  onHistoryFileRemove: (file: StirlingFileStub) => void;
+  onDownloadSingle: (file: luminaFileStub) => void;
+  onFileDoubleClick: (file: luminaFileStub) => void;
+  onHistoryFileRemove: (file: luminaFileStub) => void;
   isFileSupported: (fileName: string) => boolean;
 }
 

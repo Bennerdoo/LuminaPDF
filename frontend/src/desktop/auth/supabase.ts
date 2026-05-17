@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { STIRLING_SAAS_URL, SUPABASE_KEY } from "@app/constants/connection";
+import { lumina_SAAS_URL, SUPABASE_KEY } from "@app/constants/connection";
 
 /**
  * Supabase client for desktop application
@@ -9,7 +9,7 @@ import { STIRLING_SAAS_URL, SUPABASE_KEY } from "@app/constants/connection";
  * but this client is needed for calling Supabase edge functions like get-usage-billing
  */
 
-if (!STIRLING_SAAS_URL) {
+if (!lumina_SAAS_URL) {
   console.warn(
     "[Desktop Supabase] VITE_SAAS_SERVER_URL not configured - SaaS features will not work",
   );
@@ -22,7 +22,7 @@ if (!SUPABASE_KEY) {
 }
 
 export const supabase = createClient(
-  STIRLING_SAAS_URL || "",
+  lumina_SAAS_URL || "",
   SUPABASE_KEY || "",
   {
     auth: {

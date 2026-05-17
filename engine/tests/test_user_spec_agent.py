@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 from pydantic import ValidationError
 
-from stirling.agents import UserSpecAgent
-from stirling.contracts import (
+from lumina.agents import UserSpecAgent
+from lumina.contracts import (
     AgentDraft,
     AgentDraftRequest,
     AgentRevisionRequest,
@@ -13,8 +13,8 @@ from stirling.contracts import (
     EditPlanResponse,
     ToolOperationStep,
 )
-from stirling.models.tool_models import Angle, FlattenParams, RotatePdfParams, ToolEndpoint
-from stirling.services.runtime import AppRuntime
+from lumina.models.tool_models import Angle, FlattenParams, RotatePdfParams, ToolEndpoint
+from lumina.services.runtime import AppRuntime
 
 
 class StubUserSpecAgent(UserSpecAgent):

@@ -31,7 +31,7 @@ import UpdateModal from "@app/components/shared/UpdateModal";
 import { useFrontendVersionInfo } from "@app/hooks/useFrontendVersionInfo";
 
 const DEFAULT_AUTO_UNZIP_FILE_LIMIT = 4;
-const BANNER_DISMISSED_KEY = "stirlingpdf_features_banner_dismissed";
+const BANNER_DISMISSED_KEY = "luminapdf_features_banner_dismissed";
 
 interface GeneralSectionProps {
   hideTitle?: boolean;

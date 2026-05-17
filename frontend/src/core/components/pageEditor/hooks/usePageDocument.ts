@@ -38,7 +38,7 @@ export function usePageDocument(): PageDocumentHook {
   // Get ALL PDF files (selected or not) for document building with placeholders
   const activeFileIds = useMemo(() => {
     return allFileIds.filter((id) => {
-      const stub = selectors.getStirlingFileStub(id);
+      const stub = selectors.getluminaFileStub(id);
       return stub?.name?.toLowerCase().endsWith(".pdf") ?? false;
     });
   }, [allFileIdsKey, activeFilesSignature, selectors]);
@@ -60,12 +60,12 @@ export function usePageDocument(): PageDocumentHook {
   const globalProcessing = state.ui.isProcessing;
 
   // Get primary file record outside useMemo to track processedFile changes
-  const primaryStirlingFileStub = primaryFileId
-    ? selectors.getStirlingFileStub(primaryFileId)
+  const primaryluminaFileStub = primaryFileId
+    ? selectors.getluminaFileStub(primaryFileId)
     : null;
-  const processedFilePages = primaryStirlingFileStub?.processedFile?.pages;
+  const processedFilePages = primaryluminaFileStub?.processedFile?.pages;
   const processedFileTotalPages =
-    primaryStirlingFileStub?.processedFile?.totalPages;
+    primaryluminaFileStub?.processedFile?.totalPages;
 
   const placeholderDocumentRef = useRef<PDFDocument | null>(null);
   const [placeholderVersion, setPlaceholderVersion] = useState(0);
@@ -77,7 +77,7 @@ export function usePageDocument(): PageDocumentHook {
       return;
     }
 
-    if (primaryStirlingFileStub?.processedFile) {
+    if (primaryluminaFileStub?.processedFile) {
       placeholderDocumentRef.current = null;
       setPlaceholderVersion((v) => v + 1);
       return;
@@ -114,7 +114,7 @@ export function usePageDocument(): PageDocumentHook {
           placeholderDocumentRef.current = {
             id: `placeholder-${primaryFileId}`,
             name:
-              selectors.getStirlingFileStub(primaryFileId)?.name ?? file.name,
+              selectors.getluminaFileStub(primaryFileId)?.name ?? file.name,
             file,
             pages,
             totalPages,
@@ -134,7 +134,7 @@ export function usePageDocument(): PageDocumentHook {
     return () => {
       canceled = true;
     };
-  }, [primaryFileId, primaryStirlingFileStub?.processedFile, selectors]);
+  }, [primaryFileId, primaryluminaFileStub?.processedFile, selectors]);
 
   // Compute merged document with stable signature (prevents infinite loops)
   const currentPagesSignature = useMemo(() => {
@@ -160,12 +160,12 @@ export function usePageDocument(): PageDocumentHook {
     // Must match signature AND have the same number of source files
     const persistedFileIds = persistedDocument
       ? Array.from(
-          new Set(
-            persistedDocument.pages
-              .map((p) => p.originalFileId)
-              .filter(Boolean),
-          ),
-        )
+        new Set(
+          persistedDocument.pages
+            .map((p) => p.originalFileId)
+            .filter(Boolean),
+        ),
+      )
       : [];
     const persistedIsValid =
       persistedDocument &&
@@ -189,7 +189,7 @@ export function usePageDocument(): PageDocumentHook {
     }
 
     if (
-      !primaryStirlingFileStub?.processedFile &&
+      !primaryluminaFileStub?.processedFile &&
       placeholderDocumentRef.current
     ) {
       return placeholderDocumentRef.current;
@@ -198,7 +198,7 @@ export function usePageDocument(): PageDocumentHook {
     const primaryFile = primaryFileId ? selectors.getFile(primaryFileId) : null;
 
     // If we have file IDs but no file record, something is wrong - return null to show loading
-    if (!primaryStirlingFileStub) {
+    if (!primaryluminaFileStub) {
       console.log(
         "🎬 PageEditor: No primary file record found, showing loading",
       );
@@ -211,24 +211,24 @@ export function usePageDocument(): PageDocumentHook {
     const name =
       namingFileIds.length <= 1
         ? namingFileIds[0]
-          ? (selectors.getStirlingFileStub(namingFileIds[0])?.name ??
+          ? (selectors.getluminaFileStub(namingFileIds[0])?.name ??
             "document.pdf")
           : "document.pdf"
         : namingFileIds
-            .map((id) =>
-              (selectors.getStirlingFileStub(id)?.name ?? "file").replace(
-                /\.pdf$/i,
-                "",
-              ),
-            )
-            .join(" + ");
+          .map((id) =>
+            (selectors.getluminaFileStub(id)?.name ?? "file").replace(
+              /\.pdf$/i,
+              "",
+            ),
+          )
+          .join(" + ");
 
     // Build page insertion map from files with insertion positions
     const insertionMap = new Map<string, FileId[]>(); // insertAfterPageId -> fileIds
     const originalFileIds: FileId[] = [];
 
     activeFileIds.forEach((fileId) => {
-      const record = selectors.getStirlingFileStub(fileId);
+      const record = selectors.getluminaFileStub(fileId);
       if (record?.insertAfterPageId !== undefined) {
         console.log("[usePageDocument] File has insertAfterPageId:", {
           fileId,
@@ -258,8 +258,8 @@ export function usePageDocument(): PageDocumentHook {
       startPageNumber: number,
       isSelected: boolean,
     ): PDFPage[] => {
-      const stirlingFileStub = selectors.getStirlingFileStub(fileId);
-      if (!stirlingFileStub) {
+      const luminaFileStub = selectors.getluminaFileStub(fileId);
+      if (!luminaFileStub) {
         return [];
       }
 
@@ -280,7 +280,7 @@ export function usePageDocument(): PageDocumentHook {
         ];
       }
 
-      const processedFile = stirlingFileStub.processedFile;
+      const processedFile = luminaFileStub.processedFile;
 
       if (processedFile?.pages && processedFile.pages.length > 0) {
         // Use fully processed pages with thumbnails
@@ -433,7 +433,7 @@ export function usePageDocument(): PageDocumentHook {
     activeFileIds,
     selectedActiveFileIds,
     primaryFileId,
-    primaryStirlingFileStub,
+    primaryluminaFileStub,
     processedFilePages,
     processedFileTotalPages,
     selectors,

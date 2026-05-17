@@ -16,20 +16,20 @@ Closes #(issue_number)
 
 ### General
 
-- [ ] I have read the [Contribution Guidelines](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/CONTRIBUTING.md)
-- [ ] I have read the [Stirling-PDF Developer Guide](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/DeveloperGuide.md) (if applicable)
-- [ ] I have read the [How to add new languages to Stirling-PDF](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/devGuide/HowToAddNewLanguage.md) (if applicable)
+- [ ] I have read the [Contribution Guidelines](https://github.com/lumina-Tools/lumina-PDF/blob/main/CONTRIBUTING.md)
+- [ ] I have read the [lumina-PDF Developer Guide](https://github.com/lumina-Tools/lumina-PDF/blob/main/DeveloperGuide.md) (if applicable)
+- [ ] I have read the [How to add new languages to lumina-PDF](https://github.com/lumina-Tools/lumina-PDF/blob/main/devGuide/HowToAddNewLanguage.md) (if applicable)
 - [ ] I have performed a self-review of my own code
 - [ ] My changes generate no new warnings
 
 ### Documentation
 
-- [ ] I have updated relevant docs on [Stirling-PDF's doc repo](https://github.com/Stirling-Tools/Stirling-Tools.github.io/blob/main/docs/) (if functionality has heavily changed)
-- [ ] I have read the section [Add New Translation Tags](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/devGuide/HowToAddNewLanguage.md#add-new-translation-tags) (for new translation tags only)
+- [ ] I have updated relevant docs on [lumina-PDF's doc repo](https://github.com/lumina-Tools/lumina-Tools.github.io/blob/main/docs/) (if functionality has heavily changed)
+- [ ] I have read the section [Add New Translation Tags](https://github.com/lumina-Tools/lumina-PDF/blob/main/devGuide/HowToAddNewLanguage.md#add-new-translation-tags) (for new translation tags only)
 
 ### Translations (if applicable)
 
-- [ ] I ran [`scripts/counter_translation.py`](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/docs/counter_translation.md)
+- [ ] I ran [`scripts/counter_translation.py`](https://github.com/lumina-Tools/lumina-PDF/blob/main/docs/counter_translation.md)
 
 ### UI Changes (if applicable)
 
@@ -38,4 +38,4 @@ Closes #(issue_number)
 ### Testing (if applicable)
 
 - [ ] I have run `task check` to verify linters, typechecks, and tests pass
-- [ ] I have tested my changes locally. Refer to the [Testing Guide](https://github.com/Stirling-Tools/Stirling-PDF/blob/main/DeveloperGuide.md#7-testing) for more details.
+- [ ] I have tested my changes locally. Refer to the [Testing Guide](https://github.com/lumina-Tools/lumina-PDF/blob/main/DeveloperGuide.md#7-testing) for more details.

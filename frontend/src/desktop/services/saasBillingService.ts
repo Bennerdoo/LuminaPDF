@@ -4,8 +4,8 @@ import { supabase } from "@app/auth/supabase";
 import { authService } from "@app/services/authService";
 import { connectionModeService } from "@app/services/connectionModeService";
 import {
-  STIRLING_SAAS_URL,
-  STIRLING_SAAS_BACKEND_API_URL,
+  lumina_SAAS_URL,
+  lumina_SAAS_BACKEND_API_URL,
   SUPABASE_KEY,
 } from "@app/constants/connection";
 import type {
@@ -101,7 +101,7 @@ export class SaasBillingService {
 
     try {
       // Call RPC via REST API using Tauri fetch (Supabase client RPC may not work in Tauri)
-      const rpcUrl = `${STIRLING_SAAS_URL}/rest/v1/rpc/get_user_billing_status`;
+      const rpcUrl = `${lumina_SAAS_URL}/rest/v1/rpc/get_user_billing_status`;
 
       const response = await tauriFetch(rpcUrl, {
         method: "POST",
@@ -126,10 +126,10 @@ export class SaasBillingService {
       const billingDataArray = Array.isArray(raw) ? raw : raw ? [raw] : [];
       const billingData = billingDataArray[0] as
         | {
-            user_id: string;
-            has_metered_billing_enabled: boolean;
-            is_pro: boolean;
-          }
+          user_id: string;
+          has_metered_billing_enabled: boolean;
+          is_pro: boolean;
+        }
         | undefined;
 
       // Determine tier based on pro status
@@ -179,7 +179,7 @@ export class SaasBillingService {
       // Use backend API endpoint /api/v1/credits (same as SaaS web)
       let creditBalance: number | undefined;
       try {
-        const creditsEndpoint = `${STIRLING_SAAS_BACKEND_API_URL}/api/v1/credits`;
+        const creditsEndpoint = `${lumina_SAAS_BACKEND_API_URL}/api/v1/credits`;
         const creditResponse = await tauriFetch(creditsEndpoint, {
           method: "GET",
           headers: {

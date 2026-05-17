@@ -8,7 +8,7 @@ correctly and their helper properties behave as documented.
 import pytest
 from pydantic import ValidationError
 
-from stirling.contracts.ledger import (
+from lumina.contracts.ledger import (
     Discrepancy,
     DiscrepancyKind,
     Evidence,

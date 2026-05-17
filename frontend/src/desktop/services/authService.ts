@@ -7,7 +7,7 @@ import axios from "axios";
 import tauriHttpClient from "@app/services/tauriHttpClient";
 import {
   DESKTOP_DEEP_LINK_CALLBACK,
-  STIRLING_SAAS_URL,
+  lumina_SAAS_URL,
   SUPABASE_KEY,
 } from "@app/constants/connection";
 
@@ -91,7 +91,7 @@ export class AuthService {
 
     // Sync to localStorage for web layer (fallback)
     try {
-      localStorage.setItem("stirling_jwt", token);
+      localStorage.setItem("lumina_jwt", token);
     } catch (error) {
       console.error(
         "[Desktop AuthService] Failed to save token to localStorage:",
@@ -108,7 +108,7 @@ export class AuthService {
       try {
         await invoke("save_refresh_token", { token: refreshToken });
         // Only remove from localStorage after successful save
-        localStorage.removeItem("stirling_refresh_token");
+        localStorage.removeItem("lumina_refresh_token");
       } catch (error) {
         console.error(
           "[Desktop AuthService] Failed to save refresh token:",
@@ -141,7 +141,7 @@ export class AuthService {
     }
 
     // Fallback to localStorage
-    return localStorage.getItem("stirling_jwt");
+    return localStorage.getItem("lumina_jwt");
   }
 
   /**
@@ -179,8 +179,8 @@ export class AuthService {
 
     // Best effort: clear web storage
     try {
-      localStorage.removeItem("stirling_jwt");
-      localStorage.removeItem("stirling_refresh_token");
+      localStorage.removeItem("lumina_jwt");
+      localStorage.removeItem("lumina_refresh_token");
     } catch (error) {
       console.warn(
         "[Desktop AuthService] Failed to clear localStorage tokens",
@@ -193,7 +193,7 @@ export class AuthService {
    * Local clear only (no backend calls) to reset auth state in desktop contexts
    */
   async localClearAuth(): Promise<void> {
-    await this.clearTokenEverywhere().catch(() => {});
+    await this.clearTokenEverywhere().catch(() => { });
     try {
       await invoke("clear_user_info");
     } catch (err) {
@@ -274,7 +274,7 @@ export class AuthService {
   }
 
   async signUpSaas(email: string, password: string): Promise<void> {
-    if (!STIRLING_SAAS_URL) {
+    if (!lumina_SAAS_URL) {
       throw new Error("VITE_SAAS_SERVER_URL is not configured");
     }
     if (!SUPABASE_KEY) {
@@ -284,7 +284,7 @@ export class AuthService {
     }
 
     const redirectParam = encodeURIComponent(DESKTOP_DEEP_LINK_CALLBACK);
-    const signupUrl = `${STIRLING_SAAS_URL.replace(/\/$/, "")}/auth/v1/signup?redirect_to=${redirectParam}`;
+    const signupUrl = `${lumina_SAAS_URL.replace(/\/$/, "")}/auth/v1/signup?redirect_to=${redirectParam}`;
 
     try {
       const response = await axios.post(
@@ -325,8 +325,8 @@ export class AuthService {
   ): Promise<UserInfo> {
     try {
       // Validate SaaS configuration if connecting to SaaS
-      if (serverUrl === STIRLING_SAAS_URL) {
-        if (!STIRLING_SAAS_URL) {
+      if (serverUrl === lumina_SAAS_URL) {
+        if (!lumina_SAAS_URL) {
           throw new Error("VITE_SAAS_SERVER_URL is not configured");
         }
         if (!SUPABASE_KEY) {
@@ -343,7 +343,7 @@ export class AuthService {
         password,
         mfaCode,
         supabaseKey: SUPABASE_KEY,
-        saasServerUrl: STIRLING_SAAS_URL,
+        saasServerUrl: lumina_SAAS_URL,
       });
 
       const { token, username: returnedUsername, email } = response;
@@ -558,7 +558,7 @@ export class AuthService {
       // Still set status to unauthenticated even if clear fails
       this.setAuthStatus("unauthenticated", null);
       // Still try to clear token
-      await this.clearTokenEverywhere().catch(() => {});
+      await this.clearTokenEverywhere().catch(() => { });
     }
   }
 
@@ -861,7 +861,7 @@ export class AuthService {
       // Check if token exists in storage (user just logged in via web flow)
       const tokenInStorage =
         typeof window !== "undefined"
-          ? localStorage.getItem("stirling_jwt")
+          ? localStorage.getItem("lumina_jwt")
           : null;
       if (tokenInStorage) {
         console.log(
@@ -880,7 +880,7 @@ export class AuthService {
           "[Desktop AuthService] On login/setup path, clearing any cached auth",
         );
         // Local clear only; avoid backend logout to prevent noisy errors when already unauthenticated
-        await this.clearTokenEverywhere().catch(() => {});
+        await this.clearTokenEverywhere().catch(() => { });
         try {
           await invoke("clear_user_info");
         } catch (err) {
@@ -913,7 +913,7 @@ export class AuthService {
       // Defensive: ensure any partial tokens are purged to prevent auto-login loops.
       // Skip when simulating expiry — the token is real and must not be destroyed.
       if (!this.shouldSimulateExpiredJwt()) {
-        await this.clearTokenEverywhere().catch(() => {});
+        await this.clearTokenEverywhere().catch(() => { });
       }
     }
   }

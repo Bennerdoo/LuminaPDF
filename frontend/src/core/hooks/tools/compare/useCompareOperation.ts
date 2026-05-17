@@ -17,7 +17,7 @@ import {
 } from "@app/services/pixelCompareService";
 import { CompareParameters } from "@app/hooks/tools/compare/useCompareParameters";
 import { ToolOperationHook } from "@app/hooks/tools/shared/useToolOperation";
-import type { StirlingFile } from "@app/types/fileContext";
+import type { luminaFile } from "@app/types/fileContext";
 import { useFileContext } from "@app/contexts/file/fileHooks";
 import {
   aggregateTotals,
@@ -235,7 +235,7 @@ export const useCompareOperation = (): CompareOperationHook => {
   );
 
   const executeOperation = useCallback(
-    async (params: CompareParameters, selectedFiles: StirlingFile[]) => {
+    async (params: CompareParameters, selectedFiles: luminaFile[]) => {
       // start new run
       const runId = ++activeRunIdRef.current;
       cancelledRef.current = false;
@@ -612,7 +612,7 @@ export const useCompareOperation = (): CompareOperationHook => {
         if (errorCode === "EMPTY_TEXT") {
           setErrorMessage(
             warningMessages.emptyTextMessage ??
-              t("compare.error.generic", "Unable to compare these files."),
+            t("compare.error.generic", "Unable to compare these files."),
           );
         } else {
           const fallbackMessage = t(
@@ -656,7 +656,7 @@ export const useCompareOperation = (): CompareOperationHook => {
       try {
         workerRef.current.terminate();
         // eslint-disable-next-line no-empty
-      } catch {}
+      } catch { }
       workerRef.current = null;
     }
     if (longRunningToastIdRef.current) {

@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 # All gradle invocations use a cross-platform variable to work
 # uniformly on Linux/macOS and Windows without relying on WSL/bash.
@@ -14,50 +14,50 @@ tasks:
       PORT: '{{.PORT | default "8080"}}'
       AIENGINE_URL: '{{.AIENGINE_URL | default ""}}'
     env:
-      SERVER_PORT: '{{.PORT}}'
-      AIENGINE_URL: '{{.AIENGINE_URL}}'
-      AIENGINE_ENABLED: '{{if .AIENGINE_URL}}true{{else}}false{{end}}'
-      SECURITY_ENABLE_LOGIN: 'false'
-      LEGAL_TERMSANDCONDITIONS: 'terms.html'
-      LEGAL_PRIVACYPOLICY: 'privacy.html'
+      SERVER_PORT: "{{.PORT}}"
+      AIENGINE_URL: "{{.AIENGINE_URL}}"
+      AIENGINE_ENABLED: "{{if .AIENGINE_URL}}true{{else}}false{{end}}"
+      SECURITY_ENABLE_LOGIN: "false"
+      LEGAL_TERMSANDCONDITIONS: "terms.html"
+      LEGAL_PRIVACYPOLICY: "privacy.html"
     cmds:
-      - '{{.GRADLEW}} :stirling-pdf:bootRun'
+      - "{{.GRADLEW}} :lumina-pdf:bootRun"
 
   dev:bundled:
     desc: "Clean + bootRun with frontend bundled into the backend (single :8080 server)"
     ignore_error: true
     cmds:
-      - '{{.GRADLEW}} clean bootRun -PbuildWithFrontend=true'
+      - "{{.GRADLEW}} clean bootRun -PbuildWithFrontend=true"
 
   build:
     desc: "Full backend build"
     cmds:
-      - '{{.GRADLEW}} clean build'
+      - "{{.GRADLEW}} clean build"
 
   build:fast:
     desc: "Build without tests"
     cmds:
-      - '{{.GRADLEW}} clean build -x test'
+      - "{{.GRADLEW}} clean build -x test"
 
   build:ci:
     desc: "Build for CI (formatting checked separately)"
     cmds:
-      - '{{.GRADLEW}} build -PnoSpotless'
+      - "{{.GRADLEW}} build -PnoSpotless"
 
   test:
     desc: "Run backend tests"
     cmds:
-      - '{{.GRADLEW}} test'
+      - "{{.GRADLEW}} test"
 
   format:
     desc: "Auto-fix code formatting"
     cmds:
-      - '{{.GRADLEW}} spotlessApply'
+      - "{{.GRADLEW}} spotlessApply"
 
   format:check:
     desc: "Check code formatting"
     cmds:
-      - '{{.GRADLEW}} spotlessCheck'
+      - "{{.GRADLEW}} spotlessCheck"
 
   fix:
     desc: "Auto-fix backend"
@@ -67,7 +67,7 @@ tasks:
   swagger:
     desc: "Generate OpenAPI docs"
     cmds:
-      - '{{.GRADLEW}} :stirling-pdf:copySwaggerDoc'
+      - "{{.GRADLEW}} :lumina-pdf:copySwaggerDoc"
     sources:
       - app/core/src/main/java/**/*.java
       - app/proprietary/src/main/java/**/*.java
@@ -85,19 +85,19 @@ tasks:
     desc: "Print project version"
     silent: true
     cmds:
-      - '{{.GRADLEW}} printVersion --quiet | tail -1'
+      - "{{.GRADLEW}} printVersion --quiet | tail -1"
 
   licenses:check:
     desc: "Check dependency licenses"
     cmds:
-      - '{{.GRADLEW}} checkLicense --no-parallel'
+      - "{{.GRADLEW}} checkLicense --no-parallel"
 
   licenses:generate:
     desc: "Check and generate dependency license report"
     cmds:
-      - '{{.GRADLEW}} checkLicense generateLicenseReport --no-parallel'
+      - "{{.GRADLEW}} checkLicense generateLicenseReport --no-parallel"
 
   clean:
     desc: "Clean build artifacts"
     cmds:
-      - '{{.GRADLEW}} clean'
+      - "{{.GRADLEW}} clean"

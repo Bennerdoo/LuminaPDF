@@ -14,7 +14,7 @@ import {
   connectionModeService,
   JWT_EXPIRED_PROMPTED_KEY,
 } from "@app/services/connectionModeService";
-import { STIRLING_SAAS_URL } from "@app/constants/connection";
+import { lumina_SAAS_URL } from "@app/constants/connection";
 import { tauriBackendService } from "@app/services/tauriBackendService";
 import { selfHostedServerMonitor } from "@app/services/selfHostedServerMonitor";
 import { authService } from "@app/services/authService";
@@ -98,7 +98,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
           .then(async (isAuth) => {
             if (isAuth) {
               await connectionModeService
-                .switchToSaaS(STIRLING_SAAS_URL)
+                .switchToSaaS(lumina_SAAS_URL)
                 .catch(console.error);
               setConnectionMode("saas");
             }
@@ -311,7 +311,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
               {children}
               {/* Desktop onboarding modal: welcome slide → sign-in slide, shown once on first launch */}
               <DesktopOnboardingModal />
-              {/* Global sign-in modal, opened via stirling:open-sign-in event */}
+              {/* Global sign-in modal, opened via lumina:open-sign-in event */}
               <SignInModal />
             </SaaSCheckoutProvider>
           </SaasBillingProvider>

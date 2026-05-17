@@ -12,7 +12,7 @@ import { createQuickKey } from "@app/types/fileContext";
  */
 export function useAppInitialization(): void {
   // Get file management actions
-  const { addFiles, updateStirlingFileStub } = useFileManagement();
+  const { addFiles, updateluminaFileStub } = useFileManagement();
 
   // Handle files opened with app (Tauri mode)
   const {
@@ -83,7 +83,7 @@ export function useAppInitialization(): void {
           addedFiles.forEach((file) => {
             const localFilePath = quickKeyToPath.get(file.quickKey);
             if (localFilePath) {
-              updateStirlingFileStub(file.fileId, { localFilePath });
+              updateluminaFileStub(file.fileId, { localFilePath });
             }
           });
 
@@ -101,7 +101,7 @@ export function useAppInitialization(): void {
     openedFilePaths,
     openedFileLoading,
     addFiles,
-    updateStirlingFileStub,
+    updateluminaFileStub,
     consumeOpenedFilePaths,
   ]);
 }

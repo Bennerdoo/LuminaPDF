@@ -19,7 +19,7 @@ import { absoluteWithBasePath } from "@app/constants/app";
 import { alert } from "@app/components/toast";
 import { Z_INDEX_OVER_FILE_MANAGER_MODAL } from "@app/styles/zIndex";
 import { useAppConfig } from "@app/contexts/AppConfigContext";
-import type { StirlingFileStub } from "@app/types/fileContext";
+import type { luminaFileStub } from "@app/types/fileContext";
 import { uploadHistoryChain } from "@app/services/serverStorageUpload";
 import { fileStorage } from "@app/services/fileStorage";
 import { useFileActions } from "@app/contexts/FileContext";
@@ -28,7 +28,7 @@ import type { FileId } from "@app/types/file";
 interface ShareFileModalProps {
   opened: boolean;
   onClose: () => void;
-  file: StirlingFileStub;
+  file: luminaFileStub;
   onUploaded?: () => Promise<void> | void;
 }
 
@@ -129,7 +129,7 @@ const ShareFileModal: React.FC<ShareFileModalProps> = ({
         storedId = newStoredId;
 
         for (const stub of chain) {
-          actions.updateStirlingFileStub(stub.id, {
+          actions.updateluminaFileStub(stub.id, {
             remoteStorageId: newStoredId,
             remoteStorageUpdatedAt: updatedAt,
             remoteOwnedByCurrentUser: true,
@@ -157,7 +157,7 @@ const ShareFileModal: React.FC<ShareFileModalProps> = ({
         durationMs: 3000,
       });
       if (storedId) {
-        actions.updateStirlingFileStub(file.id, { remoteHasShareLinks: true });
+        actions.updateluminaFileStub(file.id, { remoteHasShareLinks: true });
         await fileStorage.updateFileMetadata(file.id, {
           remoteHasShareLinks: true,
         });

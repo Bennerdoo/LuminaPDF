@@ -1,5 +1,5 @@
-from stirling.config import AppSettings
-from stirling.contracts import (
+from lumina.config import AppSettings
+from lumina.contracts import (
     AgentExecutionRequest,
     AgentSpec,
     AgentSpecStep,
@@ -13,8 +13,8 @@ from stirling.contracts import (
     PdfTextSelection,
     ToolOperationStep,
 )
-from stirling.models import FileId
-from stirling.models.tool_models import Angle, RotatePdfParams, ToolEndpoint
+from lumina.models import FileId
+from lumina.models.tool_models import Angle, RotatePdfParams, ToolEndpoint
 
 
 def test_orchestrator_request_accepts_user_message() -> None:
@@ -77,7 +77,7 @@ def test_pdf_question_answer_defaults_evidence_list() -> None:
 def test_app_settings_accepts_model_configuration() -> None:
     from pathlib import Path
 
-    from stirling.config import RagBackend
+    from lumina.config import RagBackend
 
     settings = AppSettings(
         smart_model_name="claude-sonnet-4-5-20250929",

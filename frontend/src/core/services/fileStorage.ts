@@ -6,9 +6,9 @@
 
 import { FileId, BaseFileMetadata } from "@app/types/file";
 import {
-  StirlingFile,
-  StirlingFileStub,
-  createStirlingFile,
+  luminaFile,
+  luminaFileStub,
+  createluminaFile,
 } from "@app/types/fileContext";
 import {
   indexedDBManager,
@@ -17,12 +17,12 @@ import {
 
 /**
  * Storage record - single source of truth
- * Contains all data needed for both StirlingFile and StirlingFileStub
+ * Contains all data needed for both luminaFile and luminaFileStub
  */
-export interface StoredStirlingFileRecord extends BaseFileMetadata {
+export interface StoredluminaFileRecord extends BaseFileMetadata {
   data: ArrayBuffer;
-  fileId: FileId; // Matches runtime StirlingFile.fileId exactly
-  quickKey: string; // Matches runtime StirlingFile.quickKey exactly
+  fileId: FileId; // Matches runtime luminaFile.fileId exactly
+  quickKey: string; // Matches runtime luminaFile.quickKey exactly
   thumbnail?: string;
   url?: string; // For compatibility with existing components
 }
@@ -46,23 +46,23 @@ class FileStorageService {
   }
 
   /**
-   * Store a StirlingFile with its metadata from StirlingFileStub
+   * Store a luminaFile with its metadata from luminaFileStub
    */
-  async storeStirlingFile(
-    stirlingFile: StirlingFile,
-    stub: StirlingFileStub,
+  async storeluminaFile(
+    luminaFile: luminaFile,
+    stub: luminaFileStub,
   ): Promise<void> {
     const db = await this.getDatabase();
-    const arrayBuffer = await stirlingFile.arrayBuffer();
+    const arrayBuffer = await luminaFile.arrayBuffer();
 
-    const record: StoredStirlingFileRecord = {
-      id: stirlingFile.fileId,
-      fileId: stirlingFile.fileId, // Explicit field for clarity
-      quickKey: stirlingFile.quickKey,
-      name: stirlingFile.name,
-      type: stirlingFile.type,
-      size: stirlingFile.size,
-      lastModified: stirlingFile.lastModified,
+    const record: StoredluminaFileRecord = {
+      id: luminaFile.fileId,
+      fileId: luminaFile.fileId, // Explicit field for clarity
+      quickKey: luminaFile.quickKey,
+      name: luminaFile.name,
+      type: luminaFile.type,
+      size: luminaFile.size,
+      lastModified: luminaFile.lastModified,
       createdAt: stub.createdAt,
       data: arrayBuffer,
       thumbnail: stub.thumbnailUrl,
@@ -78,7 +78,7 @@ class FileStorageService {
 
       // History data from stub
       versionNumber: stub.versionNumber ?? 1,
-      originalFileId: stub.originalFileId ?? stirlingFile.fileId,
+      originalFileId: stub.originalFileId ?? luminaFile.fileId,
       parentFileId: stub.parentFileId ?? undefined,
       toolHistory: stub.toolHistory ?? [],
     };
@@ -112,9 +112,9 @@ class FileStorageService {
   }
 
   /**
-   * Get StirlingFile with full data - for loading into workbench
+   * Get luminaFile with full data - for loading into workbench
    */
-  async getStirlingFile(id: FileId): Promise<StirlingFile | null> {
+  async getluminaFile(id: FileId): Promise<luminaFile | null> {
     const db = await this.getDatabase();
 
     return new Promise((resolve, reject) => {
@@ -124,7 +124,7 @@ class FileStorageService {
 
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const record = request.result as StoredStirlingFileRecord | undefined;
+        const record = request.result as StoredluminaFileRecord | undefined;
         if (!record) {
           resolve(null);
           return;
@@ -137,27 +137,27 @@ class FileStorageService {
           lastModified: record.lastModified,
         });
 
-        // Convert to StirlingFile with preserved IDs
-        const stirlingFile = createStirlingFile(file, record.fileId);
-        resolve(stirlingFile);
+        // Convert to luminaFile with preserved IDs
+        const luminaFile = createluminaFile(file, record.fileId);
+        resolve(luminaFile);
       };
     });
   }
 
   /**
-   * Get multiple StirlingFiles - for batch loading
+   * Get multiple luminaFiles - for batch loading
    */
-  async getStirlingFiles(ids: FileId[]): Promise<StirlingFile[]> {
+  async getluminaFiles(ids: FileId[]): Promise<luminaFile[]> {
     const results = await Promise.all(
-      ids.map((id) => this.getStirlingFile(id)),
+      ids.map((id) => this.getluminaFile(id)),
     );
-    return results.filter((file): file is StirlingFile => file !== null);
+    return results.filter((file): file is luminaFile => file !== null);
   }
 
   /**
-   * Get StirlingFileStub (metadata only) - for UI browsing
+   * Get luminaFileStub (metadata only) - for UI browsing
    */
-  async getStirlingFileStub(id: FileId): Promise<StirlingFileStub | null> {
+  async getluminaFileStub(id: FileId): Promise<luminaFileStub | null> {
     const db = await this.getDatabase();
 
     return new Promise((resolve, reject) => {
@@ -167,14 +167,14 @@ class FileStorageService {
 
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const record = request.result as StoredStirlingFileRecord | undefined;
+        const record = request.result as StoredluminaFileRecord | undefined;
         if (!record) {
           resolve(null);
           return;
         }
 
-        // Create StirlingFileStub from metadata (no file data)
-        const stub: StirlingFileStub = {
+        // Create luminaFileStub from metadata (no file data)
+        const stub: luminaFileStub = {
           id: record.id,
           name: record.name,
           type: record.type,
@@ -204,22 +204,22 @@ class FileStorageService {
   }
 
   /**
-   * Get all StirlingFileStubs (metadata only) - for FileManager browsing
+   * Get all luminaFileStubs (metadata only) - for FileManager browsing
    */
-  async getAllStirlingFileStubs(): Promise<StirlingFileStub[]> {
+  async getAllluminaFileStubs(): Promise<luminaFileStub[]> {
     const db = await this.getDatabase();
 
     return new Promise((resolve, reject) => {
       const transaction = db.transaction([this.storeName], "readonly");
       const store = transaction.objectStore(this.storeName);
       const request = store.openCursor();
-      const stubs: StirlingFileStub[] = [];
+      const stubs: luminaFileStub[] = [];
 
       request.onerror = () => reject(request.error);
       request.onsuccess = (event) => {
         const cursor = (event.target as IDBRequest).result;
         if (cursor) {
-          const record = cursor.value as StoredStirlingFileRecord;
+          const record = cursor.value as StoredluminaFileRecord;
           if (record && record.name && typeof record.size === "number") {
             // Extract metadata only - no file data
             stubs.push({
@@ -259,30 +259,30 @@ class FileStorageService {
    */
   async getHistoryChainStubs(
     originalFileId: FileId,
-  ): Promise<StirlingFileStub[]> {
-    const stubs = await this.getAllStirlingFileStubs();
+  ): Promise<luminaFileStub[]> {
+    const stubs = await this.getAllluminaFileStubs();
     return stubs
       .filter((stub) => (stub.originalFileId || stub.id) === originalFileId)
       .sort((a, b) => (a.versionNumber || 1) - (b.versionNumber || 1));
   }
 
   /**
-   * Get leaf StirlingFileStubs only - for unprocessed files
+   * Get leaf luminaFileStubs only - for unprocessed files
    */
-  async getLeafStirlingFileStubs(): Promise<StirlingFileStub[]> {
+  async getLeafluminaFileStubs(): Promise<luminaFileStub[]> {
     const db = await this.getDatabase();
 
     return new Promise((resolve, reject) => {
       const transaction = db.transaction([this.storeName], "readonly");
       const store = transaction.objectStore(this.storeName);
       const request = store.openCursor();
-      const leafStubs: StirlingFileStub[] = [];
+      const leafStubs: luminaFileStub[] = [];
 
       request.onerror = () => reject(request.error);
       request.onsuccess = (event) => {
         const cursor = (event.target as IDBRequest).result;
         if (cursor) {
-          const record = cursor.value as StoredStirlingFileRecord;
+          const record = cursor.value as StoredluminaFileRecord;
           // Only include leaf files (default to true if undefined)
           if (
             record &&
@@ -323,9 +323,9 @@ class FileStorageService {
   }
 
   /**
-   * Delete StirlingFile - single operation, no sync issues
+   * Delete luminaFile - single operation, no sync issues
    */
-  async deleteStirlingFile(id: FileId): Promise<void> {
+  async deleteluminaFile(id: FileId): Promise<void> {
     const db = await this.getDatabase();
 
     return new Promise((resolve, reject) => {
@@ -351,7 +351,7 @@ class FileStorageService {
         const getRequest = store.get(id);
 
         getRequest.onsuccess = () => {
-          const record = getRequest.result as StoredStirlingFileRecord;
+          const record = getRequest.result as StoredluminaFileRecord;
           if (record) {
             record.thumbnail = thumbnail;
             const updateRequest = store.put(record);
@@ -416,7 +416,7 @@ class FileStorageService {
       }
 
       // Calculate our actual IndexedDB usage from file metadata
-      const stubs = await this.getAllStirlingFileStubs();
+      const stubs = await this.getAllluminaFileStubs();
       used = stubs.reduce((total, stub) => total + (stub?.size || 0), 0);
       fileCount = stubs.length;
 
@@ -452,7 +452,7 @@ class FileStorageService {
 
         request.onerror = () => reject(request.error);
         request.onsuccess = () => {
-          const record = request.result as StoredStirlingFileRecord | undefined;
+          const record = request.result as StoredluminaFileRecord | undefined;
           if (record) {
             const blob = new Blob([record.data], { type: record.type });
             const url = URL.createObjectURL(blob);
@@ -478,7 +478,7 @@ class FileStorageService {
       const transaction = db.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
 
-      const record = await new Promise<StoredStirlingFileRecord | undefined>(
+      const record = await new Promise<StoredluminaFileRecord | undefined>(
         (resolve, reject) => {
           const request = store.get(fileId);
           request.onsuccess = () => resolve(request.result);
@@ -516,7 +516,7 @@ class FileStorageService {
       const transaction = db.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
 
-      const record = await new Promise<StoredStirlingFileRecord | undefined>(
+      const record = await new Promise<StoredluminaFileRecord | undefined>(
         (resolve, reject) => {
           const request = store.get(fileId);
           request.onsuccess = () => resolve(request.result);
@@ -549,18 +549,18 @@ class FileStorageService {
    */
   async updateFileMetadata(
     fileId: FileId,
-    updates: Partial<StoredStirlingFileRecord>,
+    updates: Partial<StoredluminaFileRecord>,
   ): Promise<boolean> {
     try {
       const db = await this.getDatabase();
       const transaction = db.transaction([this.storeName], "readwrite");
       const store = transaction.objectStore(this.storeName);
-      const record = await new Promise<StoredStirlingFileRecord | undefined>(
+      const record = await new Promise<StoredluminaFileRecord | undefined>(
         (resolve, reject) => {
           const request = store.get(fileId);
           request.onerror = () => reject(request.error);
           request.onsuccess = () =>
-            resolve(request.result as StoredStirlingFileRecord | undefined);
+            resolve(request.result as StoredluminaFileRecord | undefined);
         },
       );
 

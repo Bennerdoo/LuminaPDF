@@ -8,7 +8,7 @@ import {
   useFileSelection,
   useFileActions,
 } from "@app/contexts/FileContext";
-import { isStirlingFile } from "@app/types/fileContext";
+import { isluminaFile } from "@app/types/fileContext";
 import { useNavigationState } from "@app/contexts/NavigationContext";
 import { useTranslation } from "react-i18next";
 import { useFileActionTerminology } from "@app/hooks/useFileActionTerminology";
@@ -177,8 +177,8 @@ export default function RightRail() {
         const fileToExport =
           selectedFiles.length > 0 ? selectedFiles[0] : activeFiles[0];
         if (!fileToExport) return;
-        const stub = isStirlingFile(fileToExport)
-          ? selectors.getStirlingFileStub(fileToExport.fileId)
+        const stub = isluminaFile(fileToExport)
+          ? selectors.getluminaFileStub(fileToExport.fileId)
           : undefined;
         try {
           const result = await downloadFile({
@@ -187,7 +187,7 @@ export default function RightRail() {
             localPath: forceNewFile ? undefined : stub?.localFilePath,
           });
           if (!forceNewFile && !result.cancelled && stub && result.savedPath) {
-            fileActions.updateStirlingFileStub(stub.id, {
+            fileActions.updateluminaFileStub(stub.id, {
               localFilePath: stub.localFilePath ?? result.savedPath,
               isDirty: false,
             });
@@ -208,8 +208,8 @@ export default function RightRail() {
 
       if (filesToExport.length > 0) {
         for (const file of filesToExport) {
-          const stub = isStirlingFile(file)
-            ? selectors.getStirlingFileStub(file.fileId)
+          const stub = isluminaFile(file)
+            ? selectors.getluminaFileStub(file.fileId)
             : undefined;
           try {
             const result = await downloadFile({
@@ -219,7 +219,7 @@ export default function RightRail() {
             });
             if (result.cancelled) continue;
             if (!forceNewFile && stub && result.savedPath) {
-              fileActions.updateStirlingFileStub(stub.id, {
+              fileActions.updateluminaFileStub(stub.id, {
                 localFilePath: stub.localFilePath ?? result.savedPath,
                 isDirty: false,
               });

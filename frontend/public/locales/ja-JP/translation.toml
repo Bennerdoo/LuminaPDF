@@ -598,7 +598,7 @@ description = "一時ファイルの保存場所とクリーンアップ動作�
 label = "一時ファイル管理"
 
 [admin.settings.advanced.tempFileManagement.baseTmpDir]
-description = "一時ファイルのベースディレクトリ（空欄で既定: java.io.tmpdir/stirling-pdf）"
+description = "一時ファイルのベースディレクトリ（空欄で既定: java.io.tmpdir/lumina-pdf）"
 label = "ベース一時ディレクトリ"
 
 [admin.settings.advanced.tempFileManagement.cleanupIntervalMinutes]

@@ -1,16 +1,16 @@
-# Verifying Stirling-PDF Release Artifacts
+# Verifying lumina-PDF Release Artifacts
 
 Every Linux release artifact (`.AppImage`, `.rpm`, `.deb`) is signed with the
-**Stirling-PDF release signing key**. Users are encouraged to verify downloads
-before running them, especially when obtaining Stirling-PDF from a mirror,
+**lumina-PDF release signing key**. Users are encouraged to verify downloads
+before running them, especially when obtaining lumina-PDF from a mirror,
 redistributor, or any source other than the official
-[GitHub Releases page](https://github.com/Stirling-Tools/Stirling-PDF/releases).
+[GitHub Releases page](https://github.com/lumina-Tools/lumina-PDF/releases).
 
 ## Signing key
 
 | Field        | Value                                              |
 |--------------|----------------------------------------------------|
-| User ID      | `Stirling PDF Inc. <contact@stirlingpdf.com>`      |
+| User ID      | `lumina PDF Inc. <contact@luminapdf.com>`      |
 | Fingerprint  | `EBB9 258B FEA4 7D92 342F  00DF B8C0 96A5 9BEF 2A8B` |
 | Algorithm    | RSA-4096                                           |
 | Valid until  | 2031-04-16                                         |
@@ -28,7 +28,7 @@ a keyserver) is the recommended way to be sure you've obtained the genuine key.
 
 ```bash
 # Option 1 — from the repo over HTTPS
-curl -fsSL https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/security/signing-key.pub \
+curl -fsSL https://raw.githubusercontent.com/lumina-Tools/lumina-PDF/main/docs/security/signing-key.pub \
   | gpg --import
 
 # Option 2 — from a keyserver
@@ -39,7 +39,7 @@ gpg --keyserver hkps://keys.openpgp.org \
 Confirm the fingerprint matches after import:
 
 ```bash
-gpg --fingerprint contact@stirlingpdf.com
+gpg --fingerprint contact@luminapdf.com
 # Expected: EBB9 258B FEA4 7D92 342F  00DF B8C0 96A5 9BEF 2A8B
 ```
 
@@ -50,16 +50,16 @@ Tauri's AppImage bundler embeds the signature inside the AppImage itself via
 
 ```bash
 # --appimage-signature prints the embedded signature
-./Stirling-PDF_*.AppImage --appimage-signature > sig.asc
-./Stirling-PDF_*.AppImage --appimage-offset                  # shows the offset
+./lumina-PDF_*.AppImage --appimage-signature > sig.asc
+./lumina-PDF_*.AppImage --appimage-offset                  # shows the offset
 # Verify the payload signature against the key
-gpg --verify sig.asc Stirling-PDF_*.AppImage
+gpg --verify sig.asc lumina-PDF_*.AppImage
 ```
 
 A successful result looks like:
 
 ```
-gpg: Good signature from "Stirling PDF Inc. <contact@stirlingpdf.com>" [ultimate]
+gpg: Good signature from "lumina PDF Inc. <contact@luminapdf.com>" [ultimate]
 ```
 
 ## Verifying an `.rpm`
@@ -70,10 +70,10 @@ RPM signatures are verified via `rpm --checksig`:
 # Import the key into rpm's keyring
 sudo rpm --import docs/security/signing-key.pub   # if working from a clone
 # OR
-sudo rpm --import https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/security/signing-key.pub
+sudo rpm --import https://raw.githubusercontent.com/lumina-Tools/lumina-PDF/main/docs/security/signing-key.pub
 
 # Verify the package
-rpm --checksig Stirling-PDF-*.rpm
+rpm --checksig lumina-PDF-*.rpm
 # Expected output ends with: "digests signatures OK"
 ```
 
@@ -83,7 +83,7 @@ Debian packages are signed with a detached `.asc` file distributed alongside
 the `.deb` on the release page:
 
 ```bash
-gpg --verify Stirling-PDF-*.deb.asc Stirling-PDF-*.deb
+gpg --verify lumina-PDF-*.deb.asc lumina-PDF-*.deb
 ```
 
 ## What if verification fails?
@@ -91,14 +91,14 @@ gpg --verify Stirling-PDF-*.deb.asc Stirling-PDF-*.deb
 A failed signature check means **do not install the file**. Possible causes:
 
 - The download was corrupted — try again from the
-  [official releases](https://github.com/Stirling-Tools/Stirling-PDF/releases).
+  [official releases](https://github.com/lumina-Tools/lumina-PDF/releases).
 - You obtained the file from a malicious mirror — get it from the official
   source.
 - The signing key has rotated — check this document on the latest `main` for
   the current fingerprint.
 
 If none of those explain it, please open a security report at
-https://github.com/Stirling-Tools/Stirling-PDF/security/advisories/new.
+https://github.com/lumina-Tools/lumina-PDF/security/advisories/new.
 
 ## Key rotation policy
 

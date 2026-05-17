@@ -30,7 +30,7 @@ export function usePageEditorDropdownState(): PageEditorDropdownState {
   const pageEditorFiles = useMemo(() => {
     return fileOrder
       .map<PageEditorDropdownFile | null>((fileId) => {
-        const stub = selectors.getStirlingFileStub(fileId);
+        const stub = selectors.getluminaFileStub(fileId);
         if (!isPdf(stub?.name)) return null;
 
         return {

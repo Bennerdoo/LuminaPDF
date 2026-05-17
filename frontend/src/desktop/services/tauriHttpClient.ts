@@ -72,7 +72,7 @@ class TauriHttpClient {
   public defaults: TauriHttpRequestConfig = {
     baseURL: "",
     headers: {
-      "User-Agent": "StirlingPDF-Desktop/1.0 Tauri",
+      "User-Agent": "luminaPDF-Desktop/1.0 Tauri",
     },
     timeout: 120000,
     responseType: "json",
@@ -140,10 +140,10 @@ class TauriHttpClient {
       originalError:
         originalError instanceof Error
           ? {
-              name: originalError.name,
-              message: originalError.message,
-              stack: originalError.stack,
-            }
+            name: originalError.name,
+            message: originalError.message,
+            stack: originalError.stack,
+          }
           : originalError,
     });
 

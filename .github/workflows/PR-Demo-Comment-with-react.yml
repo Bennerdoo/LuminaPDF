@@ -230,7 +230,7 @@ jobs:
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_PUBLIC_URL: ${{ secrets.MAVEN_PUBLIC_URL }}
-          STIRLING_PDF_DESKTOP_UI: false
+          lumina_PDF_DESKTOP_UI: false
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
@@ -247,8 +247,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-latest
-          cache-to: type=gha,mode=max,scope=stirling-pdf-latest
+          cache-from: type=gha,scope=lumina-pdf-latest
+          cache-to: type=gha,mode=max,scope=lumina-pdf-latest
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/test:pr-${{ needs.check-comment.outputs.pr_number }}
           build-args: |
             VERSION_TAG=alpha
@@ -262,8 +262,8 @@ jobs:
           context: ./engine
           file: ./engine/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-engine
-          cache-to: type=gha,mode=max,scope=stirling-pdf-engine
+          cache-from: type=gha,scope=lumina-pdf-engine
+          cache-to: type=gha,mode=max,scope=lumina-pdf-engine
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/test:engine-pr-${{ needs.check-comment.outputs.pr_number }}
           platforms: linux/amd64
 
@@ -310,10 +310,10 @@ jobs:
           if [ "$ENABLE_PROTOTYPES" == "true" ]; then
             AI_ENGINE_VARS="
                 SYSTEM_AIENGINE_ENABLED: \"true\"
-                SYSTEM_AIENGINE_URL: \"http://stirling-pdf-engine-pr-${PR_NUMBER}:5001\""
+                SYSTEM_AIENGINE_URL: \"http://lumina-pdf-engine-pr-${PR_NUMBER}:5001\""
             ENGINE_SERVICE="
-            stirling-pdf-engine:
-              container_name: stirling-pdf-engine-pr-${PR_NUMBER}
+            lumina-pdf-engine:
+              container_name: lumina-pdf-engine-pr-${PR_NUMBER}
               image: ${DOCKER_USER}/test:engine-pr-${PR_NUMBER}
               environment:
                 ANTHROPIC_API_KEY: \"${{ secrets.ANTHROPIC_API_KEY }}\"
@@ -337,21 +337,21 @@ jobs:
           cat > docker-compose.yml << EOF
           version: '3.3'
           services:
-            stirling-pdf:
-              container_name: stirling-pdf-pr-${PR_NUMBER}
+            lumina-pdf:
+              container_name: lumina-pdf-pr-${PR_NUMBER}
               image: ${DOCKER_USER}/test:pr-${PR_NUMBER}
               ports:
                 - "${PR_NUMBER}:8080"
               volumes:
-                - /stirling/PR-${PR_NUMBER}/data:/usr/share/tessdata:rw
-                - /stirling/PR-${PR_NUMBER}/config:/configs:rw
-                - /stirling/PR-${PR_NUMBER}/logs:/logs:rw
+                - /lumina/PR-${PR_NUMBER}/data:/usr/share/tessdata:rw
+                - /lumina/PR-${PR_NUMBER}/config:/configs:rw
+                - /lumina/PR-${PR_NUMBER}/logs:/logs:rw
               environment:
                 DISABLE_ADDITIONAL_FEATURES: "${DISABLE_ADDITIONAL_FEATURES}"
                 SECURITY_ENABLELOGIN: "${LOGIN_SECURITY}"
                 SYSTEM_DEFAULTLOCALE: en-GB
-                UI_APPNAME: "Stirling-PDF PR#${PR_NUMBER}"
-                UI_HOMEDESCRIPTION: "PR#${PR_NUMBER} for Stirling-PDF Latest"
+                UI_APPNAME: "lumina-PDF PR#${PR_NUMBER}"
+                UI_HOMEDESCRIPTION: "PR#${PR_NUMBER} for lumina-PDF Latest"
                 UI_APPNAMENAVBAR: "PR#${PR_NUMBER}"
                 SYSTEM_MAXFILESIZE: "100"
                 METRICS_ENABLED: "true"
@@ -367,13 +367,13 @@ jobs:
 
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << ENDSSH
             # Create PR-specific directories
-            mkdir -p /stirling/PR-${PR_NUMBER}/{data,config,logs}
+            mkdir -p /lumina/PR-${PR_NUMBER}/{data,config,logs}
 
             # Move docker-compose file to correct location
-            mv /tmp/docker-compose.yml /stirling/PR-${PR_NUMBER}/docker-compose.yml
+            mv /tmp/docker-compose.yml /lumina/PR-${PR_NUMBER}/docker-compose.yml
 
             # Start or restart the container
-            cd /stirling/PR-${PR_NUMBER}
+            cd /lumina/PR-${PR_NUMBER}
             docker-compose pull
             docker-compose up -d
           ENDSSH

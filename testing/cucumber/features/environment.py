@@ -29,7 +29,7 @@ def _check_jwt_available():
     try:
         login = requests.post(
             f"{_BASE_URL}/api/v1/auth/login",
-            json={"username": "admin", "password": "stirling"},
+            json={"username": "admin", "password": "lumina"},
             timeout=10,
         )
         if login.status_code != 200:

@@ -1,6 +1,6 @@
 {
-  "id": "stirling-saml",
-  "realm": "stirling-saml",
+  "id": "lumina-saml",
+  "realm": "lumina-saml",
   "displayName": "Lumina PDF SAML Test",
   "displayNameHtml": "<div class=\"kc-logo-text\"><span>Lumina PDF SAML</span></div>",
   "enabled": true,
@@ -29,10 +29,16 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user"],
+      "realmRoles": [
+        "user"
+      ],
       "attributes": {
-        "department": ["Engineering"],
-        "employeeId": ["EMP001"]
+        "department": [
+          "Engineering"
+        ],
+        "employeeId": [
+          "EMP001"
+        ]
       }
     },
     {
@@ -49,10 +55,17 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["user", "admin"],
+      "realmRoles": [
+        "user",
+        "admin"
+      ],
       "attributes": {
-        "department": ["IT"],
-        "employeeId": ["ADM001"]
+        "department": [
+          "IT"
+        ],
+        "employeeId": [
+          "ADM001"
+        ]
       }
     }
   ],
@@ -74,7 +87,7 @@
   },
   "clients": [
     {
-    "clientId": "http://localhost:8080/saml2/service-provider-metadata/keycloak",
+      "clientId": "http://localhost:8080/saml2/service-provider-metadata/keycloak",
       "name": "Lumina PDF SAML Client",
       "description": "SAML2 client for Lumina PDF testing",
       "rootUrl": "http://localhost:8080",
@@ -200,7 +213,9 @@
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
   "eventsEnabled": false,
-  "eventsListeners": ["jboss-logging"],
+  "eventsListeners": [
+    "jboss-logging"
+  ],
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,

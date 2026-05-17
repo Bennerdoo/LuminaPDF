@@ -25,8 +25,8 @@ import {
 import { useSignature } from "@app/contexts/SignatureContext";
 import { useRedaction } from "@app/contexts/RedactionContext";
 import type { RedactionPendingTrackerAPI } from "@app/components/viewer/RedactionPendingTracker";
-import { createStirlingFilesAndStubs } from "@app/services/fileStubHelpers";
-import { isStirlingFile, getFormFillFileId } from "@app/types/fileContext";
+import { createluminaFilesAndStubs } from "@app/services/fileStubHelpers";
+import { isluminaFile, getFormFillFileId } from "@app/types/fileContext";
 import { useViewerRightRailButtons } from "@app/components/viewer/useViewerRightRailButtons";
 import { StampPlacementOverlay } from "@app/components/viewer/StampPlacementOverlay";
 import {
@@ -400,13 +400,13 @@ const EmbedPdfViewerContent = ({
 
   // Check if the current file is encrypted (gate the viewer to prevent PDFium crash)
   const isCurrentFileEncrypted = React.useMemo(() => {
-    if (!currentFile || !isStirlingFile(currentFile)) return false;
-    const stub = selectors.getStirlingFileStub(currentFile.fileId);
+    if (!currentFile || !isluminaFile(currentFile)) return false;
+    const stub = selectors.getluminaFileStub(currentFile.fileId);
     return stub?.processedFile?.isEncrypted === true;
   }, [currentFile, selectors]);
 
   const bookmarkCacheKey = React.useMemo(() => {
-    if (currentFile && isStirlingFile(currentFile)) {
+    if (currentFile && isluminaFile(currentFile)) {
       return currentFile.fileId;
     }
 
@@ -435,7 +435,7 @@ const EmbedPdfViewerContent = ({
 
     return activeFiles
       .map((file) => {
-        if (isStirlingFile(file)) {
+        if (isluminaFile(file)) {
           return file.fileId;
         }
         return undefined;
@@ -701,15 +701,15 @@ const EmbedPdfViewerContent = ({
       const filename = currentFile.name || "document.pdf";
       const file = new File([blob], filename, { type: "application/pdf" });
 
-      // Step 3: Create StirlingFiles and stubs for version history
+      // Step 3: Create luminaFiles and stubs for version history
       // Only consume the current file, not all active files
       const currentFileId = activeFiles[activeFileIndex]?.fileId;
       if (!currentFileId) throw new Error("Current file ID not found");
 
-      const parentStub = selectors.getStirlingFileStub(currentFileId);
+      const parentStub = selectors.getluminaFileStub(currentFileId);
       if (!parentStub) throw new Error("Parent stub not found");
 
-      const { stirlingFiles, stubs } = await createStirlingFilesAndStubs(
+      const { luminaFiles, stubs } = await createluminaFilesAndStubs(
         [file],
         parentStub,
         selectedTool ?? "multiTool",
@@ -727,7 +727,7 @@ const EmbedPdfViewerContent = ({
       if (newFileId) setActiveFileId(newFileId);
 
       // Step 4: Consume only the current file (replace in context)
-      await actions.consumeFiles([currentFileId], stirlingFiles, stubs);
+      await actions.consumeFiles([currentFileId], luminaFiles, stubs);
 
       // Mark annotations as saved so navigation away from the viewer is allowed.
       hasAnnotationChangesRef.current = false;
@@ -776,11 +776,11 @@ const EmbedPdfViewerContent = ({
         const currentFileId = activeFiles[activeFileIndex]?.fileId;
         if (!currentFileId) throw new Error("Current file ID not found");
 
-        const parentStub = selectors.getStirlingFileStub(currentFileId);
+        const parentStub = selectors.getluminaFileStub(currentFileId);
         if (!parentStub) throw new Error("Parent stub not found");
 
-        // Create StirlingFiles and stubs for version history
-        const { stirlingFiles, stubs } = await createStirlingFilesAndStubs(
+        // Create luminaFiles and stubs for version history
+        const { luminaFiles, stubs } = await createluminaFilesAndStubs(
           [file],
           parentStub,
           selectedTool ?? "multiTool",
@@ -799,7 +799,7 @@ const EmbedPdfViewerContent = ({
         if (newFileId) setActiveFileId(newFileId);
 
         // Replace the current file in context
-        await actions.consumeFiles([currentFileId], stirlingFiles, stubs);
+        await actions.consumeFiles([currentFileId], luminaFiles, stubs);
 
         console.log("[Viewer] Form fill changes applied successfully");
       } catch (error) {
@@ -850,10 +850,10 @@ const EmbedPdfViewerContent = ({
         const currentFileId = activeFiles[activeFileIndex]?.fileId;
         if (!currentFileId) throw new Error("Current file ID not found");
 
-        const parentStub = selectors.getStirlingFileStub(currentFileId);
+        const parentStub = selectors.getluminaFileStub(currentFileId);
         if (!parentStub) throw new Error("Parent stub not found");
 
-        const { stirlingFiles, stubs } = await createStirlingFilesAndStubs(
+        const { luminaFiles, stubs } = await createluminaFilesAndStubs(
           [file],
           parentStub,
           selectedTool ?? "multiTool",
@@ -867,7 +867,7 @@ const EmbedPdfViewerContent = ({
         const newFileId = stubs[0]?.id;
         if (newFileId) setActiveFileId(newFileId);
 
-        await actions.consumeFiles([currentFileId], stirlingFiles, stubs);
+        await actions.consumeFiles([currentFileId], luminaFiles, stubs);
       } catch (error) {
         console.error("[Viewer] Apply layer changes failed:", error);
       } finally {
@@ -915,14 +915,14 @@ const EmbedPdfViewerContent = ({
       const filename = currentFile.name || "document.pdf";
       const file = new File([blob], filename, { type: "application/pdf" });
 
-      // Create StirlingFiles and stubs for version history
+      // Create luminaFiles and stubs for version history
       const currentFileId = activeFiles[activeFileIndex]?.fileId;
       if (!currentFileId) throw new Error("Current file ID not found");
 
-      const parentStub = selectors.getStirlingFileStub(currentFileId);
+      const parentStub = selectors.getluminaFileStub(currentFileId);
       if (!parentStub) throw new Error("Parent stub not found");
 
-      const { stirlingFiles, stubs } = await createStirlingFilesAndStubs(
+      const { luminaFiles, stubs } = await createluminaFilesAndStubs(
         [file],
         parentStub,
         selectedTool ?? "multiTool",
@@ -935,7 +935,7 @@ const EmbedPdfViewerContent = ({
       rotationRestoreAttemptsRef.current = 0;
 
       // Consume only the current file (replace in context)
-      await actions.consumeFiles([currentFileId], stirlingFiles, stubs);
+      await actions.consumeFiles([currentFileId], luminaFiles, stubs);
 
       // Clear flags
       hasAnnotationChangesRef.current = false;
@@ -1223,7 +1223,7 @@ const EmbedPdfViewerContent = ({
             <Button
               variant="filled"
               onClick={() => {
-                if (currentFile && isStirlingFile(currentFile)) {
+                if (currentFile && isluminaFile(currentFile)) {
                   actions.openEncryptedUnlockPrompt(currentFile.fileId);
                 }
               }}
@@ -1255,7 +1255,7 @@ const EmbedPdfViewerContent = ({
               fileName={
                 previewFile
                   ? previewFile.name
-                  : currentFile && isStirlingFile(currentFile)
+                  : currentFile && isluminaFile(currentFile)
                     ? currentFile.name
                     : effectiveFile?.file instanceof File
                       ? effectiveFile.file.name

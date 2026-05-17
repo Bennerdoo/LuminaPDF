@@ -12,7 +12,7 @@ echo ""
 # Check Keycloak health — Keycloak 24+ moved /health off the main listener,
 # so probe the realm directly which is the meaningful liveness check anyway.
 echo -n "Checking Keycloak health... "
-if curl -sf http://localhost:9080/realms/stirling-saml > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-saml > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ Keycloak is not ready${NC}"
@@ -21,7 +21,7 @@ fi
 
 # Check SAML realm
 echo -n "Checking SAML realm... "
-if curl -sf http://localhost:9080/realms/stirling-saml > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-saml > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ SAML realm not found${NC}"
@@ -30,7 +30,7 @@ fi
 
 # Check SAML metadata
 echo -n "Checking SAML metadata endpoint... "
-if curl -sf http://localhost:9080/realms/stirling-saml/protocol/saml/descriptor > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-saml/protocol/saml/descriptor > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ SAML metadata not available${NC}"

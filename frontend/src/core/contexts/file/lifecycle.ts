@@ -5,7 +5,7 @@
 import { FileId } from "@app/types/file";
 import {
   FileContextAction,
-  StirlingFileStub,
+  luminaFileStub,
   ProcessedFilePage,
 } from "@app/types/fileContext";
 
@@ -22,7 +22,7 @@ export class FileLifecycleManager {
   constructor(
     private filesRef: React.MutableRefObject<Map<FileId, File>>,
     private dispatch: React.Dispatch<FileContextAction>,
-  ) {}
+  ) { }
 
   /**
    * Track blob URLs for cleanup
@@ -185,9 +185,9 @@ export class FileLifecycleManager {
   /**
    * Update file record with race condition guards
    */
-  updateStirlingFileStub = (
+  updateluminaFileStub = (
     fileId: FileId,
-    updates: Partial<StirlingFileStub>,
+    updates: Partial<luminaFileStub>,
     stateRef?: React.MutableRefObject<any>,
   ): void => {
     // Guard against updating removed files (race condition protection)

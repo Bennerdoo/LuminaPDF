@@ -1,7 +1,7 @@
 services:
   Lumina-PDF:
     container_name: Lumina-PDF-Security-Remote-UNO
-    image: docker.stirlingpdf.com/stirlingtools/Lumina-PDF:latest
+    image: docker.luminapdf.com/Lumina/Lumina-PDF:latest
     build:
       context: ../../..
       dockerfile: docker/embedded/Dockerfile
@@ -13,10 +13,10 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ../../../stirling/latest/data:/usr/share/tessdata:rw
-      - ../../../stirling/latest/config:/configs:rw
-      - ../../../stirling/latest/logs:/logs:rw
-      - stirling-tmp:/tmp/Lumina-PDF:rw
+      - ../../../lumina/latest/data:/usr/share/tessdata:rw
+      - ../../../lumina/latest/config:/configs:rw
+      - ../../../lumina/latest/logs:/logs:rw
+      - lumina-tmp:/tmp/Lumina-PDF:rw
     environment:
       DISABLE_ADDITIONAL_FEATURES: "false"
       SECURITY_ENABLELOGIN: "false"
@@ -33,7 +33,7 @@ services:
       PROCESS_EXECUTOR_UNO_SERVER_ENDPOINTS_1_PROTOCOL: "http"
       # Session limit should match endpoint count for optimal concurrency
       PROCESS_EXECUTOR_SESSION_LIMIT_LIBRE_OFFICE_SESSION_LIMIT: "2"
-      # STIRLING_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
+      # lumina_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
       # JAVA_CUSTOM_OPTS: ""              # Additional JVM flags appended to the active profile
       PUID: 1002
       PGID: 1002
@@ -52,13 +52,13 @@ services:
       unoserver2:
         condition: service_healthy
     networks:
-      - stirling-network
+      - lumina-network
     restart: on-failure:5
 
   unoserver1:
     container_name: UNO-Server-1
     # See docker/unoserver/VERSION for available tags.
-    image: ghcr.io/stirling-tools/stirling-unoserver:latest
+    image: ghcr.io/lumina-tools/lumina-unoserver:latest
     environment:
       UNOSERVER_PORT: "2003"
       UNOSERVER_UNO_PORT: "2002"
@@ -66,32 +66,32 @@ services:
       # Recycle hourly to bound LibreOffice memory; 0 disables, floor 60s.
       UNOSERVER_RECYCLE_INTERVAL_SECONDS: "3600"
     volumes:
-      - stirling-tmp:/tmp/Lumina-PDF:rw
+      - lumina-tmp:/tmp/Lumina-PDF:rw
     expose:
       - "2003"
     networks:
-      - stirling-network
+      - lumina-network
     restart: on-failure:5
 
   unoserver2:
     container_name: UNO-Server-2
-    image: ghcr.io/stirling-tools/stirling-unoserver:latest
+    image: ghcr.io/lumina-tools/lumina-unoserver:latest
     environment:
       UNOSERVER_PORT: "2003"
       UNOSERVER_UNO_PORT: "2002"
       UNOSERVER_CONVERSION_TIMEOUT: "1800"
       UNOSERVER_RECYCLE_INTERVAL_SECONDS: "3600"
     volumes:
-      - stirling-tmp:/tmp/Lumina-PDF:rw
+      - lumina-tmp:/tmp/Lumina-PDF:rw
     expose:
       - "2003"
     networks:
-      - stirling-network
+      - lumina-network
     restart: on-failure:5
 
 networks:
-  stirling-network:
+  lumina-network:
     driver: bridge
 
 volumes:
-  stirling-tmp:
+  lumina-tmp:

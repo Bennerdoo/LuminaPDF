@@ -3,7 +3,7 @@ import { connectionModeService } from "@app/services/connectionModeService";
 import { tauriBackendService } from "@app/services/tauriBackendService";
 import { endpointAvailabilityService } from "@app/services/endpointAvailabilityService";
 import { selfHostedServerMonitor } from "@app/services/selfHostedServerMonitor";
-import { STIRLING_SAAS_BACKEND_API_URL } from "@app/constants/connection";
+import { lumina_SAAS_BACKEND_API_URL } from "@app/constants/connection";
 import {
   CONVERSION_ENDPOINTS,
   ENDPOINT_NAMES,
@@ -176,13 +176,13 @@ export class OperationRouter {
 
     // Always route team endpoints to SaaS backend (existing logic)
     if (mode === "saas" && this.isSaaSBackendEndpoint(operation)) {
-      if (!STIRLING_SAAS_BACKEND_API_URL) {
+      if (!lumina_SAAS_BACKEND_API_URL) {
         throw new Error("VITE_SAAS_BACKEND_API_URL not configured");
       }
       console.debug(
         `[operationRouter] Routing ${operation} to SaaS backend (team endpoint)`,
       );
-      return STIRLING_SAAS_BACKEND_API_URL.replace(/\/$/, "");
+      return lumina_SAAS_BACKEND_API_URL.replace(/\/$/, "");
     }
 
     // NEW: Check if local backend supports this tool endpoint
@@ -230,19 +230,19 @@ export class OperationRouter {
           }
 
           // SaaS supports it - route to SaaS backend
-          if (!STIRLING_SAAS_BACKEND_API_URL) {
+          if (!lumina_SAAS_BACKEND_API_URL) {
             console.error(
               "[operationRouter] VITE_SAAS_BACKEND_API_URL not configured",
             );
             throw new Error(
               "Cloud processing is required for this tool but VITE_SAAS_BACKEND_API_URL is not configured. " +
-                "Please check your environment configuration.",
+              "Please check your environment configuration.",
             );
           }
           console.debug(
             `[operationRouter] Routing ${operation} to SaaS backend (not supported locally, but supported on SaaS)`,
           );
-          return STIRLING_SAAS_BACKEND_API_URL.replace(/\/$/, "");
+          return lumina_SAAS_BACKEND_API_URL.replace(/\/$/, "");
         }
 
         // Supported locally - continue with local backend

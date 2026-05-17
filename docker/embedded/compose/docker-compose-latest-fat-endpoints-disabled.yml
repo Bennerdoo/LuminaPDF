@@ -2,7 +2,7 @@
 services:
   Lumina-PDF:
     container_name: Lumina-PDF-Fat-Disable-Endpoints
-    image: docker.stirlingpdf.com/stirlingtools/Lumina-PDF:fat
+    image: docker.luminapdf.com/Lumina/Lumina-PDF:fat
     build:
       context: ../../../
       dockerfile: docker/embedded/Dockerfile.fat
@@ -18,14 +18,14 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ../../../stirling/latest/data:/usr/share/tessdata:rw
-      - ../../../stirling/latest/config:/configs:rw
-      - ../../../stirling/latest/logs:/logs:rw
+      - ../../../lumina/latest/data:/usr/share/tessdata:rw
+      - ../../../lumina/latest/config:/configs:rw
+      - ../../../lumina/latest/logs:/logs:rw
       - ../../../testing/allEndpointsRemovedSettings.yml:/configs/settings.yml:rw
     environment:
       DISABLE_ADDITIONAL_FEATURES: "false"
       SECURITY_ENABLELOGIN: "false"
-      # STIRLING_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
+      # lumina_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
       # JAVA_CUSTOM_OPTS: ""              # Additional JVM flags appended to the active profile
       PUID: 1002
       PGID: 1002

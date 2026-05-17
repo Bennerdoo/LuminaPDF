@@ -655,7 +655,7 @@ export default function AdminConnectionsSection() {
 
             {/* Documentation Link */}
             <Anchor
-              href="https://docs.stirlingpdf.com/Functionality/Mobile-Scanner"
+              href="https://docs.luminapdf.com/Functionality/Mobile-Scanner"
               target="_blank"
               size="xs"
               c="blue"

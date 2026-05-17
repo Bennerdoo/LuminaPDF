@@ -223,7 +223,7 @@ def generate_models_code(combined_schema: dict[str, Any]) -> str:
         output_model_type=DataModelType.PydanticV2BaseModel,
         target_python_version=PythonVersion.PY_313,
         snake_case_field=True,
-        base_class="stirling.models.base.ApiModel",
+        base_class="lumina.models.base.ApiModel",
         field_constraints=True,
         no_alias=True,
         set_default_enum_member=True,

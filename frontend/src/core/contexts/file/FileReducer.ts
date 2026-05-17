@@ -6,7 +6,7 @@ import { FileId } from "@app/types/file";
 import {
   FileContextState,
   FileContextAction,
-  StirlingFileStub,
+  luminaFileStub,
 } from "@app/types/fileContext";
 
 // Initial state
@@ -30,7 +30,7 @@ export const initialFileContextState: FileContextState = {
 function processFileSwap(
   state: FileContextState,
   filesToRemove: FileId[],
-  filesToAdd: StirlingFileStub[],
+  filesToAdd: luminaFileStub[],
 ): FileContextState {
   // Only remove unpinned files
   const unpinnedRemoveIds = filesToRemove.filter(
@@ -81,11 +81,11 @@ export function fileContextReducer(
 ): FileContextState {
   switch (action.type) {
     case "ADD_FILES": {
-      const { stirlingFileStubs } = action.payload;
+      const { luminaFileStubs } = action.payload;
       const newIds: FileId[] = [];
-      const newById: Record<FileId, StirlingFileStub> = { ...state.files.byId };
+      const newById: Record<FileId, luminaFileStub> = { ...state.files.byId };
 
-      stirlingFileStubs.forEach((record) => {
+      luminaFileStubs.forEach((record) => {
         // Only add if not already present (dedupe by stable ID)
         if (!newById[record.id]) {
           newIds.push(record.id);
@@ -286,15 +286,15 @@ export function fileContextReducer(
     }
 
     case "CONSUME_FILES": {
-      const { inputFileIds, outputStirlingFileStubs } = action.payload;
+      const { inputFileIds, outputluminaFileStubs } = action.payload;
 
-      return processFileSwap(state, inputFileIds, outputStirlingFileStubs);
+      return processFileSwap(state, inputFileIds, outputluminaFileStubs);
     }
 
     case "UNDO_CONSUME_FILES": {
-      const { inputStirlingFileStubs, outputFileIds } = action.payload;
+      const { inputluminaFileStubs, outputFileIds } = action.payload;
 
-      return processFileSwap(state, outputFileIds, inputStirlingFileStubs);
+      return processFileSwap(state, outputFileIds, inputluminaFileStubs);
     }
 
     case "RESET_CONTEXT": {

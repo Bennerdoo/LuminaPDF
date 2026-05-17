@@ -1075,7 +1075,7 @@
 }
 
 /* Wordmark muted variant (used in empty/placeholder states) */
-/* Stirling text: 30% opacity in light mode, full opacity in dark */
+/* lumina text: 30% opacity in light mode, full opacity in dark */
 .wordmark__text--muted {
   fill-opacity: 0.3;
 }

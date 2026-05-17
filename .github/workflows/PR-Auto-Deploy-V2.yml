@@ -231,8 +231,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-latest
-          cache-to: type=gha,mode=max,scope=stirling-pdf-latest
+          cache-from: type=gha,scope=lumina-pdf-latest
+          cache-to: type=gha,mode=max,scope=lumina-pdf-latest
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-${{ steps.commit-hash.outputs.app_short }}
           build-args: VERSION_TAG=v2-alpha
           platforms: linux/amd64
@@ -253,29 +253,29 @@ jobs:
           cat > docker-compose.yml << EOF
           version: '3.3'
           services:
-            stirling-pdf-v2:
-              container_name: stirling-pdf-v2-pr-${{ needs.check-pr.outputs.pr_number }}
+            lumina-pdf-v2:
+              container_name: lumina-pdf-v2-pr-${{ needs.check-pr.outputs.pr_number }}
               image: ${{ secrets.DOCKER_HUB_USERNAME }}/test:v2-${{ steps.commit-hash.outputs.app_short }}
               ports:
                 - "${V2_PORT}:8080"
               volumes:
-                - /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}/data:/usr/share/tessdata:rw
-                - /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}/config:/configs:rw
-                - /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}/logs:/logs:rw
+                - /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}/data:/usr/share/tessdata:rw
+                - /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}/config:/configs:rw
+                - /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}/logs:/logs:rw
               environment:
                 DISABLE_ADDITIONAL_FEATURES: "false"
                 SECURITY_ENABLELOGIN: "true"
                 SECURITY_INITIALLOGIN_USERNAME: "${{ secrets.TEST_LOGIN_USERNAME }}"
                 SECURITY_INITIALLOGIN_PASSWORD: "${{ secrets.TEST_LOGIN_PASSWORD }}"
                 SYSTEM_DEFAULTLOCALE: en-GB
-                UI_APPNAME: "Stirling-PDF V2 PR#${{ needs.check-pr.outputs.pr_number }}"
+                UI_APPNAME: "lumina-PDF V2 PR#${{ needs.check-pr.outputs.pr_number }}"
                 UI_HOMEDESCRIPTION: "V2 PR#${{ needs.check-pr.outputs.pr_number }} - Embedded Architecture"
                 UI_APPNAMENAVBAR: "V2 PR#${{ needs.check-pr.outputs.pr_number }}"
                 SYSTEM_MAXFILESIZE: "100"
                 METRICS_ENABLED: "true"
                 SYSTEM_GOOGLEVISIBILITY: "false"
-                SWAGGER_SERVER_URL: "https://${V2_PORT}.ssl.stirlingpdf.cloud"
-                baseUrl: "https://${V2_PORT}.ssl.stirlingpdf.cloud"
+                SWAGGER_SERVER_URL: "https://${V2_PORT}.ssl.luminapdf.cloud"
+                baseUrl: "https://${V2_PORT}.ssl.luminapdf.cloud"
               restart: on-failure:5
           EOF
 
@@ -284,13 +284,13 @@ jobs:
 
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << ENDSSH
             # Create V2 PR-specific directories
-            mkdir -p /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}/{data,config,logs}
+            mkdir -p /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}/{data,config,logs}
 
             # Move docker-compose file to correct location
-            mv /tmp/docker-compose-v2.yml /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}/docker-compose.yml
+            mv /tmp/docker-compose-v2.yml /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}/docker-compose.yml
 
             # Stop any existing container and clean up
-            cd /stirling/V2-PR-${{ needs.check-pr.outputs.pr_number }}
+            cd /lumina/V2-PR-${{ needs.check-pr.outputs.pr_number }}
             docker-compose down --remove-orphans 2>/dev/null || true
 
             # Start the new container
@@ -333,7 +333,7 @@ jobs:
             }
 
             const deploymentUrl = `http://${{ secrets.NEW_VPS_HOST }}:${v2Port}`;
-            const httpsUrl = `https://${v2Port}.ssl.stirlingpdf.cloud`;
+            const httpsUrl = `https://${v2Port}.ssl.luminapdf.cloud`;
 
             const commentBody = `## 🚀 V2 Auto-Deployment Complete!\n\n` +
                               `Your V2 PR with embedded architecture has been deployed!\n\n` +
@@ -413,21 +413,21 @@ jobs:
       - name: Cleanup V2 deployment
         run: |
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << 'ENDSSH'
-            if [ -d "/stirling/V2-PR-${{ github.event.pull_request.number }}" ]; then
+            if [ -d "/lumina/V2-PR-${{ github.event.pull_request.number }}" ]; then
               echo "Found V2 PR directory, proceeding with cleanup..."
 
               # Stop and remove V2 containers
-              cd /stirling/V2-PR-${{ github.event.pull_request.number }}
+              cd /lumina/V2-PR-${{ github.event.pull_request.number }}
               docker-compose down || true
 
               # Go back to root before removal
               cd /
 
               # Remove V2 PR-specific directories
-              rm -rf /stirling/V2-PR-${{ github.event.pull_request.number }}
+              rm -rf /lumina/V2-PR-${{ github.event.pull_request.number }}
 
               # Clean up V2 container by name (in case compose cleanup missed it)
-              docker rm -f stirling-pdf-v2-pr-${{ github.event.pull_request.number }} || true
+              docker rm -f lumina-pdf-v2-pr-${{ github.event.pull_request.number }} || true
 
               echo "V2 cleanup completed"
             else

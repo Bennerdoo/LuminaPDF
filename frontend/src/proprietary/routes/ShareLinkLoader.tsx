@@ -7,7 +7,7 @@ import { useAuth } from "@app/auth/UseSession";
 import { useFileActions } from "@app/contexts/FileContext";
 import { useNavigationActions } from "@app/contexts/NavigationContext";
 import { alert } from "@app/components/toast";
-import type { StirlingFile } from "@app/types/fileContext";
+import type { luminaFile } from "@app/types/fileContext";
 import type { FileId } from "@app/types/file";
 import { fileStorage } from "@app/services/fileStorage";
 import {
@@ -97,7 +97,7 @@ export default function ShareLinkLoader({ token }: ShareLinkLoaderProps) {
           const bundle = await loadShareBundleEntries(blob);
           if (bundle) {
             const { manifest, rootOrder, sortedEntries, files } = bundle;
-            const stirlingFiles = await actions.addFilesWithOptions(files, {
+            const luminaFiles = await actions.addFilesWithOptions(files, {
               selectFiles: false,
               autoUnzip: false,
               skipAutoUnzip: false,
@@ -106,8 +106,8 @@ export default function ShareLinkLoader({ token }: ShareLinkLoaderProps) {
             if (signal.aborted) return;
 
             const idMap = new Map<string, FileId>();
-            for (let i = 0; i < stirlingFiles.length; i += 1) {
-              idMap.set(sortedEntries[i].logicalId, stirlingFiles[i].fileId);
+            for (let i = 0; i < luminaFiles.length; i += 1) {
+              idMap.set(sortedEntries[i].logicalId, luminaFiles[i].fileId);
             }
 
             const rootIdMap = new Map<string, FileId>();
@@ -137,7 +137,7 @@ export default function ShareLinkLoader({ token }: ShareLinkLoaderProps) {
                 remoteHasShareLinks: false,
                 remoteShareToken: shareMetadata?.shareToken || normalizedToken,
               };
-              actions.updateStirlingFileStub(newId, {
+              actions.updateluminaFileStub(newId, {
                 versionNumber: entry.versionNumber,
                 originalFileId: rootId,
                 parentFileId: parentId,
@@ -183,16 +183,16 @@ export default function ShareLinkLoader({ token }: ShareLinkLoaderProps) {
         const file = new File([blob], filename, {
           type: contentTypeValue || blob.type,
         });
-        const stirlingFiles = await actions.addFilesWithOptions([file], {
+        const luminaFiles = await actions.addFilesWithOptions([file], {
           selectFiles: true,
           autoUnzip: false,
           skipAutoUnzip: false,
         });
         if (signal.aborted) return;
 
-        if (stirlingFiles.length > 0) {
-          const ids = stirlingFiles.map(
-            (stirlingFile: StirlingFile) => stirlingFile.fileId,
+        if (luminaFiles.length > 0) {
+          const ids = luminaFiles.map(
+            (luminaFile: luminaFile) => luminaFile.fileId,
           );
           actions.setSelectedFiles(ids);
           const sharedUpdates = {
@@ -205,7 +205,7 @@ export default function ShareLinkLoader({ token }: ShareLinkLoaderProps) {
             remoteShareToken: shareMetadata?.shareToken || normalizedToken,
           };
           for (const fileId of ids) {
-            actions.updateStirlingFileStub(fileId, sharedUpdates);
+            actions.updateluminaFileStub(fileId, sharedUpdates);
             await fileStorage.updateFileMetadata(fileId, sharedUpdates);
           }
         }

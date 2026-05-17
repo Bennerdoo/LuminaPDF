@@ -1,4 +1,4 @@
-import { StirlingFile } from "@app/types/fileContext";
+import { luminaFile } from "@app/types/fileContext";
 import type { ResponseHandler } from "@app/utils/toolResponseProcessor";
 import { ToolId } from "@app/types/toolId";
 import type { ProcessingProgress } from "@app/hooks/tools/shared/useToolState";
@@ -167,7 +167,7 @@ export interface ToolOperationHook<TParams = void> {
   // Actions
   executeOperation: (
     params: TParams,
-    selectedFiles: StirlingFile[],
+    selectedFiles: luminaFile[],
   ) => Promise<void>;
   resetResults: () => void;
   clearError: () => void;

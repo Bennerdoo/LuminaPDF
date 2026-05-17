@@ -14,10 +14,10 @@ from decimal import Decimal
 import pytest
 from fastapi.testclient import TestClient
 
-from stirling.api import app
-from stirling.api.dependencies import get_math_auditor_agent
-from stirling.config import AppSettings, load_settings
-from stirling.contracts.ledger import (
+from lumina.api import app
+from lumina.api.dependencies import get_math_auditor_agent
+from lumina.config import AppSettings, load_settings
+from lumina.contracts.ledger import (
     Discrepancy,
     DiscrepancyKind,
     Evidence,

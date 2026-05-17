@@ -94,7 +94,7 @@ log_warn "Using TESSDATA_PREFIX=$TESSDATA_PREFIX"
 # === Temp dir ===
 # Ensure the temporary directory exists and has proper permissions.
 mkdir -p /tmp/Lumina-PDF
-chown -R stirlingpdfuser:stirlingpdfgroup /tmp/Lumina-PDF || true
+chown -R luminapdfuser:luminapdfgroup /tmp/Lumina-PDF || true
 chmod -R 755 /tmp/Lumina-PDF || true
 
 # === Start application ===

@@ -137,22 +137,22 @@ export const usePageEditorExport = ({
       const exportFilename = getExportFilename();
       const result = sourceFiles
         ? await pdfExportService.exportPDFMultiFile(
-            documentWithDOMState,
-            sourceFiles,
-            validSelectedPageIds,
-            {
-              selectedOnly: true,
-              filename: exportFilename,
-            },
-          )
+          documentWithDOMState,
+          sourceFiles,
+          validSelectedPageIds,
+          {
+            selectedOnly: true,
+            filename: exportFilename,
+          },
+        )
         : await pdfExportService.exportPDF(
-            documentWithDOMState,
-            validSelectedPageIds,
-            {
-              selectedOnly: true,
-              filename: exportFilename,
-            },
-          );
+          documentWithDOMState,
+          validSelectedPageIds,
+          {
+            selectedOnly: true,
+            filename: exportFilename,
+          },
+        );
 
       pdfExportService.downloadFile(result.blob, result.filename);
       setHasUnsavedChanges(false);
@@ -304,17 +304,17 @@ export const usePageEditorExport = ({
         await actions.removeFiles(sourceFileIds, true);
       }
 
-      const newStirlingFiles = await actions.addFiles(renamedFiles, {
+      const newluminaFiles = await actions.addFiles(renamedFiles, {
         selectFiles: true,
       });
-      if (newStirlingFiles.length > 0) {
-        actions.setSelectedFiles(newStirlingFiles.map((file) => file.fileId));
+      if (newluminaFiles.length > 0) {
+        actions.setSelectedFiles(newluminaFiles.map((file) => file.fileId));
       }
 
-      if (sourceFileIds.length === 1 && newStirlingFiles.length === 1) {
-        const sourceStub = selectors.getStirlingFileStub(sourceFileIds[0]);
+      if (sourceFileIds.length === 1 && newluminaFiles.length === 1) {
+        const sourceStub = selectors.getluminaFileStub(sourceFileIds[0]);
         if (sourceStub?.localFilePath) {
-          actions.updateStirlingFileStub(newStirlingFiles[0].fileId, {
+          actions.updateluminaFileStub(newluminaFiles[0].fileId, {
             localFilePath: sourceStub.localFilePath,
             isDirty: true,
           });

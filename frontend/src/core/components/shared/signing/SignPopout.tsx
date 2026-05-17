@@ -381,13 +381,13 @@ const SignPopout = ({
     setCreating(true);
     try {
       const selectedFile = selectedFiles[0];
-      const stirlingFile = await fileStorage.getStirlingFile(
+      const luminaFile = await fileStorage.getluminaFile(
         selectedFile.fileId,
       );
-      if (!stirlingFile) throw new Error("File not found");
+      if (!luminaFile) throw new Error("File not found");
 
       const formData = new FormData();
-      formData.append("file", stirlingFile, selectedFile.name);
+      formData.append("file", luminaFile, selectedFile.name);
       formData.append("workflowType", "SIGNING");
       formData.append("documentName", selectedFile.name);
       selectedUserIds.forEach((userId, index) => {

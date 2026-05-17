@@ -1,7 +1,7 @@
 services:
   Lumina-PDF:
     container_name: Lumina-PDF-Ultra-Lite
-    image: docker.stirlingpdf.com/stirlingtools/Lumina-PDF:ultra-lite
+    image: docker.luminapdf.com/Lumina/Lumina-PDF:ultra-lite
     build:
       context: ../../../
       dockerfile: docker/embedded/Dockerfile.ultra-lite
@@ -17,11 +17,11 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../../../stirling/latest/config:/configs:rw
-      - ../../../stirling/latest/logs:/logs:rw
+      - ../../../lumina/latest/config:/configs:rw
+      - ../../../lumina/latest/logs:/logs:rw
     environment:
       SECURITY_ENABLELOGIN: "false"
-      # STIRLING_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
+      # lumina_JVM_PROFILE: "balanced"  # Options: balanced (G1GC, default), performance (Shenandoah)
       # JAVA_CUSTOM_OPTS: ""              # Additional JVM flags appended to the active profile
       SYSTEM_DEFAULTLOCALE: en-US
       UI_APPNAME: Lumina-PDF-Ultra-lite

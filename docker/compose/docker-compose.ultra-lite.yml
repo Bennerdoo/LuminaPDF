@@ -1,5 +1,6 @@
 services:
   Lumina-PDF:
+    image: lumina-pdf:ultra-lite
     build:
       context: ../..
       dockerfile: docker/embedded/Dockerfile.ultra-lite
@@ -17,8 +18,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../../stirling/latest/config:/configs:rw
-      - ../../stirling/latest/logs:/logs:rw
+      - ../../LUMINA/latest/config:/configs:rw
+      - ../../LUMINA/latest/logs:/logs:rw
     environment:
       DISABLE_ADDITIONAL_FEATURES: "true"
       SECURITY_ENABLELOGIN: "false"
@@ -30,8 +31,8 @@ services:
       UI_APPNAMENAVBAR: Lumina-PDF Ultra-lite
       SYSTEM_MAXFILESIZE: "50"
     networks:
-      - stirling-network
+      - LUMINA-network
 
 networks:
-  stirling-network:
+  LUMINA-network:
     driver: bridge

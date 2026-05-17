@@ -4,8 +4,8 @@ from dataclasses import replace
 
 import pytest
 
-from stirling.agents import PdfQuestionAgent
-from stirling.contracts import (
+from lumina.agents import PdfQuestionAgent
+from lumina.contracts import (
     AiFile,
     ExtractedFileText,
     NeedIngestResponse,
@@ -17,9 +17,9 @@ from stirling.contracts import (
     PdfTextSelection,
     SupportedCapability,
 )
-from stirling.models import FileId
-from stirling.rag import Document, RagService, SqliteVecStore
-from stirling.services.runtime import AppRuntime
+from lumina.models import FileId
+from lumina.rag import Document, RagService, SqliteVecStore
+from lumina.services.runtime import AppRuntime
 
 
 class StubEmbedder:
@@ -41,7 +41,7 @@ class StubEmbedder:
         source: str = "",
         base_metadata: dict[str, str] | None = None,
     ) -> list[Document]:
-        from stirling.rag.chunker import chunk_text
+        from lumina.rag.chunker import chunk_text
 
         chunks = chunk_text(text, 100, 10)
         docs: list[Document] = []

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Modal } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { useFileManager } from "@app/hooks/useFileManager";
 import { useFilesModalContext } from "@app/contexts/FilesModalContext";
 import { useAppConfig } from "@app/contexts/AppConfigContext";
@@ -30,7 +30,7 @@ const FileManager: React.FC<FileManagerProps> = ({ selectedTool }) => {
     onRecentFileSelect,
   } = useFilesModalContext();
   const { config } = useAppConfig();
-  const [recentFiles, setRecentFiles] = useState<StirlingFileStub[]>([]);
+  const [recentFiles, setRecentFiles] = useState<luminaFileStub[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -55,9 +55,9 @@ const FileManager: React.FC<FileManagerProps> = ({ selectedTool }) => {
   }, [loadRecentFiles]);
 
   const handleRecentFilesSelected = useCallback(
-    async (files: StirlingFileStub[]) => {
+    async (files: luminaFileStub[]) => {
       try {
-        // Use StirlingFileStubs directly - preserves all metadata!
+        // Use luminaFileStubs directly - preserves all metadata!
         onRecentFileSelect(files);
       } catch (error) {
         console.error("Failed to process selected files:", error);

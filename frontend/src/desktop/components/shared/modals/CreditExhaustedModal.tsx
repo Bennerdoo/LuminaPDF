@@ -529,7 +529,7 @@ export function CreditExhaustedModal({
               {/* Contact Sales - DISABLED for now
               <Button
                 component="a"
-                href="mailto:contact@stirlingpdf.com?subject=Enterprise Plan Inquiry"
+                href="mailto:contact@luminapdf.com?subject=Enterprise Plan Inquiry"
                 variant="outline"
                 fullWidth
                 size="md"
@@ -552,7 +552,7 @@ export function CreditExhaustedModal({
           {t("credits.modal.selfHostPrompt", "Want to self host?")}{" "}
           <Text
             component="a"
-            href="https://www.stirling.com/pricing"
+            href="https://www.lumina.com/pricing"
             target="_blank"
             rel="noopener noreferrer"
             size="sm"

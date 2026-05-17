@@ -19,13 +19,13 @@ import StorageIcon from "@mui/icons-material/Storage";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { getFileSize, getFileDate } from "@app/utils/fileUtils";
 import { useIndexedDBThumbnail } from "@app/hooks/useIndexedDBThumbnail";
 
 interface FileCardProps {
   file: File;
-  fileStub?: StirlingFileStub;
+  fileStub?: luminaFileStub;
   onRemove: () => void;
   onDoubleClick?: () => void;
   onView?: () => void;

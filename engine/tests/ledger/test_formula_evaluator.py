@@ -12,7 +12,7 @@ from decimal import Decimal
 
 import pytest
 
-from stirling.agents.ledger.validators.formula import FormulaEvaluator
+from lumina.agents.ledger.validators.formula import FormulaEvaluator
 
 
 @pytest.fixture

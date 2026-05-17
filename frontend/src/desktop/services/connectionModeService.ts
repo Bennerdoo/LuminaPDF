@@ -37,8 +37,8 @@ export interface ConnectionTestResult {
   diagnostics?: DiagnosticResult[];
 }
 
-export const LOCAL_MODE_STORAGE_KEY = "stirling-local-mode";
-export const JWT_EXPIRED_PROMPTED_KEY = "stirling-jwt-expired-prompted";
+export const LOCAL_MODE_STORAGE_KEY = "lumina-local-mode";
+export const JWT_EXPIRED_PROMPTED_KEY = "lumina-jwt-expired-prompted";
 
 export class ConnectionModeService {
   private static instance: ConnectionModeService;
@@ -113,7 +113,7 @@ export class ConnectionModeService {
         // mode has never been explicitly set (no localStorage flag either direction),
         // and there is no provisioning lock. Default to local so the user sees
         // the bundled backend instead of a broken SaaS-mode UI.
-        // MSI installs with STIRLING_SERVER_URL are excluded because they have a
+        // MSI installs with lumina_SERVER_URL are excluded because they have a
         // non-null server_config; locked provisioned installs are excluded by the
         // lock_connection_mode guard.
         config.mode = "local";

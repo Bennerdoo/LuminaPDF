@@ -15,13 +15,13 @@ from unittest.mock import patch
 import pytest
 from pydantic_ai.exceptions import AgentRunError
 
-from stirling.agents.pdf_comment import PdfCommentAgent
-from stirling.agents.pdf_comment.agent import LlmCommentInstruction, LlmCommentOutput
-from stirling.contracts.pdf_comments import (
+from lumina.agents.pdf_comment import PdfCommentAgent
+from lumina.agents.pdf_comment.agent import LlmCommentInstruction, LlmCommentOutput
+from lumina.contracts.pdf_comments import (
     PdfCommentRequest,
     TextChunk,
 )
-from stirling.services.runtime import AppRuntime
+from lumina.services.runtime import AppRuntime
 
 # ---------------------------------------------------------------------------
 # Helpers

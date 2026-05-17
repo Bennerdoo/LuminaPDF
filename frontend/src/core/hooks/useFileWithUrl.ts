@@ -11,7 +11,7 @@ export function useFileWithUrl(
   const result = useMemo(() => {
     if (!file) return null;
 
-    // Validate that file is a proper File, StirlingFile, or Blob object
+    // Validate that file is a proper File, luminaFile, or Blob object
     if (!isFileObject(file) && !(file instanceof Blob)) {
       console.warn("useFileWithUrl: Expected File or Blob, got:", file);
       return null;
@@ -48,7 +48,7 @@ export function useFileWithUrlAndCleanup(file: File | null): {
   cleanup: () => void;
 } {
   return useMemo(() => {
-    if (!file) return { fileObj: null, cleanup: () => {} };
+    if (!file) return { fileObj: null, cleanup: () => { } };
 
     const url = URL.createObjectURL(file);
     const fileObj = { file, url };

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { authService, UserInfo } from "@app/services/authService";
 import { buildOAuthCallbackHtml } from "@app/utils/oauthCallbackHtml";
 import { BASE_PATH } from "@app/constants/app";
-import { STIRLING_SAAS_URL } from "@app/constants/connection";
+import { lumina_SAAS_URL } from "@app/constants/connection";
 import "@app/components/SetupWizard/desktopOAuth.css";
 
 type KnownProviderId =
@@ -73,7 +73,7 @@ export const DesktopOAuthButtons: React.FC<DesktopOAuthButtonsProps> = ({
       const normalizedServer = serverUrl.replace(/\/+$/, "");
       const usingSupabaseFlow =
         mode === "saas" ||
-        normalizedServer === STIRLING_SAAS_URL.replace(/\/+$/, "");
+        normalizedServer === lumina_SAAS_URL.replace(/\/+$/, "");
       const userInfo = usingSupabaseFlow
         ? await authService.loginWithOAuth(
             provider.id,

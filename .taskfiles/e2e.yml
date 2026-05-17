@@ -1,17 +1,17 @@
-version: '3'
+version: "3"
 
 tasks:
   install:
     desc: "Install Playwright browsers"
     dir: frontend
-    deps: [ ':frontend:install' ]
+    deps: [":frontend:install"]
     cmds:
       - npx playwright install {{.CLI_ARGS}} --with-deps
 
   stubbed:
     desc: "Run stubbed E2E tests"
     dir: frontend
-    deps: [ ':frontend:prepare' ]
+    deps: [":frontend:prepare"]
     cmds:
       - npx playwright test --project=stubbed {{.CLI_ARGS}}
 
@@ -33,9 +33,9 @@ tasks:
     internal: true
     ignore_error: true
     vars:
-      BASE_DIR: '{{.ROOT_DIR}}/.test-state/playwright'
+      BASE_DIR: "{{.ROOT_DIR}}/.test-state/playwright"
     env:
-      STIRLING_BASE_PATH: '{{.BASE_DIR}}'
+      lumina_BASE_PATH: "{{.BASE_DIR}}"
       # Suppress the analytics opt-in modal that fires on first admin login.
       # It renders a Mantine overlay that intercepts pointer events and blocks
       # FirstLoginSlide from rendering, so the bootstrap spec times out waiting
@@ -43,7 +43,7 @@ tasks:
       SYSTEM_ENABLEANALYTICS: "false"
       # NOTE: SECURITY_INITIALLOGIN_USERNAME/PASSWORD are intentionally NOT set.
       # The live-setup project's bootstrap spec performs the real first-login
-      # flow against the backend's default admin/stirling user, exercising the
+      # flow against the backend's default admin/lumina user, exercising the
       # forced-password-change UI and leaving the DB at admin/adminadmin for
       # the rest of the live suite. This is both real coverage of the first-
       # login flow and a stronger seed than env-var-driven user creation.
@@ -63,7 +63,7 @@ tasks:
           # resorting to fuzzy `pkill -f` patterns. `wait` keeps this script
           # alive for the lifetime of gradle so Task'"'"'s parallel deps stay
           # synchronised.
-          bash gradlew :stirling-pdf:bootRun > "{{.BASE_DIR}}/backend.log" 2>&1 &
+          bash gradlew :lumina-pdf:bootRun > "{{.BASE_DIR}}/backend.log" 2>&1 &
           GRADLE_PID=$!
           echo $GRADLE_PID > "{{.BASE_DIR}}/backend.pid"
           wait $GRADLE_PID
@@ -71,10 +71,10 @@ tasks:
 
   live:runner:
     internal: true
-    deps: [ ':frontend:prepare' ]
+    deps: [":frontend:prepare"]
     dir: frontend
     vars:
-      BASE_DIR: '{{.ROOT_DIR}}/.test-state/playwright'
+      BASE_DIR: "{{.ROOT_DIR}}/.test-state/playwright"
     cmds:
       # Wrapped in `bash -c` because Task's embedded shell (mvdan/sh) only
       # supports `EXIT`/`ERR` in `trap`, not `INT`/`TERM`. CLI_ARGS are
@@ -142,14 +142,14 @@ tasks:
         task e2e:oauth:up
         task e2e:saml:up
     dir: frontend
-    deps: [ ':frontend:prepare' ]
+    deps: [":frontend:prepare"]
     cmds:
       - npx playwright test --project=enterprise {{.CLI_ARGS}}
 
   cross-browser:
     desc: "Run stubbed E2E tests on Chromium, Firefox, and WebKit"
     dir: frontend
-    deps: [ ':frontend:prepare' ]
+    deps: [":frontend:prepare"]
     cmds:
       - npx playwright test --project=stubbed --project=stubbed-firefox --project=stubbed-webkit {{.CLI_ARGS}}
 

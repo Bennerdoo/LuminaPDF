@@ -108,18 +108,18 @@ jobs:
         id: cleanup
         run: |
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << 'ENDSSH'
-            if [ -d "/stirling/PR-${{ github.event.pull_request.number }}" ]; then
+            if [ -d "/lumina/PR-${{ github.event.pull_request.number }}" ]; then
               echo "Found PR directory, proceeding with cleanup..."
 
               # Stop and remove containers
-              cd /stirling/PR-${{ github.event.pull_request.number }}
+              cd /lumina/PR-${{ github.event.pull_request.number }}
               docker-compose down || true
 
               # Go back to root before removal
               cd /
 
               # Remove PR-specific directories
-              rm -rf /stirling/PR-${{ github.event.pull_request.number }}
+              rm -rf /lumina/PR-${{ github.event.pull_request.number }}
 
               # Remove the Docker images
               docker rmi --no-prune ${{ secrets.DOCKER_HUB_USERNAME }}/test:pr-${{ github.event.pull_request.number }} || true

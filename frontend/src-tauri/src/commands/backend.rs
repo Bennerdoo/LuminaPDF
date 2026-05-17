@@ -74,7 +74,7 @@ fn find_bundled_jre(resource_dir: &PathBuf) -> Result<PathBuf, String> {
 }
 
 // Find the Lumina-PDF JAR file
-fn find_stirling_jar(resource_dir: &PathBuf) -> Result<PathBuf, String> {
+fn find_lumina_jar(resource_dir: &PathBuf) -> Result<PathBuf, String> {
     let libs_dir = resource_dir.join("libs");
     let mut jar_files: Vec<_> = std::fs::read_dir(&libs_dir)
         .map_err(|e| {
@@ -166,7 +166,7 @@ fn copy_dir_recursive(src: &Path, dest: &Path) -> std::io::Result<()> {
 }
 
 // Create, configure and run the Java command to run Lumina-PDF JAR
-fn run_stirling_pdf_jar(app: &tauri::AppHandle, java_path: &PathBuf, jar_path: &PathBuf) -> Result<(), String> {
+fn run_lumina_pdf_jar(app: &tauri::AppHandle, java_path: &PathBuf, jar_path: &PathBuf) -> Result<(), String> {
     // Get platform-specific application data directory for Tauri mode
     let app_data_dir = app_data_dir();
 
@@ -206,7 +206,7 @@ fn run_stirling_pdf_jar(app: &tauri::AppHandle, java_path: &PathBuf, jar_path: &
     let java_options = vec![
         "-Xmx2g",
         "-DBROWSER_OPEN=false",
-        "-DSTIRLING_PDF_TAURI_MODE=true",
+        "-Dlumina_PDF_TAURI_MODE=true",
         &log_path_option,
         "-Dlogging.file.name=Lumina-PDF.log",
         "-Dserver.port=0",  // Let OS assign an available port
@@ -258,9 +258,9 @@ fn run_stirling_pdf_jar(app: &tauri::AppHandle, java_path: &PathBuf, jar_path: &
         .args(java_options)
         .current_dir(&work_dir)  // Set working directory to writable location
         .env("TAURI_PARENT_PID", std::process::id().to_string())
-        .env("STIRLING_PDF_CONFIG_DIR", config_dir.to_str().unwrap())
-        .env("STIRLING_PDF_LOG_DIR", log_dir.to_str().unwrap())
-        .env("STIRLING_PDF_WORK_DIR", work_dir.to_str().unwrap());
+        .env("lumina_PDF_CONFIG_DIR", config_dir.to_str().unwrap())
+        .env("lumina_PDF_LOG_DIR", log_dir.to_str().unwrap())
+        .env("lumina_PDF_WORK_DIR", work_dir.to_str().unwrap());
 
     add_log("⚙️ Starting backend with bundled JRE...".to_string());
 
@@ -425,7 +425,7 @@ pub async fn start_backend(
     })?;
 
     // Find the Lumina-PDF JAR
-    let jar_path = find_stirling_jar(&resource_dir).map_err(|e| {
+    let jar_path = find_lumina_jar(&resource_dir).map_err(|e| {
         reset_starting_flag();
         e
     })?;
@@ -439,7 +439,7 @@ pub async fn start_backend(
     add_log(format!("📦 Normalized Java path: {:?}", normalized_java_path));
 
     // Create and start the Java command
-    run_stirling_pdf_jar(&app, &normalized_java_path, &normalized_jar_path).map_err(|e| {
+    run_lumina_pdf_jar(&app, &normalized_java_path, &normalized_jar_path).map_err(|e| {
         reset_starting_flag();
         e
     })?;

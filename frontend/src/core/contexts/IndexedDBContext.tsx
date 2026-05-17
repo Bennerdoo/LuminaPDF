@@ -7,8 +7,8 @@ import React, { createContext, useContext, useCallback, useRef } from "react";
 import { fileStorage } from "@app/services/fileStorage";
 import { FileId } from "@app/types/file";
 import {
-  StirlingFileStub,
-  createStirlingFile,
+  luminaFileStub,
+  createluminaFile,
   createQuickKey,
 } from "@app/types/fileContext";
 import { generateThumbnailForFile } from "@app/utils/thumbnailUtils";
@@ -21,14 +21,14 @@ interface IndexedDBContextValue {
     file: File,
     fileId: FileId,
     existingThumbnail?: string,
-  ) => Promise<StirlingFileStub>;
+  ) => Promise<luminaFileStub>;
   loadFile: (fileId: FileId) => Promise<File | null>;
-  loadMetadata: (fileId: FileId) => Promise<StirlingFileStub | null>;
+  loadMetadata: (fileId: FileId) => Promise<luminaFileStub | null>;
   deleteFile: (fileId: FileId) => Promise<void>;
 
   // Batch operations
-  loadAllMetadata: () => Promise<StirlingFileStub[]>;
-  loadLeafMetadata: () => Promise<StirlingFileStub[]>; // Only leaf files for recent files list
+  loadAllMetadata: () => Promise<luminaFileStub[]>;
+  loadLeafMetadata: () => Promise<luminaFileStub[]>; // Only leaf files for recent files list
   deleteMultiple: (fileIds: FileId[]) => Promise<void>;
   clearAll: () => Promise<void>;
 
@@ -78,16 +78,16 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
       file: File,
       fileId: FileId,
       existingThumbnail?: string,
-    ): Promise<StirlingFileStub> => {
+    ): Promise<luminaFileStub> => {
       // Use existing thumbnail or generate new one if none provided
       const thumbnail =
         existingThumbnail || (await generateThumbnailForFile(file));
 
       // Store in IndexedDB (no history data - that's handled by direct fileStorage calls now)
-      const stirlingFile = createStirlingFile(file, fileId);
+      const luminaFile = createluminaFile(file, fileId);
 
       // Create minimal stub for storage
-      const stub: StirlingFileStub = {
+      const stub: luminaFileStub = {
         id: fileId,
         name: file.name,
         size: file.size,
@@ -102,14 +102,14 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
         toolHistory: [],
       };
 
-      await fileStorage.storeStirlingFile(stirlingFile, stub);
-      const storedFile = await fileStorage.getStirlingFileStub(fileId);
+      await fileStorage.storeluminaFile(luminaFile, stub);
+      const storedFile = await fileStorage.getluminaFileStub(fileId);
 
       // Cache the file object for immediate reuse
       fileCache.current.set(fileId, { file, lastAccessed: Date.now() });
       evictLRUEntries();
 
-      // Return StirlingFileStub from the stored file (no conversion needed)
+      // Return luminaFileStub from the stored file (no conversion needed)
       if (!storedFile) {
         throw new Error(
           `Failed to retrieve stored file after saving: ${file.name}`,
@@ -132,10 +132,10 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
       }
 
       // Load from IndexedDB
-      const storedFile = await fileStorage.getStirlingFile(fileId);
+      const storedFile = await fileStorage.getluminaFile(fileId);
       if (!storedFile) return null;
 
-      // StirlingFile is already a File object, no reconstruction needed
+      // luminaFile is already a File object, no reconstruction needed
       const file = storedFile;
 
       // Cache for future use with LRU eviction
@@ -148,9 +148,9 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
   );
 
   const loadMetadata = useCallback(
-    async (fileId: FileId): Promise<StirlingFileStub | null> => {
+    async (fileId: FileId): Promise<luminaFileStub | null> => {
       // Load stub directly from storage service
-      return await fileStorage.getStirlingFileStub(fileId);
+      return await fileStorage.getluminaFileStub(fileId);
     },
     [],
   );
@@ -160,22 +160,22 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
     fileCache.current.delete(fileId);
 
     // Remove from IndexedDB
-    await fileStorage.deleteStirlingFile(fileId);
+    await fileStorage.deleteluminaFile(fileId);
   }, []);
 
   const loadLeafMetadata = useCallback(async (): Promise<
-    StirlingFileStub[]
+    luminaFileStub[]
   > => {
-    const metadata = await fileStorage.getLeafStirlingFileStubs(); // Only get leaf files
+    const metadata = await fileStorage.getLeafluminaFileStubs(); // Only get leaf files
 
-    // All files are already StirlingFileStub objects, no processing needed
+    // All files are already luminaFileStub objects, no processing needed
     return metadata;
   }, []);
 
-  const loadAllMetadata = useCallback(async (): Promise<StirlingFileStub[]> => {
-    const metadata = await fileStorage.getAllStirlingFileStubs();
+  const loadAllMetadata = useCallback(async (): Promise<luminaFileStub[]> => {
+    const metadata = await fileStorage.getAllluminaFileStubs();
 
-    // All files are already StirlingFileStub objects, no processing needed
+    // All files are already luminaFileStub objects, no processing needed
     return metadata;
   }, []);
 
@@ -186,7 +186,7 @@ export function IndexedDBProvider({ children }: IndexedDBProviderProps) {
 
       // Remove from IndexedDB in parallel
       await Promise.all(
-        fileIds.map((id) => fileStorage.deleteStirlingFile(id)),
+        fileIds.map((id) => fileStorage.deleteluminaFile(id)),
       );
     },
     [],

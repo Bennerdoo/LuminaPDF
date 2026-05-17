@@ -89,9 +89,9 @@ fn check_default_windows() -> Result<bool, String> {
 
             add_log(format!("Windows PDF handler ProgID: {}", default_str));
 
-            // Check if it contains "Stirling" (case-insensitive)
+            // Check if it contains "lumina" (case-insensitive)
             // Note: This checks the ProgID registered by the installer
-            let is_default = default_str.to_lowercase().contains("stirling");
+            let is_default = default_str.to_lowercase().contains("lumina");
             Ok(is_default)
         })();
 
@@ -160,7 +160,7 @@ fn check_default_macos() -> Result<bool, String> {
         add_log(format!("macOS PDF handler: {}", handler_str));
 
         // Check if it's our bundle identifier
-        let is_default = handler_str == "stirling.pdf.dev";
+        let is_default = handler_str == "lumina.pdf.dev";
         Ok(is_default)
     }
 }
@@ -186,7 +186,7 @@ fn set_default_macos() -> Result<String, String> {
     unsafe {
         // Set our app as the default handler for PDF files
         let pdf_uti = CFString::new("com.adobe.pdf");
-        let our_bundle_id = CFString::new("stirling.pdf.dev");
+        let our_bundle_id = CFString::new("lumina.pdf.dev");
 
         let status = LSSetDefaultRoleHandlerForContentType(
             pdf_uti.as_concrete_TypeRef(),

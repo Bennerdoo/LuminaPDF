@@ -50,7 +50,7 @@ jobs:
 
       - name: Verify tool models are up to date
         run: |
-          if ! git diff --exit-code engine/src/stirling/models/tool_models.py; then
+          if ! git diff --exit-code engine/src/lumina/models/tool_models.py; then
             echo "tool_models.py is out of date."
             echo "Run 'task engine:tool-models' locally and commit the updated file."
             exit 1

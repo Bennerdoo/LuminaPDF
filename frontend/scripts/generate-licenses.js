@@ -345,7 +345,7 @@ function checkLicenseCompatibility(licenseSummary, licenseArray) {
     "Ruby",
     "MPL-2.0",
     "CC-BY-4.0",
-    "SEE LICENSE IN https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/refs/heads/main/proprietary/LICENSE",
+    "SEE LICENSE IN https://raw.githubusercontent.com/lumina-Tools/lumina-PDF/refs/heads/main/proprietary/LICENSE",
     "SEE LICENSE IN LICENSE https://github.com/PostHog/posthog-js/blob/main/LICENSE",
   ]);
 
@@ -375,16 +375,16 @@ function checkLicenseCompatibility(licenseSummary, licenseArray) {
     const isOnlyOurPackages = affectedPackages.every(
       (dep) =>
         dep.name === "frontend" ||
-        dep.name.toLowerCase().includes("stirling-pdf") ||
-        dep.name.toLowerCase().includes("stirling_pdf") ||
-        dep.name.toLowerCase().includes("stirlingpdf"),
+        dep.name.toLowerCase().includes("lumina-pdf") ||
+        dep.name.toLowerCase().includes("lumina_pdf") ||
+        dep.name.toLowerCase().includes("luminapdf"),
     );
 
     if (
       isOnlyOurPackages &&
       (license === "UNLICENSED" || license.startsWith("SEE LICENSE IN"))
     ) {
-      return; // Skip warnings for our own Stirling-PDF packages
+      return; // Skip warnings for our own lumina-PDF packages
     }
 
     // Check for compound licenses like "(MIT AND Zlib)" or "(MIT OR CC0-1.0)"

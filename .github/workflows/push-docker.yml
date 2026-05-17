@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       build_main_app:
-        description: "Build & push the main Stirling-PDF image (latest, fat, ultra-lite)."
+        description: "Build & push the main lumina-PDF image (latest, fat, ultra-lite)."
         required: false
         type: boolean
         default: true
       build_unoserver:
-        description: "Build & push the standalone stirling-unoserver image."
+        description: "Build & push the standalone lumina-unoserver image."
         required: false
         type: boolean
         default: true
       force_unoserver_rebuild:
-        description: "Rebuild stirling-unoserver even if its source hash is unchanged."
+        description: "Rebuild lumina-unoserver even if its source hash is unchanged."
         required: false
         type: boolean
         default: false
@@ -134,8 +134,8 @@ jobs:
           images: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/s-pdf
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
-            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/stirling-pdf
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/lumina-pdf
+            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/lumina-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }},enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
@@ -151,8 +151,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-latest
-          cache-to: type=gha,mode=max,scope=stirling-pdf-latest
+          cache-from: type=gha,scope=lumina-pdf-latest
+          cache-to: type=gha,mode=max,scope=lumina-pdf-latest
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
@@ -184,8 +184,8 @@ jobs:
           images: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/s-pdf
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
-            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/stirling-pdf
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/lumina-pdf
+            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/lumina-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-fat,enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
             type=raw,value=latest-fat,enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
@@ -199,8 +199,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile.fat
           push: true
-          cache-from: type=gha,scope=stirling-pdf-fat
-          cache-to: type=gha,mode=max,scope=stirling-pdf-fat
+          cache-from: type=gha,scope=lumina-pdf-fat
+          cache-to: type=gha,mode=max,scope=lumina-pdf-fat
           tags: ${{ steps.meta-fat.outputs.tags }}
           labels: ${{ steps.meta-fat.outputs.labels }}
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
@@ -228,8 +228,8 @@ jobs:
           images: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/s-pdf
             ghcr.io/${{ steps.repoowner.outputs.lowercase }}/s-pdf
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf
-            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/stirling-pdf
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/lumina-pdf
+            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/lumina-pdf
           tags: |
             type=raw,value=${{ steps.versionNumber.outputs.versionNumber }}-ultra-lite,enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
             type=raw,value=latest-ultra-lite,enable=${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/V2-master' }}
@@ -243,8 +243,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile.ultra-lite
           push: true
-          cache-from: type=gha,scope=stirling-pdf-ultra-lite
-          cache-to: type=gha,mode=max,scope=stirling-pdf-ultra-lite
+          cache-from: type=gha,scope=lumina-pdf-ultra-lite
+          cache-to: type=gha,mode=max,scope=lumina-pdf-ultra-lite
           tags: ${{ steps.meta-lite.outputs.tags }}
           labels: ${{ steps.meta-lite.outputs.labels }}
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
@@ -299,8 +299,8 @@ jobs:
         env:
           UNOSERVER_VERSION: ${{ steps.unoserverVersion.outputs.version }}
           UNOSERVER_HASH: ${{ steps.unoserverHash.outputs.hash }}
-          UNOSERVER_IMAGE: ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-unoserver
-          UNOSERVER_HASH_ANNOTATION: org.stirlingpdf.unoserver-source-hash
+          UNOSERVER_IMAGE: ghcr.io/${{ steps.repoowner.outputs.lowercase }}/lumina-unoserver
+          UNOSERVER_HASH_ANNOTATION: org.luminapdf.unoserver-source-hash
           FORCE_REBUILD: ${{ inputs.force_unoserver_rebuild }}
           GH_REF: ${{ github.ref }}
           EVENT_NAME: ${{ github.event_name }}
@@ -330,9 +330,9 @@ jobs:
                 mode="stable"
                 tags="${UNOSERVER_IMAGE}:${UNOSERVER_VERSION},${UNOSERVER_IMAGE}:latest"
               elif docker manifest inspect "${UNOSERVER_IMAGE}:${UNOSERVER_VERSION}" >/dev/null 2>&1; then
-                echo "stirling-unoserver:${UNOSERVER_VERSION} already on GHCR — skipping"
+                echo "lumina-unoserver:${UNOSERVER_VERSION} already on GHCR — skipping"
               else
-                echo "stirling-unoserver:${UNOSERVER_VERSION} is new — will publish"
+                echo "lumina-unoserver:${UNOSERVER_VERSION} is new — will publish"
                 mode="stable"
                 tags="${UNOSERVER_IMAGE}:${UNOSERVER_VERSION},${UNOSERVER_IMAGE}:latest"
               fi
@@ -371,12 +371,12 @@ jobs:
           context: .
           file: ./docker/unoserver/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-unoserver
-          cache-to: type=gha,mode=max,scope=stirling-unoserver
+          cache-from: type=gha,scope=lumina-unoserver
+          cache-to: type=gha,mode=max,scope=lumina-unoserver
           tags: ${{ steps.unoserverDecision.outputs.tags }}
           # Manifest annotation read by the decision step above to detect drift.
           annotations: |
-            index:org.stirlingpdf.unoserver-source-hash=${{ steps.unoserverHash.outputs.hash }}
+            index:org.luminapdf.unoserver-source-hash=${{ steps.unoserverHash.outputs.hash }}
           platforms: linux/amd64,linux/arm64/v8
           provenance: true
           sbom: true

@@ -1,16 +1,16 @@
 from conftest import build_app_settings
 from fastapi.testclient import TestClient
 
-from stirling.api import app
-from stirling.api.dependencies import (
+from lumina.api import app
+from lumina.api.dependencies import (
     get_execution_planning_agent,
     get_orchestrator_agent,
     get_pdf_edit_agent,
     get_pdf_question_agent,
     get_user_spec_agent,
 )
-from stirling.config import load_settings
-from stirling.contracts import (
+from lumina.config import load_settings
+from lumina.contracts import (
     AgentDraft,
     AgentDraftRequest,
     AgentDraftResponse,
@@ -26,7 +26,7 @@ from stirling.contracts import (
     PdfQuestionRequest,
     SupportedCapability,
 )
-from stirling.models.tool_models import Angle, RotatePdfParams
+from lumina.models.tool_models import Angle, RotatePdfParams
 
 
 class StubOrchestratorAgent:

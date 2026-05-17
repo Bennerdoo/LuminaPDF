@@ -60,7 +60,7 @@ RUN set -eu; \
         > "/usr/share/myspell/infos/ooo/hyphen-${lang}-${country}"; \
     done
 
-COPY --chmod=0644 docker/unoserver/fonts.conf /etc/fonts/conf.d/100-stirling.conf
+COPY --chmod=0644 docker/unoserver/fonts.conf /etc/fonts/conf.d/100-lumina.conf
 RUN fc-cache -f
 
 # venv with --system-site-packages so it picks up distro python3-uno.
@@ -101,6 +101,6 @@ ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 
 LABEL org.opencontainers.image.title="Lumina-PDF Unoserver" \
       org.opencontainers.image.description="Pinned unoserver build for Lumina-PDF remote UNO mode" \
-      org.opencontainers.image.source="https://github.com/Stirling-Tools/Lumina-PDF" \
+      org.opencontainers.image.source="https://github.com/lumina-Tools/Lumina-PDF" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.vendor="Stirling-Tools"
+      org.opencontainers.image.vendor="lumina-Tools"

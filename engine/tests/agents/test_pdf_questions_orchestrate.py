@@ -10,8 +10,8 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from stirling.agents.pdf_questions import _MATH_SYNTH_SYSTEM_PROMPT, PdfQuestionAgent
-from stirling.contracts import (
+from lumina.agents.pdf_questions import _MATH_SYNTH_SYSTEM_PROMPT, PdfQuestionAgent
+from lumina.contracts import (
     AiFile,
     EditPlanResponse,
     MathAuditorToolReportArtifact,
@@ -19,10 +19,10 @@ from stirling.contracts import (
     PdfQuestionAnswerResponse,
     SupportedCapability,
 )
-from stirling.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
-from stirling.models import FileId
-from stirling.models.agent_tool_models import AgentToolId
-from stirling.services.runtime import AppRuntime
+from lumina.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
+from lumina.models import FileId
+from lumina.models.agent_tool_models import AgentToolId
+from lumina.services.runtime import AppRuntime
 
 
 @dataclass

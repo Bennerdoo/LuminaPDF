@@ -90,7 +90,7 @@ function InteractionPauseBridge({
   return null;
 }
 
-const DOCUMENT_NAME = "stirling-pdf-signing-viewer";
+const DOCUMENT_NAME = "lumina-pdf-signing-viewer";
 
 export interface SignaturePreview {
   id: string;

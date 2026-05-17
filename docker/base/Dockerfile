@@ -615,15 +615,15 @@ ARG PUID=1000
 ARG PGID=1000
 
 RUN set -eux; \
-    if ! getent group stirlingpdfgroup >/dev/null 2>&1; then \
-      groupadd -g "${PGID}" stirlingpdfgroup 2>/dev/null \
-        || groupadd stirlingpdfgroup; \
+    if ! getent group luminapdfgroup >/dev/null 2>&1; then \
+      groupadd -g "${PGID}" luminapdfgroup 2>/dev/null \
+        || groupadd luminapdfgroup; \
     fi; \
-    if ! id -u stirlingpdfuser >/dev/null 2>&1; then \
-      useradd -m -u "${PUID}" -g stirlingpdfgroup \
-        -d /home/stirlingpdfuser -s /bin/bash stirlingpdfuser 2>/dev/null \
-        || useradd -m -g stirlingpdfgroup \
-          -d /home/stirlingpdfuser -s /bin/bash stirlingpdfuser; \
+    if ! id -u luminapdfuser >/dev/null 2>&1; then \
+      useradd -m -u "${PUID}" -g luminapdfgroup \
+        -d /home/luminapdfuser -s /bin/bash luminapdfuser 2>/dev/null \
+        || useradd -m -g luminapdfgroup \
+          -d /home/luminapdfuser -s /bin/bash luminapdfuser; \
     fi
 
 # Application directories
@@ -631,8 +631,8 @@ RUN set -eux; \
     mkdir -p /configs /configs/cache /configs/heap_dumps /logs /customFiles \
              /pipeline/watchedFolders /pipeline/finishedFolders \
              /tmp/Lumina-PDF/heap_dumps; \
-    chown -R stirlingpdfuser:stirlingpdfgroup \
-      /home/stirlingpdfuser /configs /logs /customFiles /pipeline \
+    chown -R luminapdfuser:luminapdfgroup \
+      /home/luminapdfuser /configs /logs /customFiles /pipeline \
       /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF/heap_dumps
@@ -650,10 +650,10 @@ RUN set -eux; \
 # Metadata labels - base image
 LABEL org.opencontainers.image.title="Lumina-PDF Base" \
       org.opencontainers.image.description="Pre-built base image with Calibre, Ghostscript, QPDF, ImageMagick, LibreOffice, OCRmyPDF and dependencies" \
-      org.opencontainers.image.source="https://github.com/Stirling-Tools/Lumina-PDF" \
+      org.opencontainers.image.source="https://github.com/lumina-Tools/Lumina-PDF" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.vendor="Stirling-Tools" \
-      org.opencontainers.image.url="https://www.stirlingpdf.com" \
-      org.opencontainers.image.documentation="https://docs.stirlingpdf.com" \
-      maintainer="Stirling-Tools" \
-      org.opencontainers.image.authors="Stirling-Tools"
+      org.opencontainers.image.vendor="lumina-Tools" \
+      org.opencontainers.image.url="https://www.luminapdf.com" \
+      org.opencontainers.image.documentation="https://docs.luminapdf.com" \
+      maintainer="lumina-Tools" \
+      org.opencontainers.image.authors="lumina-Tools"

@@ -3,20 +3,20 @@
  */
 
 import {
-  StirlingFileStub,
+  luminaFileStub,
   FileContextAction,
   FileContextState,
-  createNewStirlingFileStub,
+  createNewluminaFileStub,
   createFileId,
   createQuickKey,
-  createStirlingFile,
+  createluminaFile,
   ProcessedFileMetadata,
 } from "@app/types/fileContext";
 import { FileId, ToolOperation } from "@app/types/file";
 import { generateThumbnailWithMetadata } from "@app/utils/thumbnailUtils";
 import { FileLifecycleManager } from "@app/contexts/file/lifecycle";
 import { buildQuickKeySet } from "@app/contexts/file/fileSelectors";
-import { StirlingFile } from "@app/types/fileContext";
+import { luminaFile } from "@app/types/fileContext";
 import { fileStorage } from "@app/services/fileStorage";
 import { zipFileService } from "@app/services/zipFileService";
 import { FileAnalyzer } from "@app/services/fileAnalyzer";
@@ -153,23 +153,23 @@ export async function generateProcessedFileMetadata(
 }
 
 /**
- * Create a child StirlingFileStub from a parent stub with proper history management.
+ * Create a child luminaFileStub from a parent stub with proper history management.
  * Used when a tool processes an existing file to create a new version with incremented history.
  *
- * @param parentStub - The parent StirlingFileStub to create a child from
+ * @param parentStub - The parent luminaFileStub to create a child from
  * @param operation - Tool operation information (toolName, timestamp)
  * @param resultingFile - The processed File object
  * @param thumbnail - Optional thumbnail for the child
  * @param processedFileMetadata - Optional fresh metadata for the processed file
- * @returns New child StirlingFileStub with proper version history
+ * @returns New child luminaFileStub with proper version history
  */
 export function createChildStub(
-  parentStub: StirlingFileStub,
+  parentStub: luminaFileStub,
   operation: ToolOperation,
   resultingFile: File,
   thumbnail?: string,
   processedFileMetadata?: ProcessedFileMetadata,
-): StirlingFileStub {
+): luminaFileStub {
   const newFileId = createFileId();
 
   // Build new tool history by appending to parent's history
@@ -261,13 +261,13 @@ export async function addFiles(
   dispatch: React.Dispatch<FileContextAction>,
   lifecycleManager: FileLifecycleManager,
   enablePersistence: boolean = false,
-): Promise<StirlingFile[]> {
+): Promise<luminaFile[]> {
   // Acquire mutex to prevent race conditions
   await addFilesMutex.lock();
 
   try {
-    const stirlingFileStubs: StirlingFileStub[] = [];
-    const stirlingFiles: StirlingFile[] = [];
+    const luminaFileStubs: luminaFileStub[] = [];
+    const luminaFiles: luminaFile[] = [];
     // Hydration tasks are scheduled per-file to update thumbnails/metadata without blocking add flow
 
     // Build quickKey lookup from existing files for deduplication
@@ -359,7 +359,7 @@ export async function addFiles(
       filesRef.current.set(fileId, file);
 
       // Create new filestub with minimal metadata; hydrate thumbnails/processedFile asynchronously
-      const fileStub = createNewStirlingFileStub(file, fileId);
+      const fileStub = createNewluminaFileStub(file, fileId);
 
       // Early encryption detection for PDFs — set the flag before dispatch so the
       // viewer gate and modal queue pick it up immediately instead of after hydration
@@ -417,17 +417,17 @@ export async function addFiles(
       if (!allowDuplicates) {
         existingQuickKeys.add(quickKey);
       }
-      stirlingFileStubs.push(fileStub);
+      luminaFileStubs.push(fileStub);
 
       // Dispatch immediately so each file appears as soon as it is processed
       dispatch({
         type: "ADD_FILES",
-        payload: { stirlingFileStubs: [fileStub] },
+        payload: { luminaFileStubs: [fileStub] },
       });
 
-      // Create StirlingFile directly
-      const stirlingFile = createStirlingFile(file, fileId);
-      stirlingFiles.push(stirlingFile);
+      // Create luminaFile directly
+      const luminaFile = createluminaFile(file, fileId);
+      luminaFiles.push(luminaFile);
 
       // Queue background hydration so add flow doesn't block on thumbnail/metadata work
       scheduleMetadataHydration(async () => {
@@ -463,7 +463,7 @@ export async function addFiles(
           }
         }
 
-        const updates: Partial<StirlingFileStub> = {};
+        const updates: Partial<luminaFileStub> = {};
         const primaryThumbnail =
           thumbnail ||
           processedFileMetadata?.thumbnailUrl ||
@@ -481,31 +481,31 @@ export async function addFiles(
         }
 
         if (Object.keys(updates).length > 0) {
-          lifecycleManager.updateStirlingFileStub(fileId, updates, stateRef);
+          lifecycleManager.updateluminaFileStub(fileId, updates, stateRef);
         }
       });
     }
 
     // Persist to storage if enabled using fileStorage service
-    if (enablePersistence && stirlingFiles.length > 0) {
+    if (enablePersistence && luminaFiles.length > 0) {
       await Promise.all(
-        stirlingFiles.map(async (stirlingFile, index) => {
+        luminaFiles.map(async (luminaFile, index) => {
           try {
             // Get corresponding stub with all metadata
-            const fileStub = stirlingFileStubs[index];
+            const fileStub = luminaFileStubs[index];
 
-            // Store using the cleaner signature - pass StirlingFile + StirlingFileStub directly
-            await fileStorage.storeStirlingFile(stirlingFile, fileStub);
+            // Store using the cleaner signature - pass luminaFile + luminaFileStub directly
+            await fileStorage.storeluminaFile(luminaFile, fileStub);
 
             if (DEBUG)
               console.log(
-                `📄 addFiles: Stored file ${stirlingFile.name} with metadata:`,
+                `📄 addFiles: Stored file ${luminaFile.name} with metadata:`,
                 fileStub,
               );
           } catch (error) {
             console.error(
               "Failed to persist file to storage:",
-              stirlingFile.name,
+              luminaFile.name,
               error,
             );
           }
@@ -513,7 +513,7 @@ export async function addFiles(
       );
     }
 
-    return stirlingFiles;
+    return luminaFiles;
   } finally {
     // Always release mutex even if error occurs
     addFilesMutex.unlock();
@@ -522,49 +522,49 @@ export async function addFiles(
 
 /**
  * Consume files helper - replace unpinned input files with output files
- * Now accepts pre-created StirlingFiles and StirlingFileStubs to preserve all metadata
+ * Now accepts pre-created luminaFiles and luminaFileStubs to preserve all metadata
  */
 export async function consumeFiles(
   inputFileIds: FileId[],
-  outputStirlingFiles: StirlingFile[],
-  outputStirlingFileStubs: StirlingFileStub[],
+  outputluminaFiles: luminaFile[],
+  outputluminaFileStubs: luminaFileStub[],
   filesRef: React.MutableRefObject<Map<FileId, File>>,
   dispatch: React.Dispatch<FileContextAction>,
 ): Promise<FileId[]> {
   if (DEBUG)
     console.log(
-      `📄 consumeFiles: Processing ${inputFileIds.length} input files, ${outputStirlingFiles.length} output files with pre-created stubs`,
+      `📄 consumeFiles: Processing ${inputFileIds.length} input files, ${outputluminaFiles.length} output files with pre-created stubs`,
     );
 
   // Validate that we have matching files and stubs
-  if (outputStirlingFiles.length !== outputStirlingFileStubs.length) {
+  if (outputluminaFiles.length !== outputluminaFileStubs.length) {
     throw new Error(
-      `Mismatch between output files (${outputStirlingFiles.length}) and stubs (${outputStirlingFileStubs.length})`,
+      `Mismatch between output files (${outputluminaFiles.length}) and stubs (${outputluminaFileStubs.length})`,
     );
   }
 
-  // Store StirlingFiles in filesRef using their existing IDs (no ID generation needed)
-  for (let i = 0; i < outputStirlingFiles.length; i++) {
-    const stirlingFile = outputStirlingFiles[i];
-    const stub = outputStirlingFileStubs[i];
+  // Store luminaFiles in filesRef using their existing IDs (no ID generation needed)
+  for (let i = 0; i < outputluminaFiles.length; i++) {
+    const luminaFile = outputluminaFiles[i];
+    const stub = outputluminaFileStubs[i];
 
-    if (stirlingFile.fileId !== stub.id) {
+    if (luminaFile.fileId !== stub.id) {
       console.warn(
-        `📄 consumeFiles: ID mismatch between StirlingFile (${stirlingFile.fileId}) and stub (${stub.id})`,
+        `📄 consumeFiles: ID mismatch between luminaFile (${luminaFile.fileId}) and stub (${stub.id})`,
       );
     }
 
-    filesRef.current.set(stirlingFile.fileId, stirlingFile);
+    filesRef.current.set(luminaFile.fileId, luminaFile);
 
     if (DEBUG)
       console.log(
-        `📄 consumeFiles: Stored StirlingFile ${stirlingFile.name} with ID ${stirlingFile.fileId}`,
+        `📄 consumeFiles: Stored luminaFile ${luminaFile.name} with ID ${luminaFile.fileId}`,
       );
   }
 
   // Mark input files as processed in storage (no longer leaf nodes)
   if (
-    !outputStirlingFileStubs.reduce(
+    !outputluminaFileStubs.reduce(
       (areAllV1, stub) => areAllV1 && stub.versionNumber == 1,
       true,
     )
@@ -589,19 +589,19 @@ export async function consumeFiles(
   }
 
   // Save output files directly to fileStorage with complete metadata
-  for (let i = 0; i < outputStirlingFiles.length; i++) {
-    const stirlingFile = outputStirlingFiles[i];
-    const stub = outputStirlingFileStubs[i];
+  for (let i = 0; i < outputluminaFiles.length; i++) {
+    const luminaFile = outputluminaFiles[i];
+    const stub = outputluminaFileStubs[i];
 
     try {
       // Use fileStorage directly with complete metadata from stub
-      await fileStorage.storeStirlingFile(stirlingFile, stub);
+      await fileStorage.storeluminaFile(luminaFile, stub);
 
       if (DEBUG)
         console.log(
-          `📄 Saved StirlingFile ${stirlingFile.name} directly to storage with complete metadata:`,
+          `📄 Saved luminaFile ${luminaFile.name} directly to storage with complete metadata:`,
           {
-            fileId: stirlingFile.fileId,
+            fileId: luminaFile.fileId,
             versionNumber: stub.versionNumber,
             originalFileId: stub.originalFileId,
             parentFileId: stub.parentFileId,
@@ -611,7 +611,7 @@ export async function consumeFiles(
     } catch (error) {
       console.error(
         "Failed to persist output file to fileStorage:",
-        stirlingFile.name,
+        luminaFile.name,
         error,
       );
     }
@@ -622,23 +622,23 @@ export async function consumeFiles(
     type: "CONSUME_FILES",
     payload: {
       inputFileIds,
-      outputStirlingFileStubs: outputStirlingFileStubs,
+      outputluminaFileStubs: outputluminaFileStubs,
     },
   });
 
   if (DEBUG)
     console.log(
-      `📄 consumeFiles: Successfully consumed files - removed ${inputFileIds.length} inputs, added ${outputStirlingFileStubs.length} outputs`,
+      `📄 consumeFiles: Successfully consumed files - removed ${inputFileIds.length} inputs, added ${outputluminaFileStubs.length} outputs`,
     );
   // Return the output file IDs for undo tracking
-  return outputStirlingFileStubs.map((stub) => stub.id);
+  return outputluminaFileStubs.map((stub) => stub.id);
 }
 
 /**
  * Helper function to restore files to filesRef and manage IndexedDB cleanup
  */
 async function restoreFilesAndCleanup(
-  filesToRestore: Array<{ file: File; record: StirlingFileStub }>,
+  filesToRestore: Array<{ file: File; record: luminaFileStub }>,
   fileIdsToRemove: FileId[],
   filesRef: React.MutableRefObject<Map<FileId, File>>,
   indexedDB?: { deleteFile: (fileId: FileId) => Promise<void> } | null,
@@ -690,7 +690,7 @@ async function restoreFilesAndCleanup(
  */
 export async function undoConsumeFiles(
   inputFiles: File[],
-  inputStirlingFileStubs: StirlingFileStub[],
+  inputluminaFileStubs: luminaFileStub[],
   outputFileIds: FileId[],
   filesRef: React.MutableRefObject<Map<FileId, File>>,
   dispatch: React.Dispatch<FileContextAction>,
@@ -705,13 +705,13 @@ export async function undoConsumeFiles(
 ): Promise<void> {
   if (DEBUG)
     console.log(
-      `📄 undoConsumeFiles: Restoring ${inputStirlingFileStubs.length} input files, removing ${outputFileIds.length} output files`,
+      `📄 undoConsumeFiles: Restoring ${inputluminaFileStubs.length} input files, removing ${outputFileIds.length} output files`,
     );
 
   // Validate inputs
-  if (inputFiles.length !== inputStirlingFileStubs.length) {
+  if (inputFiles.length !== inputluminaFileStubs.length) {
     throw new Error(
-      `Mismatch between input files (${inputFiles.length}) and records (${inputStirlingFileStubs.length})`,
+      `Mismatch between input files (${inputFiles.length}) and records (${inputluminaFileStubs.length})`,
     );
   }
 
@@ -722,7 +722,7 @@ export async function undoConsumeFiles(
     // Prepare files to restore
     const filesToRestore = inputFiles.map((file, index) => ({
       file,
-      record: inputStirlingFileStubs[index],
+      record: inputluminaFileStubs[index],
     }));
 
     // Restore input files and clean up output files
@@ -735,7 +735,7 @@ export async function undoConsumeFiles(
 
     // Mark restored files as dirty if they have localFilePath
     // (they now differ from what's saved on disk)
-    const stubsWithDirtyMarked = inputStirlingFileStubs.map((stub) => {
+    const stubsWithDirtyMarked = inputluminaFileStubs.map((stub) => {
       if (stub.localFilePath) {
         return { ...stub, isDirty: true };
       }
@@ -746,14 +746,14 @@ export async function undoConsumeFiles(
     dispatch({
       type: "UNDO_CONSUME_FILES",
       payload: {
-        inputStirlingFileStubs: stubsWithDirtyMarked,
+        inputluminaFileStubs: stubsWithDirtyMarked,
         outputFileIds,
       },
     });
 
     if (DEBUG)
       console.log(
-        `📄 undoConsumeFiles: Successfully undone consume operation - restored ${inputStirlingFileStubs.length} inputs, removed ${outputFileIds.length} outputs`,
+        `📄 undoConsumeFiles: Successfully undone consume operation - restored ${inputluminaFileStubs.length} inputs, removed ${outputFileIds.length} outputs`,
       );
   } catch (error) {
     // Rollback filesRef to previous state
@@ -775,23 +775,23 @@ export async function undoConsumeFiles(
  */
 
 /**
- * Add files using existing StirlingFileStubs from storage - preserves all metadata
+ * Add files using existing luminaFileStubs from storage - preserves all metadata
  * Use this when loading files that already exist in storage (FileManager, etc.)
- * StirlingFileStubs come with proper thumbnails, history, processing state
+ * luminaFileStubs come with proper thumbnails, history, processing state
  */
-export async function addStirlingFileStubs(
-  stirlingFileStubs: StirlingFileStub[],
+export async function addluminaFileStubs(
+  luminaFileStubs: luminaFileStub[],
   options: { insertAfterPageId?: string; selectFiles?: boolean } = {},
   stateRef: React.MutableRefObject<FileContextState>,
   filesRef: React.MutableRefObject<Map<FileId, File>>,
   dispatch: React.Dispatch<FileContextAction>,
   lifecycleManager: FileLifecycleManager,
-): Promise<StirlingFile[]> {
+): Promise<luminaFile[]> {
   await addFilesMutex.lock();
 
   try {
     // Show loading indicator while preparing files from storage
-    if (stirlingFileStubs.length > 0) {
+    if (luminaFileStubs.length > 0) {
       dispatch({
         type: "SET_PROCESSING",
         payload: { isProcessing: true, progress: 0 },
@@ -799,15 +799,15 @@ export async function addStirlingFileStubs(
     }
 
     const existingQuickKeys = buildQuickKeySet(stateRef.current.files.byId);
-    const loadedFiles: StirlingFile[] = [];
+    const loadedFiles: luminaFile[] = [];
     let firstFileDispatched = false;
 
     // Process and dispatch files one by one for progressive UI updates
-    for (const stub of stirlingFileStubs) {
+    for (const stub of luminaFileStubs) {
       // Check for duplicates using quickKey
       if (existingQuickKeys.has(stub.quickKey || "")) {
         if (DEBUG)
-          console.log(`📄 Skipping duplicate StirlingFileStub: ${stub.name}`);
+          console.log(`📄 Skipping duplicate luminaFileStub: ${stub.name}`);
         continue;
       }
 
@@ -822,7 +822,7 @@ export async function addStirlingFileStubs(
       existingQuickKeys.add(stub.quickKey || "");
 
       // Dispatch each file immediately as we process it (progressive loading)
-      dispatch({ type: "ADD_FILES", payload: { stirlingFileStubs: [record] } });
+      dispatch({ type: "ADD_FILES", payload: { luminaFileStubs: [record] } });
 
       // Clear loading indicator after first file appears
       if (!firstFileDispatched) {
@@ -838,16 +838,16 @@ export async function addStirlingFileStubs(
 
       // Load File object from IndexedDB asynchronously
       scheduleMetadataHydration(async () => {
-        const stirlingFile = await fileStorage.getStirlingFile(fileId);
-        if (!stirlingFile) {
+        const luminaFile = await fileStorage.getluminaFile(fileId);
+        if (!luminaFile) {
           return;
         }
 
         // Store the loaded file in filesRef
-        filesRef.current.set(fileId, stirlingFile);
+        filesRef.current.set(fileId, luminaFile);
 
         // Check if processedFile data needs regeneration
-        if (stirlingFile.type.startsWith("application/pdf")) {
+        if (luminaFile.type.startsWith("application/pdf")) {
           const needsProcessing =
             !stub.processedFile ||
             !stub.processedFile.pages ||
@@ -857,10 +857,10 @@ export async function addStirlingFileStubs(
           if (needsProcessing) {
             // Regenerate metadata
             const processedFileMetadata =
-              await generateProcessedFileMetadata(stirlingFile);
+              await generateProcessedFileMetadata(luminaFile);
 
             if (processedFileMetadata) {
-              const updates: Partial<StirlingFileStub> = {
+              const updates: Partial<luminaFileStub> = {
                 processedFile: processedFileMetadata,
               };
 
@@ -878,7 +878,7 @@ export async function addStirlingFileStubs(
                 }
               }
 
-              lifecycleManager.updateStirlingFileStub(
+              lifecycleManager.updateluminaFileStub(
                 fileId,
                 updates,
                 stateRef,
@@ -917,9 +917,9 @@ export const createFileActions = (
   clearFileError: (fileId: FileId) =>
     dispatch({ type: "CLEAR_FILE_ERROR", payload: { fileId } }),
   clearAllFileErrors: () => dispatch({ type: "CLEAR_ALL_FILE_ERRORS" }),
-  updateStirlingFileStub: (
+  updateluminaFileStub: (
     fileId: FileId,
-    updates: Partial<StirlingFileStub>,
+    updates: Partial<luminaFileStub>,
   ) =>
     dispatch({ type: "UPDATE_FILE_RECORD", payload: { id: fileId, updates } }),
 });

@@ -56,12 +56,12 @@ test.describe("Lumina-PDF seed", () => {
     await expect(
       page
         .locator(
-          '.h-screen, .mobile-layout, [data-testid="dashboard"], img[alt*="Stirling"]',
+          '.h-screen, .mobile-layout, [data-testid="dashboard"], img[alt*="lumina"]',
         )
         .first(),
     ).toBeVisible({ timeout: 15000 });
 
     // Verify the title contains Lumina PDF
-    await expect(page).toHaveTitle(/Stirling/i);
+    await expect(page).toHaveTitle(/lumina/i);
   });
 });

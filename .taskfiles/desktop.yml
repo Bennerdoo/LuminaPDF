@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 vars:
   JLINK_MODULES: "java.base,java.compiler,java.desktop,java.instrument,java.logging,java.management,java.naming,java.net.http,java.prefs,java.rmi,java.scripting,java.security.jgss,java.security.sasl,java.sql,java.transaction.xa,java.xml,java.xml.crypto,jdk.crypto.ec,jdk.crypto.cryptoki,jdk.unsupported"
@@ -82,9 +82,9 @@ tasks:
       - cmd: ./gradlew bootJar --no-daemon
         platforms: [linux, darwin]
       - mkdir -p frontend/src-tauri/libs
-      - cp app/core/build/libs/stirling-pdf-*.jar frontend/src-tauri/libs/
+      - cp app/core/build/libs/lumina-pdf-*.jar frontend/src-tauri/libs/
     status:
-      - test -f frontend/src-tauri/libs/stirling-pdf-*.jar
+      - test -f frontend/src-tauri/libs/lumina-pdf-*.jar
 
   jlink:runtime:
     desc: "Create custom JRE with jlink"

@@ -28,7 +28,7 @@ import {
   draggable,
   dropTargetForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { zipFileService } from "@app/services/zipFileService";
 
 import styles from "@app/components/fileEditor/FileEditor.module.css";
@@ -48,7 +48,7 @@ import { useAppConfig } from "@app/contexts/AppConfigContext";
 import FileEditorFileName from "@app/components/fileEditor/FileEditorFileName";
 
 interface FileEditorThumbnailProps {
-  file: StirlingFileStub;
+  file: luminaFileStub;
   index: number;
   totalFiles: number;
   selectedFiles: FileId[];
@@ -258,7 +258,7 @@ const FileEditorThumbnail = ({
           localPath: file.localFilePath,
         });
         if (!result.cancelled && result.savedPath) {
-          fileActions.updateStirlingFileStub(file.id, {
+          fileActions.updateluminaFileStub(file.id, {
             localFilePath: file.localFilePath ?? result.savedPath,
             isDirty: false,
           });

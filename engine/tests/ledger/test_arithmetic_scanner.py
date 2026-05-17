@@ -10,7 +10,7 @@ from decimal import Decimal
 
 import pytest
 
-from stirling.agents.ledger.validators.arithmetic import ArithmeticScanner
+from lumina.agents.ledger.validators.arithmetic import ArithmeticScanner
 
 
 @pytest.fixture

@@ -15,15 +15,15 @@ if [ -d /scripts ] && [[ ":${PATH}:" != *":/scripts:"* ]]; then
   export PATH="/scripts:${PATH}"
 fi
 
-if [ -x /scripts/stirling-diagnostics.sh ]; then
+if [ -x /scripts/lumina-diagnostics.sh ]; then
   mkdir -p /usr/local/bin
-  ln -sf /scripts/stirling-diagnostics.sh /usr/local/bin/diagnostics
-  ln -sf /scripts/stirling-diagnostics.sh /usr/local/bin/stirling-diagnostics
-  ln -sf /scripts/stirling-diagnostics.sh /usr/local/bin/diag
-  ln -sf /scripts/stirling-diagnostics.sh /usr/local/bin/debug
-  ln -sf /scripts/stirling-diagnostics.sh /usr/local/bin/diagnostic
+  ln -sf /scripts/lumina-diagnostics.sh /usr/local/bin/diagnostics
+  ln -sf /scripts/lumina-diagnostics.sh /usr/local/bin/lumina-diagnostics
+  ln -sf /scripts/lumina-diagnostics.sh /usr/local/bin/diag
+  ln -sf /scripts/lumina-diagnostics.sh /usr/local/bin/debug
+  ln -sf /scripts/lumina-diagnostics.sh /usr/local/bin/diagnostic
 fi
-if [ -x /scripts/aot-diagnostics.sh ] && [ "${STIRLING_AOT_ENABLE:-false}" = "true" ]; then
+if [ -x /scripts/aot-diagnostics.sh ] && [ "${lumina_AOT_ENABLE:-false}" = "true" ]; then
   mkdir -p /usr/local/bin
   ln -sf /scripts/aot-diagnostics.sh /usr/local/bin/aot-diag
   ln -sf /scripts/aot-diagnostics.sh /usr/local/bin/aot-diagnostics
@@ -183,7 +183,7 @@ SWITCH_USER_WARNING_EMITTED=false
 
 warn_switch_user_once() {
   if [ "$SWITCH_USER_WARNING_EMITTED" = false ]; then
-    log "WARNING: Unable to switch to user ${RUNTIME_USER:-stirlingpdfuser}; running command as ${CURRENT_USER}."
+    log "WARNING: Unable to switch to user ${RUNTIME_USER:-luminapdfuser}; running command as ${CURRENT_USER}."
     SWITCH_USER_WARNING_EMITTED=true
   fi
 }
@@ -383,14 +383,14 @@ start_unoserver_pool() {
 
 # ---------- VERSION_TAG ----------
 # Load VERSION_TAG from file if not provided via environment.
-if [ -z "${VERSION_TAG:-}" ] && [ -f /etc/stirling_version ]; then
-  VERSION_TAG="$(tr -d '\r\n' < /etc/stirling_version)"
+if [ -z "${VERSION_TAG:-}" ] && [ -f /etc/lumina_version ]; then
+  VERSION_TAG="$(tr -d '\r\n' < /etc/lumina_version)"
   export VERSION_TAG
 fi
 
 # ---------- AOT ----------
-# OFF by default. Set STIRLING_AOT_ENABLE=true to opt in.
-AOT_ENABLED="${STIRLING_AOT_ENABLE:-false}"
+# OFF by default. Set lumina_AOT_ENABLE=true to opt in.
+AOT_ENABLED="${lumina_AOT_ENABLE:-false}"
 
 # ---------- Dynamic Memory Detection ----------
 # Detects the container memory limit (in MB) from cgroups v2/v1 or /proc/meminfo.
@@ -496,7 +496,7 @@ generate_aot_cache() {
   aot_dir=$(dirname "$aot_path")
   mkdir -p "$aot_dir" 2>/dev/null || true
 
-  local aot_conf="/tmp/stirling.aotconf"
+  local aot_conf="/tmp/lumina.aotconf"
   local arch
   arch=$(uname -m)
 
@@ -539,7 +539,7 @@ generate_aot_cache() {
            -XX:AOTConfiguration="$aot_conf" \
            -Dspring.main.banner-mode=off \
            -Dspring.context.exit=onRefresh \
-           -Dstirling.datasource.url="jdbc:h2:mem:aottraining;DB_CLOSE_DELAY=-1;MODE=PostgreSQL" \
+           -Dlumina.datasource.url="jdbc:h2:mem:aottraining;DB_CLOSE_DELAY=-1;MODE=PostgreSQL" \
            "$@" >/tmp/aot-record.log 2>&1 || record_exit=$?
   else
     JAVA_TOOL_OPTIONS= JDK_JAVA_OPTIONS= _JAVA_OPTIONS= \
@@ -549,7 +549,7 @@ generate_aot_cache() {
          -XX:AOTConfiguration="$aot_conf" \
          -Dspring.main.banner-mode=off \
          -Dspring.context.exit=onRefresh \
-         -Dstirling.datasource.url="jdbc:h2:mem:aottraining;DB_CLOSE_DELAY=-1;MODE=PostgreSQL" \
+         -Dlumina.datasource.url="jdbc:h2:mem:aottraining;DB_CLOSE_DELAY=-1;MODE=PostgreSQL" \
          "$@" >/tmp/aot-record.log 2>&1 || record_exit=$?
   fi
 
@@ -560,7 +560,7 @@ generate_aot_cache() {
   fi
   if [ "$record_exit" -eq 137 ]; then
     log "AOT: RECORD phase OOM-killed (exit 137), container memory too low for training"
-    log "AOT: Set STIRLING_AOT_ENABLE=false or increase container memory above 1GB"
+    log "AOT: Set lumina_AOT_ENABLE=false or increase container memory above 1GB"
     rm -f "$aot_conf" /tmp/aot-record.log
     return 1
   fi
@@ -688,7 +688,7 @@ save_aot_fingerprint() {
 
 # ---------- Memory Detection ----------
 CONTAINER_MEM_MB=$(detect_container_memory_mb)
-JVM_PROFILE="${STIRLING_JVM_PROFILE:-balanced}"
+JVM_PROFILE="${lumina_JVM_PROFILE:-balanced}"
 compute_dynamic_memory "$CONTAINER_MEM_MB" "$JVM_PROFILE"
 MEMORY_FLAGS="-XX:InitialRAMPercentage=${DYNAMIC_INITIAL_RAM_PCT} -XX:MaxRAMPercentage=${DYNAMIC_MAX_RAM_PCT} -XX:MaxMetaspaceSize=${DYNAMIC_MAX_METASPACE}m"
 
@@ -709,7 +709,7 @@ fi
 
 # ---------- JVM Profile Selection ----------
 # Resolve JAVA_BASE_OPTS from profile system or user override.
-# Priority: JAVA_BASE_OPTS (explicit override) > STIRLING_JVM_PROFILE > fallback defaults
+# Priority: JAVA_BASE_OPTS (explicit override) > lumina_JVM_PROFILE > fallback defaults
 if [ -z "${JAVA_BASE_OPTS:-}" ]; then
   case "$JVM_PROFILE" in
     performance)
@@ -794,7 +794,7 @@ if [ "$AOT_ENABLED" = "true" ]; then
 fi
 
 # ---------- AOT Cache Management (Project Leyden) ----------
-AOT_CACHE="/configs/cache/stirling.aot"
+AOT_CACHE="/configs/cache/lumina.aot"
 AOT_GENERATE_BACKGROUND=false
 
 if [ "$AOT_ENABLED" = "true" ]; then
@@ -809,7 +809,7 @@ if [ "$AOT_ENABLED" = "true" ]; then
   elif validate_aot_cache "$AOT_CACHE"; then
     log "AOT cache valid: $AOT_CACHE"
     JAVA_BASE_OPTS="${JAVA_BASE_OPTS} -XX:AOTCache=${AOT_CACHE}"
-    rm -f /app/stirling.jsa /app/stirling.aot /app/stirling.aot.fingerprint 2>/dev/null || true
+    rm -f /app/lumina.jsa /app/lumina.aot /app/lumina.aot.fingerprint 2>/dev/null || true
   else
     log "No valid AOT cache found. Will generate in background after app starts."
     AOT_GENERATE_BACKGROUND=true
@@ -837,7 +837,7 @@ umask "$UMASK_VAL" 2>/dev/null || umask 022
 
 # ---------- XDG_RUNTIME_DIR ----------
 # Create the runtime directory, respecting UID/GID settings.
-RUNTIME_USER="stirlingpdfuser"
+RUNTIME_USER="luminapdfuser"
 if id -u "$RUNTIME_USER" >/dev/null 2>&1; then
   RUID="$(id -u "$RUNTIME_USER")"
   RGRP="$(id -gn "$RUNTIME_USER")"
@@ -871,15 +871,15 @@ fi
 # ---------- UID/GID remap ----------
 # Remap user/group IDs to match container runtime settings.
 if [ "$(id -u)" -eq 0 ]; then
-  if id -u stirlingpdfuser >/dev/null 2>&1; then
-    if [ -n "${PUID:-}" ] && [ "$PUID" != "$(id -u stirlingpdfuser)" ]; then
-      usermod -o -u "$PUID" stirlingpdfuser || true
-      chown stirlingpdfuser:stirlingpdfgroup "${XDG_RUNTIME_DIR}" 2>/dev/null || true
+  if id -u luminapdfuser >/dev/null 2>&1; then
+    if [ -n "${PUID:-}" ] && [ "$PUID" != "$(id -u luminapdfuser)" ]; then
+      usermod -o -u "$PUID" luminapdfuser || true
+      chown luminapdfuser:luminapdfgroup "${XDG_RUNTIME_DIR}" 2>/dev/null || true
     fi
   fi
-  if getent group stirlingpdfgroup >/dev/null 2>&1; then
-    if [ -n "${PGID:-}" ] && [ "$PGID" != "$(getent group stirlingpdfgroup | cut -d: -f3)" ]; then
-      groupmod -o -g "$PGID" stirlingpdfgroup || true
+  if getent group luminapdfgroup >/dev/null 2>&1; then
+    if [ -n "${PGID:-}" ] && [ "$PGID" != "$(getent group luminapdfgroup | cut -d: -f3)" ]; then
+      groupmod -o -g "$PGID" luminapdfgroup || true
     fi
   fi
 fi
@@ -893,7 +893,7 @@ CHOWN_PATHS=("$HOME" "/logs" "/scripts" "/configs" "/customFiles" "/pipeline" "/
 CHOWN_OK=true
 for p in "${CHOWN_PATHS[@]}"; do
   if [ -e "$p" ]; then
-    chown -R "stirlingpdfuser:stirlingpdfgroup" "$p" 2>/dev/null || CHOWN_OK=false
+    chown -R "luminapdfuser:luminapdfgroup" "$p" 2>/dev/null || CHOWN_OK=false
     chmod -R 755 "$p" 2>/dev/null || true
   fi
 done
@@ -955,7 +955,7 @@ if [ -f "/app.jar" ]; then
 elif [ -f "/app/app.jar" ]; then
   # Spring Boot 4 layered JAR structure (exploded via extract --layers).
   # Use -cp (not -jar) so the classpath matches the AOT cache exactly.
-  JAVA_CMD+=("-cp" "/app/app.jar:/app/lib/*" "stirling.software.SPDF.SPDFApplication")
+  JAVA_CMD+=("-cp" "/app/app.jar:/app/lib/*" "lumina.software.SPDF.SPDFApplication")
 else
   # Legacy fallback for Spring Boot 3 layered layout
   export JAVA_MAIN_CLASS=org.springframework.boot.loader.launch.JarLauncher
@@ -1034,7 +1034,7 @@ if [ "$AOT_GENERATE_BACKGROUND" = true ]; then
         _gen_rc=0
         if [ -f /app/app.jar ] && [ -d /app/lib ]; then
           generate_aot_cache "$AOT_CACHE" \
-            -cp "/app/app.jar:/app/lib/*" stirling.software.SPDF.SPDFApplication || _gen_rc=$?
+            -cp "/app/app.jar:/app/lib/*" lumina.software.SPDF.SPDFApplication || _gen_rc=$?
         elif [ -f /app.jar ]; then
           generate_aot_cache "$AOT_CACHE" -jar /app.jar || _gen_rc=$?
         elif [ -d /app/BOOT-INF ]; then
@@ -1063,7 +1063,7 @@ if [ "$AOT_GENERATE_BACKGROUND" = true ]; then
         fi
       done
       log "AOT: All attempts failed. App runs normally without cache."
-      log "AOT: To disable, set STIRLING_AOT_ENABLE=false (or omit it, default is off)"
+      log "AOT: To disable, set lumina_AOT_ENABLE=false (or omit it, default is off)"
     ) &
     AOT_GEN_PID=$!
     log "AOT: Background generation scheduled (PID $AOT_GEN_PID, arch=$(uname -m))"

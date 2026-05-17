@@ -2,7 +2,7 @@ name: Update Package Manager Manifests
 
 on:
   release:
-    types: [ released ]
+    types: [released]
   workflow_dispatch:
     inputs:
       version:
@@ -52,7 +52,7 @@ jobs:
           VERSION: ${{ steps.info.outputs.version }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          BASE="https://github.com/Stirling-Tools/Stirling-PDF/releases/download/v${VERSION}"
+          BASE="https://github.com/lumina-Tools/lumina-PDF/releases/download/v${VERSION}"
 
           download_sha256() {
             local url="$1"
@@ -62,10 +62,10 @@ jobs:
             sha256sum "$file" | awk '{print $1}'
           }
 
-          DMG_SHA=$(download_sha256 "${BASE}/Stirling-PDF-macos-universal.dmg")
-          MSI_SHA=$(download_sha256 "${BASE}/Stirling-PDF-windows-x86_64.msi")
-          DEB_SHA=$(download_sha256 "${BASE}/Stirling-PDF-linux-x86_64.deb")
-          JAR_SHA=$(download_sha256 "${BASE}/Stirling-PDF-with-login.jar")
+          DMG_SHA=$(download_sha256 "${BASE}/lumina-PDF-macos-universal.dmg")
+          MSI_SHA=$(download_sha256 "${BASE}/lumina-PDF-windows-x86_64.msi")
+          DEB_SHA=$(download_sha256 "${BASE}/lumina-PDF-linux-x86_64.deb")
+          JAR_SHA=$(download_sha256 "${BASE}/lumina-PDF-with-login.jar")
 
           echo "dmg_sha256=$DMG_SHA" >> "$GITHUB_OUTPUT"
           echo "msi_sha256=$MSI_SHA" >> "$GITHUB_OUTPUT"
@@ -83,56 +83,56 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: Checkout homebrew-stirling-pdf tap (also hosts Scoop bucket)
+      - name: Checkout homebrew-lumina-pdf tap (also hosts Scoop bucket)
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
-          repository: Stirling-Tools/homebrew-stirling-pdf
+          repository: lumina-Tools/homebrew-lumina-pdf
           token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
           path: tap
 
-      # Stirling-PDF now ships a single universal DMG, so the Cask should
+      # lumina-PDF now ships a single universal DMG, so the Cask should
       # have one sha256 line rather than separate on_arm/on_intel blocks.
       # We rewrite every `sha256 "..."` in the Cask to the same value so
       # the workflow keeps working through the Cask migration: pre-migration
       # both arch blocks get the universal SHA (still correct, since both
       # would resolve to the same DMG), post-migration the lone sha256 line
       # is updated.
-      - name: Update Homebrew cask (Casks/stirling-pdf.rb)
+      - name: Update Homebrew cask (Casks/lumina-pdf.rb)
         env:
           VERSION: ${{ needs.get-release-info.outputs.version }}
           DMG_SHA: ${{ needs.get-release-info.outputs.dmg_sha256 }}
         run: |
-          CASK="tap/Casks/stirling-pdf.rb"
+          CASK="tap/Casks/lumina-pdf.rb"
           sed -i "s/version \"[^\"]*\"/version \"${VERSION}\"/" "$CASK"
           sed -i "s/sha256 \"[^\"]*\"/sha256 \"${DMG_SHA}\"/g" "$CASK"
 
-      - name: Update Homebrew formula (Formula/stirling-pdf-server.rb)
+      - name: Update Homebrew formula (Formula/lumina-pdf-server.rb)
         env:
           VERSION: ${{ needs.get-release-info.outputs.version }}
           JAR_SHA: ${{ needs.get-release-info.outputs.jar_sha256 }}
         run: |
-          FORMULA="tap/Formula/stirling-pdf-server.rb"
+          FORMULA="tap/Formula/lumina-pdf-server.rb"
           sed -i "s/version \"[^\"]*\"/version \"${VERSION}\"/" "$FORMULA"
           sed -i "s/sha256 \"[^\"]*\"/sha256 \"${JAR_SHA}\"/" "$FORMULA"
 
-      - name: Update Scoop stirling-pdf.json
+      - name: Update Scoop lumina-pdf.json
         env:
           VERSION: ${{ needs.get-release-info.outputs.version }}
           MSI_SHA: ${{ needs.get-release-info.outputs.msi_sha256 }}
         run: |
-          MANIFEST="tap/scoop/stirling-pdf.json"
+          MANIFEST="tap/scoop/lumina-pdf.json"
           jq --arg v "$VERSION" --arg h "$MSI_SHA" \
-            '.version = $v | .architecture["64bit"].url = "https://github.com/Stirling-Tools/Stirling-PDF/releases/download/v\($v)/Stirling-PDF-windows-x86_64.msi" | .architecture["64bit"].hash = $h' \
+            '.version = $v | .architecture["64bit"].url = "https://github.com/lumina-Tools/lumina-PDF/releases/download/v\($v)/lumina-PDF-windows-x86_64.msi" | .architecture["64bit"].hash = $h' \
             "$MANIFEST" > tmp.json && mv tmp.json "$MANIFEST"
 
-      - name: Update Scoop stirling-pdf-server.json
+      - name: Update Scoop lumina-pdf-server.json
         env:
           VERSION: ${{ needs.get-release-info.outputs.version }}
           JAR_SHA: ${{ needs.get-release-info.outputs.jar_sha256 }}
         run: |
-          MANIFEST="tap/scoop/stirling-pdf-server.json"
+          MANIFEST="tap/scoop/lumina-pdf-server.json"
           jq --arg v "$VERSION" --arg h "$JAR_SHA" \
-            '.version = $v | .url = "https://github.com/Stirling-Tools/Stirling-PDF/releases/download/v\($v)/Stirling-PDF-with-login.jar" | .hash = $h' \
+            '.version = $v | .url = "https://github.com/lumina-Tools/lumina-PDF/releases/download/v\($v)/lumina-PDF-with-login.jar" | .hash = $h' \
             "$MANIFEST" > tmp.json && mv tmp.json "$MANIFEST"
 
       - name: Show tap diff (for dry-run visibility)
@@ -149,7 +149,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Casks/stirling-pdf.rb Formula/stirling-pdf-server.rb scoop/stirling-pdf.json scoop/stirling-pdf-server.json
+          git add Casks/lumina-pdf.rb Formula/lumina-pdf-server.rb scoop/lumina-pdf.json scoop/lumina-pdf-server.json
           git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "chore: bump Stirling-PDF to v${{ needs.get-release-info.outputs.version }}"
+          git commit -m "chore: bump lumina-PDF to v${{ needs.get-release-info.outputs.version }}"
           git push

@@ -2,7 +2,7 @@ import { Stack, Text, Select, Alert, Checkbox } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { ConvertParameters } from "@app/hooks/tools/convert/useConvertParameters";
 import { usePdfSignatureDetection } from "@app/hooks/usePdfSignatureDetection";
-import { StirlingFile } from "@app/types/fileContext";
+import { luminaFile } from "@app/types/fileContext";
 import { Z_INDEX_AUTOMATE_DROPDOWN } from "@app/styles/zIndex";
 
 interface ConvertToPdfaSettingsProps {
@@ -11,7 +11,7 @@ interface ConvertToPdfaSettingsProps {
     key: K,
     value: ConvertParameters[K],
   ) => void;
-  selectedFiles: StirlingFile[];
+  selectedFiles: luminaFile[];
   disabled?: boolean;
 }
 

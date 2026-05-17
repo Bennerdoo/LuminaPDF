@@ -24,7 +24,7 @@ import { absoluteWithBasePath } from "@app/constants/app";
 import { alert } from "@app/components/toast";
 import { Z_INDEX_OVER_FILE_MANAGER_MODAL } from "@app/styles/zIndex";
 import { useAppConfig } from "@app/contexts/AppConfigContext";
-import type { StirlingFileStub } from "@app/types/fileContext";
+import type { luminaFileStub } from "@app/types/fileContext";
 import { fileStorage } from "@app/services/fileStorage";
 import { useFileActions } from "@app/contexts/FileContext";
 
@@ -50,7 +50,7 @@ interface StoredFileResponse {
 interface ShareManagementModalProps {
   opened: boolean;
   onClose: () => void;
-  file: StirlingFileStub;
+  file: luminaFileStub;
 }
 
 const ShareManagementModal: React.FC<ShareManagementModalProps> = ({
@@ -205,7 +205,7 @@ const ShareManagementModal: React.FC<ShareManagementModalProps> = ({
             createdAt: new Date().toISOString(),
           },
         ]);
-        actions.updateStirlingFileStub(file.id, { remoteHasShareLinks: true });
+        actions.updateluminaFileStub(file.id, { remoteHasShareLinks: true });
         await fileStorage.updateFileMetadata(file.id, {
           remoteHasShareLinks: true,
         });
@@ -271,7 +271,7 @@ const ShareManagementModal: React.FC<ShareManagementModalProps> = ({
           return updated;
         });
         setSelectedActivityToken((prev) => (prev === token ? null : prev));
-        actions.updateStirlingFileStub(file.id, {
+        actions.updateluminaFileStub(file.id, {
           remoteHasShareLinks: nextHasLinks,
         });
         await fileStorage.updateFileMetadata(file.id, {

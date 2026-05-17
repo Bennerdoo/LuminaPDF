@@ -29,7 +29,7 @@ import { useToolWorkflow } from "@app/contexts/ToolWorkflowContext";
 import { useNavigationActions } from "@app/contexts/NavigationContext";
 import { useFileContext, useFileState } from "@app/contexts/file/fileHooks";
 import type { FileId } from "@app/types/file";
-import type { StirlingFile } from "@app/types/fileContext";
+import type { luminaFile } from "@app/types/fileContext";
 import DocumentThumbnail from "@app/components/shared/filePreview/DocumentThumbnail";
 import type { CompareWorkbenchData } from "@app/types/compare";
 import { getDefaultWorkbench } from "@app/types/workbench";
@@ -269,8 +269,8 @@ const Compare = (props: BaseToolProps) => {
       baseId: FileId | null,
       compId: FileId | null,
       options?: {
-        baseFile?: StirlingFile | null;
-        comparisonFile?: StirlingFile | null;
+        baseFile?: luminaFile | null;
+        comparisonFile?: luminaFile | null;
       },
     ) => {
       if (!baseId || !compId) {
@@ -384,7 +384,7 @@ const Compare = (props: BaseToolProps) => {
     const compSel =
       base.selectedFiles.find((file) => file.fileId === compId) ??
       (compId ? selectors.getFile(compId) : null);
-    const selected: StirlingFile[] = [];
+    const selected: luminaFile[] = [];
     if (baseSel) selected.push(baseSel);
     if (compSel) selected.push(compSel);
 
@@ -416,7 +416,7 @@ const Compare = (props: BaseToolProps) => {
         baseFileId: baseId,
         comparisonFileId: compId,
       };
-      const selected: StirlingFile[] = [];
+      const selected: luminaFile[] = [];
       const baseSel =
         base.selectedFiles.find((file) => file.fileId === baseId) ??
         (baseId ? selectors.getFile(baseId) : null);
@@ -476,7 +476,7 @@ const Compare = (props: BaseToolProps) => {
     (role: "base" | "comparison") => {
       const fileId =
         role === "base" ? params.baseFileId : params.comparisonFileId;
-      const stub = fileId ? selectors.getStirlingFileStub(fileId) : undefined;
+      const stub = fileId ? selectors.getluminaFileStub(fileId) : undefined;
 
       // Show add button in base if no base file, or in comparison if base exists but no comparison
       const shouldShowAddButton =
@@ -605,10 +605,10 @@ const Compare = (props: BaseToolProps) => {
   );
 
   const baseStub = params.baseFileId
-    ? selectors.getStirlingFileStub(params.baseFileId)
+    ? selectors.getluminaFileStub(params.baseFileId)
     : undefined;
   const compStub = params.comparisonFileId
-    ? selectors.getStirlingFileStub(params.comparisonFileId)
+    ? selectors.getluminaFileStub(params.comparisonFileId)
     : undefined;
   const canExecute = Boolean(
     params.baseFileId &&

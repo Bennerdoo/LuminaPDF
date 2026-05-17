@@ -2,7 +2,7 @@
 # Uses pre-built base image for fast builds
 
 ARG BASE_VERSION=1.0.2
-ARG BASE_IMAGE=stirlingtools/Lumina-PDF-base:${BASE_VERSION}
+ARG BASE_IMAGE=Lumina/Lumina-PDF-base:${BASE_VERSION}
 
 # Stage 1: Build the Java application and frontend
 FROM gradle:9.3.1-jdk25@sha256:85aec999629f4774a383cb792da4b598bdf5a7e69c4b9570bb70c0f919179183 AS app-build
@@ -81,28 +81,28 @@ RUN set -eux; \
     ln -s /configs /app/configs; \
     ln -s /customFiles /app/customFiles; \
     ln -s /pipeline /app/pipeline; \
-    chown -h stirlingpdfuser:stirlingpdfgroup /app/logs /app/configs /app/customFiles /app/pipeline; \
-    chown stirlingpdfuser:stirlingpdfgroup /app; \
+    chown -h LUMINApdfuser:LUMINApdfgroup /app/logs /app/configs /app/customFiles /app/pipeline; \
+    chown LUMINApdfuser:LUMINApdfgroup /app; \
     chmod 750 /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF/heap_dumps; \
     fc-cache -f
 
 # Write version to a file so it is readable by scripts without env-var inheritance.
-# init-without-ocr.sh reads /etc/stirling_version for the AOT cache fingerprint.
-RUN echo "${VERSION_TAG:-dev}" > /etc/stirling_version
+# init-without-ocr.sh reads /etc/LUMINA_version for the AOT cache fingerprint.
+RUN echo "${VERSION_TAG:-dev}" > /etc/LUMINA_version
 
 # Environment variables
 ENV VERSION_TAG=$VERSION_TAG \
-    STIRLING_AOT_ENABLE="false" \
-    STIRLING_JVM_PROFILE="balanced" \
+    LUMINA_AOT_ENABLE="false" \
+    LUMINA_JVM_PROFILE="balanced" \
     _JVM_OPTS_BALANCED="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:G1HeapRegionSize=4m -XX:G1PeriodicGCInterval=60000 -XX:+UseStringDeduplication -XX:+UseCompactObjectHeaders -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     _JVM_OPTS_PERFORMANCE="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseShenandoahGC -XX:ShenandoahGCMode=generational -XX:+UseCompactObjectHeaders -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     JAVA_CUSTOM_OPTS="" \
-    HOME=/home/stirlingpdfuser \
+    HOME=/home/LUMINApdfuser \
     PUID=1000 \
     PGID=1000 \
     UMASK=022 \
-    STIRLING_TEMPFILES_DIRECTORY=/tmp/Lumina-PDF \
+    LUMINA_TEMPFILES_DIRECTORY=/tmp/Lumina-PDF \
     TMPDIR=/tmp/Lumina-PDF \
     TEMP=/tmp/Lumina-PDF \
     TMP=/tmp/Lumina-PDF \
@@ -112,13 +112,13 @@ ENV VERSION_TAG=$VERSION_TAG \
 # Metadata labels
 LABEL org.opencontainers.image.title="Lumina-PDF" \
       org.opencontainers.image.description="Full version with Calibre, LibreOffice, Tesseract, OCRmyPDF" \
-      org.opencontainers.image.source="https://github.com/Stirling-Tools/Lumina-PDF" \
+      org.opencontainers.image.source="https://github.com/LUMINA-Tools/Lumina-PDF" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.vendor="Stirling-Tools" \
-      org.opencontainers.image.url="https://www.stirlingpdf.com" \
-      org.opencontainers.image.documentation="https://docs.stirlingpdf.com" \
-      maintainer="Stirling-Tools" \
-      org.opencontainers.image.authors="Stirling-Tools" \
+      org.opencontainers.image.vendor="LUMINA-Tools" \
+      org.opencontainers.image.url="https://www.LUMINApdf.com" \
+      org.opencontainers.image.documentation="https://docs.LUMINApdf.com" \
+      maintainer="LUMINA-Tools" \
+      org.opencontainers.image.authors="LUMINA-Tools" \
       org.opencontainers.image.version="${VERSION_TAG}" \
       org.opencontainers.image.keywords="PDF, manipulation, API, Spring Boot, React"
 

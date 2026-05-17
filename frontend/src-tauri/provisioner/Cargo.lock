@@ -76,7 +76,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "stirling-provisioner"
+name = "lumina-provisioner"
 version = "0.1.0"
 dependencies = [
  "serde",

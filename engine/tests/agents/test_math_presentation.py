@@ -1,4 +1,4 @@
-"""Tests for ``stirling.agents.math_presentation``.
+"""Tests for ``lumina.agents.math_presentation``.
 
 Only one helper lives in this module now: Verdict-artifact extraction
 on the resume turn. Math intent itself is decided by the orchestrator's
@@ -12,8 +12,8 @@ from __future__ import annotations
 import pytest
 from pydantic import ValidationError
 
-from stirling.agents.math_presentation import extract_math_verdict
-from stirling.contracts import (
+from lumina.agents.math_presentation import extract_math_verdict
+from lumina.contracts import (
     AiFile,
     ExtractedFileText,
     ExtractedTextArtifact,
@@ -21,8 +21,8 @@ from stirling.contracts import (
     OrchestratorRequest,
     WorkflowArtifact,
 )
-from stirling.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
-from stirling.models import FileId
+from lumina.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
+from lumina.models import FileId
 
 
 def _make_verdict(discrepancies: list[Discrepancy]) -> Verdict:

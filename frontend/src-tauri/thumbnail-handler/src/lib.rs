@@ -35,7 +35,7 @@ use windows::Data::Pdf::PdfDocument;
 use windows::Storage::Streams::{DataWriter, InMemoryRandomAccessStream, IRandomAccessStream};
 
 // CLSID for this thumbnail handler -- must match WiX registry entries
-const CLSID_STIRLING_THUMBNAIL: GUID = GUID::from_u128(0x2d2fbe3a_9a88_4308_a52e_7ef63ca7cf48);
+const CLSID_lumina_THUMBNAIL: GUID = GUID::from_u128(0x2d2fbe3a_9a88_4308_a52e_7ef63ca7cf48);
 
 static DLL_REF_COUNT: AtomicU32 = AtomicU32::new(0);
 
@@ -360,7 +360,7 @@ unsafe extern "system" fn DllGetClassObject(
     }
     *ppv = std::ptr::null_mut();
 
-    if *rclsid != CLSID_STIRLING_THUMBNAIL {
+    if *rclsid != CLSID_lumina_THUMBNAIL {
         return CLASS_E_CLASSNOTAVAILABLE;
     }
 

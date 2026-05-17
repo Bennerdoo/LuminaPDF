@@ -27,9 +27,9 @@ import {
   FileContextActionsValue,
   FileContextActions,
   FileId,
-  StirlingFileStub,
-  StirlingFile,
-  createStirlingFile,
+  luminaFileStub,
+  luminaFile,
+  createluminaFile,
 } from "@app/types/fileContext";
 
 // Import modular components
@@ -40,7 +40,7 @@ import {
 import { createFileSelectors } from "@app/contexts/file/fileSelectors";
 import {
   addFiles,
-  addStirlingFileStubs,
+  addluminaFileStubs,
   consumeFiles,
   undoConsumeFiles,
   createFileActions,
@@ -224,9 +224,9 @@ function FileContextInner({
     dispatch({ type: "SET_UNSAVED_CHANGES", payload: { hasChanges } });
   }, []);
 
-  const selectFiles = (stirlingFiles: StirlingFile[]) => {
+  const selectFiles = (luminaFiles: luminaFile[]) => {
     const currentSelection = stateRef.current.ui.selectedFileIds;
-    const newFileIds = stirlingFiles.map((stirlingFile) => stirlingFile.fileId);
+    const newFileIds = luminaFiles.map((luminaFile) => luminaFile.fileId);
     dispatch({
       type: "SET_SELECTED_FILES",
       payload: { fileIds: [...currentSelection, ...newFileIds] },
@@ -242,8 +242,8 @@ function FileContextInner({
         selectFiles?: boolean;
         skipAutoUnzip?: boolean;
       },
-    ): Promise<StirlingFile[]> => {
-      const stirlingFiles = await addFiles(
+    ): Promise<luminaFile[]> => {
+      const luminaFiles = await addFiles(
         {
           files,
           ...options,
@@ -261,11 +261,11 @@ function FileContextInner({
       );
 
       // Auto-select the newly added files if requested
-      if (options?.selectFiles && stirlingFiles.length > 0) {
-        selectFiles(stirlingFiles);
+      if (options?.selectFiles && luminaFiles.length > 0) {
+        selectFiles(luminaFiles);
       }
 
-      return stirlingFiles;
+      return luminaFiles;
     },
     [enablePersistence, requestConfirmation],
   );
@@ -285,8 +285,8 @@ function FileContextInner({
         ) => Promise<boolean>;
         allowDuplicates?: boolean;
       },
-    ): Promise<StirlingFile[]> => {
-      const stirlingFiles = await addFiles(
+    ): Promise<luminaFile[]> => {
+      const luminaFiles = await addFiles(
         {
           files,
           ...options,
@@ -298,23 +298,23 @@ function FileContextInner({
         enablePersistence,
       );
 
-      if (options?.selectFiles && stirlingFiles.length > 0) {
-        selectFiles(stirlingFiles);
+      if (options?.selectFiles && luminaFiles.length > 0) {
+        selectFiles(luminaFiles);
       }
 
-      return stirlingFiles;
+      return luminaFiles;
     },
     [enablePersistence],
   );
 
-  const addStirlingFileStubsAction = useCallback(
+  const addluminaFileStubsAction = useCallback(
     async (
-      stirlingFileStubs: StirlingFileStub[],
+      luminaFileStubs: luminaFileStub[],
       options?: { insertAfterPageId?: string; selectFiles?: boolean },
-    ): Promise<StirlingFile[]> => {
-      // StirlingFileStubs preserve all metadata - perfect for FileManager use case!
-      const result = await addStirlingFileStubs(
-        stirlingFileStubs,
+    ): Promise<luminaFile[]> => {
+      // luminaFileStubs preserve all metadata - perfect for FileManager use case!
+      const result = await addluminaFileStubs(
+        luminaFileStubs,
         options,
         stateRef,
         filesRef,
@@ -339,13 +339,13 @@ function FileContextInner({
   const consumeFilesWrapper = useCallback(
     async (
       inputFileIds: FileId[],
-      outputStirlingFiles: StirlingFile[],
-      outputStirlingFileStubs: StirlingFileStub[],
+      outputluminaFiles: luminaFile[],
+      outputluminaFileStubs: luminaFileStub[],
     ): Promise<FileId[]> => {
       return consumeFiles(
         inputFileIds,
-        outputStirlingFiles,
-        outputStirlingFileStubs,
+        outputluminaFiles,
+        outputluminaFileStubs,
         filesRef,
         dispatch,
       );
@@ -406,12 +406,12 @@ function FileContextInner({
         thumbnail,
         processedMetadata,
       );
-      const stirlingUnlockedFile = createStirlingFile(
+      const luminaUnlockedFile = createluminaFile(
         unlockedFile,
         childStub.id,
       );
 
-      await consumeFilesWrapper([fileId], [stirlingUnlockedFile], [childStub]);
+      await consumeFilesWrapper([fileId], [luminaUnlockedFile], [childStub]);
     },
     [consumeFilesWrapper, t],
   );
@@ -536,12 +536,12 @@ function FileContextInner({
   const undoConsumeFilesWrapper = useCallback(
     async (
       inputFiles: File[],
-      inputStirlingFileStubs: StirlingFileStub[],
+      inputluminaFileStubs: luminaFileStub[],
       outputFileIds: FileId[],
     ): Promise<void> => {
       return undoConsumeFiles(
         inputFiles,
-        inputStirlingFileStubs,
+        inputluminaFileStubs,
         outputFileIds,
         filesRef,
         dispatch,
@@ -551,16 +551,16 @@ function FileContextInner({
     [indexedDB],
   );
 
-  // File pinning functions - use StirlingFile directly
+  // File pinning functions - use luminaFile directly
   const pinFileWrapper = useCallback(
-    (file: StirlingFile) => {
+    (file: luminaFile) => {
       baseActions.pinFile(file.fileId);
     },
     [baseActions],
   );
 
   const unpinFileWrapper = useCallback(
-    (file: StirlingFile) => {
+    (file: luminaFile) => {
       baseActions.unpinFile(file.fileId);
     },
     [baseActions],
@@ -572,7 +572,7 @@ function FileContextInner({
       ...baseActions,
       addFiles: addRawFiles,
       addFilesWithOptions,
-      addStirlingFileStubs: addStirlingFileStubsAction,
+      addluminaFileStubs: addluminaFileStubsAction,
       removeFiles: async (fileIds: FileId[], deleteFromStorage?: boolean) => {
         // Remove from memory and cleanup resources
         lifecycleManager.removeFiles(fileIds, stateRef);
@@ -586,10 +586,10 @@ function FileContextInner({
           }
         }
       },
-      updateStirlingFileStub: (
+      updateluminaFileStub: (
         fileId: FileId,
-        updates: Partial<StirlingFileStub>,
-      ) => lifecycleManager.updateStirlingFileStub(fileId, updates, stateRef),
+        updates: Partial<luminaFileStub>,
+      ) => lifecycleManager.updateluminaFileStub(fileId, updates, stateRef),
       reorderFiles: (orderedFileIds: FileId[]) => {
         dispatch({ type: "REORDER_FILES", payload: { orderedFileIds } });
       },
@@ -632,7 +632,7 @@ function FileContextInner({
     [
       baseActions,
       addRawFiles,
-      addStirlingFileStubsAction,
+      addluminaFileStubsAction,
       lifecycleManager,
       setHasUnsavedChanges,
       consumeFilesWrapper,
@@ -750,7 +750,7 @@ export {
   useFileSelection,
   useFileManagement,
   useFileUI,
-  useStirlingFileStub,
+  useluminaFileStub,
   useAllFiles,
   useSelectedFiles,
   // Primary API hooks for tools

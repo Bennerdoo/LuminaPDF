@@ -22,12 +22,12 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from stirling.agents import OrchestratorAgent
-from stirling.contracts import AiFile, OrchestratorRequest
-from stirling.contracts.pdf_edit import EditPlanResponse
-from stirling.models import FileId
-from stirling.models.agent_tool_models import AgentToolId, PdfCommentAgentParams
-from stirling.services.runtime import AppRuntime
+from lumina.agents import OrchestratorAgent
+from lumina.contracts import AiFile, OrchestratorRequest
+from lumina.contracts.pdf_edit import EditPlanResponse
+from lumina.models import FileId
+from lumina.models.agent_tool_models import AgentToolId, PdfCommentAgentParams
+from lumina.services.runtime import AppRuntime
 
 
 @dataclass(frozen=True)
@@ -47,7 +47,7 @@ async def test_delegate_pdf_review_wires_prompt_to_tool_step(runtime: AppRuntime
     # PdfReviewAgent now classifies math intent locally via a tiny LLM. Stub it
     # to false so this test stays focused on the prose-review wire contract.
     with patch(
-        "stirling.agents.pdf_review.MathIntentClassifier.classify",
+        "lumina.agents.pdf_review.MathIntentClassifier.classify",
         new=AsyncMock(return_value=False),
     ):
         response = await orchestrator.delegate_pdf_review(ctx)  # type: ignore[arg-type]

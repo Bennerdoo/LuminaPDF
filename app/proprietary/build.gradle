@@ -19,7 +19,7 @@ spotless {
         // google-java-format 1.28.0 bundles Guava 32.x which crashes Spotless lint on JDK 24/25
         suppressLintsFor { setStep('google-java-format') }
 
-        importOrder("java", "javax", "org", "com", "net", "io", "jakarta", "lombok", "me", "stirling")
+        importOrder("java", "javax", "org", "com", "net", "io", "jakarta", "lombok", "me", "lumina")
         trimTrailingWhitespace()
         leadingTabsToSpaces()
         endWithNewline()
@@ -85,6 +85,6 @@ tasks.register('type3SignatureTool', JavaExec) {
     group = 'type3'
     description = 'Dump Type3 font signatures and glyph coverage for the Type3 library'
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'stirling.software.SPDF.service.pdfjson.type3.tool.Type3SignatureTool'
+    mainClass = 'lumina.software.SPDF.service.pdfjson.type3.tool.Type3SignatureTool'
     standardInput = System.in
 }

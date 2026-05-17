@@ -3,7 +3,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { message } from "@tauri-apps/plugin-dialog";
 import { useFileState, useFileActions } from "@app/contexts/FileContext";
 import { downloadFile } from "@app/services/downloadService";
-import type { StirlingFileStub } from "@app/types/fileContext";
+import type { luminaFileStub } from "@app/types/fileContext";
 import { useTranslation } from "react-i18next";
 
 export function useExitWarning() {
@@ -27,7 +27,7 @@ export function useExitWarning() {
         return;
       }
 
-      const allStubs = selectorsRef.current.getStirlingFileStubs();
+      const allStubs = selectorsRef.current.getluminaFileStubs();
       const dirtyStubs = allStubs.filter((stub) => stub.isDirty);
 
       if (dirtyStubs.length > 0) {
@@ -108,7 +108,7 @@ export function useExitWarning() {
     };
   }, [fileActions, t]);
 
-  const saveDirtyFiles = async (dirtyStubs: StirlingFileStub[]) => {
+  const saveDirtyFiles = async (dirtyStubs: luminaFileStub[]) => {
     const filesById = new Map(
       selectorsRef.current.getFiles().map((file) => [file.fileId, file]),
     );
@@ -137,7 +137,7 @@ export function useExitWarning() {
         }
 
         if (result.savedPath) {
-          fileActions.updateStirlingFileStub(stub.id, {
+          fileActions.updateluminaFileStub(stub.id, {
             localFilePath: stub.localFilePath ?? result.savedPath,
             isDirty: false,
           });

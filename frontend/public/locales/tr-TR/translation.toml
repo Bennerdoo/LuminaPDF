@@ -598,7 +598,7 @@ description = "Geçici dosya depolama ve temizleme davranışını yapılandır�
 label = "Geçici Dosya Yönetimi"
 
 [admin.settings.advanced.tempFileManagement.baseTmpDir]
-description = "Geçici dosyalar için temel dizin (varsayılan için boş bırakın: java.io.tmpdir/stirling-pdf)"
+description = "Geçici dosyalar için temel dizin (varsayılan için boş bırakın: java.io.tmpdir/lumina-pdf)"
 label = "Temel Geçici Dizin"
 
 [admin.settings.advanced.tempFileManagement.cleanupIntervalMinutes]

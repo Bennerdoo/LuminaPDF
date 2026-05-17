@@ -25,7 +25,7 @@ import i18n from "@app/i18n/config";
 import { detectFileExtension } from "@app/utils/fileUtils";
 import { FIT_OPTIONS } from "@app/constants/convertConstants";
 import {
-  createTestStirlingFile,
+  createTestluminaFile,
   createTestFilesWithId,
 } from "@app/tests/utils/testFileHelpers";
 import { MantineProvider } from "@mantine/core";
@@ -137,7 +137,7 @@ describe("Convert Tool - Smart Detection Integration Tests", () => {
       );
 
       // Create mock DOCX file
-      const docxFile = createTestStirlingFile(
+      const docxFile = createTestluminaFile(
         "document.docx",
         "docx content",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -187,7 +187,7 @@ describe("Convert Tool - Smart Detection Integration Tests", () => {
       );
 
       // Create mock unknown file
-      const unknownFile = createTestStirlingFile(
+      const unknownFile = createTestluminaFile(
         "document.xyz",
         "unknown content",
         "application/octet-stream",
@@ -421,7 +421,7 @@ describe("Convert Tool - Smart Detection Integration Tests", () => {
         },
       );
 
-      const htmlFile = createTestStirlingFile(
+      const htmlFile = createTestluminaFile(
         "page.html",
         "<html>content</html>",
         "text/html",
@@ -462,7 +462,7 @@ describe("Convert Tool - Smart Detection Integration Tests", () => {
         },
       );
 
-      const emlFile = createTestStirlingFile(
+      const emlFile = createTestluminaFile(
         "email.eml",
         "email content",
         "message/rfc822",
@@ -510,7 +510,7 @@ describe("Convert Tool - Smart Detection Integration Tests", () => {
         },
       );
 
-      const pdfFile = createTestStirlingFile(
+      const pdfFile = createTestluminaFile(
         "document.pdf",
         "pdf content",
         "application/pdf",

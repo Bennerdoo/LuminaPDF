@@ -1,5 +1,5 @@
 import type { FileId } from "@app/types/file";
-import type { StirlingFile } from "@app/types/fileContext";
+import type { luminaFile } from "@app/types/fileContext";
 
 export type CompareDiffTokenType = "unchanged" | "removed" | "added";
 
@@ -166,26 +166,26 @@ export interface CompareWorkerRequest {
 
 export type CompareWorkerResponse =
   | {
-      type: "chunk";
-      tokens: CompareDiffToken[];
-    }
+    type: "chunk";
+    tokens: CompareDiffToken[];
+  }
   | {
-      type: "success";
-      stats: {
-        baseWordCount: number;
-        comparisonWordCount: number;
-        durationMs: number;
-      };
-    }
-  | {
-      type: "warning";
-      message: string;
-    }
-  | {
-      type: "error";
-      message: string;
-      code?: "EMPTY_TEXT" | "TOO_LARGE" | "TOO_DISSIMILAR";
+    type: "success";
+    stats: {
+      baseWordCount: number;
+      comparisonWordCount: number;
+      durationMs: number;
     };
+  }
+  | {
+    type: "warning";
+    message: string;
+  }
+  | {
+    type: "error";
+    message: string;
+    code?: "EMPTY_TEXT" | "TOO_LARGE" | "TOO_DISSIMILAR";
+  };
 
 export interface PixelCompareWorkerWarnings {
   pageCountMismatch: string; // supports {{base}}, {{comparison}}, {{shared}}
@@ -238,10 +238,10 @@ export type PixelCompareWorkerResponse =
   | { type: "progress"; pageNumber: number; totalPages: number }
   | { type: "page"; page: PixelCompareWorkerPagePayload }
   | {
-      type: "success";
-      totals: Omit<CompareResultPixelData["totals"], "processedAt">;
-      warnings: string[];
-    }
+    type: "success";
+    totals: Omit<CompareResultPixelData["totals"], "processedAt">;
+    warnings: string[];
+  }
   | { type: "error"; message: string };
 
 export interface CompareDocumentPaneProps {
@@ -433,8 +433,8 @@ export interface CompareWorkbenchData {
   onSelectBase?: (fileId: FileId | null) => void;
   onSelectComparison?: (fileId: FileId | null) => void;
   isLoading?: boolean;
-  baseLocalFile?: StirlingFile | null;
-  comparisonLocalFile?: StirlingFile | null;
+  baseLocalFile?: luminaFile | null;
+  comparisonLocalFile?: luminaFile | null;
 }
 
 export interface CompareChangeOption {

@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Base image version (e.g., 1.0.0, 1.0.1)'
+        description: "Base image version (e.g., 1.0.0, 1.0.1)"
         required: true
         type: string
 
@@ -78,8 +78,8 @@ jobs:
         uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
         with:
           images: |
-            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/stirling-pdf-base
-            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/stirling-pdf-base
+            ${{ secrets.DOCKER_HUB_ORG_USERNAME }}/lumina-pdf-base
+            ghcr.io/${{ steps.repoowner.outputs.lowercase }}/lumina-pdf-base
           tags: |
             type=raw,value=${{ steps.version.outputs.version }}
 
@@ -91,8 +91,8 @@ jobs:
           context: docker/base
           file: ./docker/base/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-base
-          cache-to: type=gha,mode=max,scope=stirling-pdf-base
+          cache-from: type=gha,scope=lumina-pdf-base
+          cache-to: type=gha,mode=max,scope=lumina-pdf-base
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64/v8

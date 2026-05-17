@@ -14,17 +14,17 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from stirling.agents.pdf_review import (
+from lumina.agents.pdf_review import (
     _LOCALISER_SYSTEM_PROMPT,
     PdfReviewAgent,
     _LocalisedComment,
     _LocalisedVerdict,
 )
-from stirling.contracts import AiFile, EditPlanResponse, OrchestratorRequest, SupportedCapability
-from stirling.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
-from stirling.models import FileId, ToolEndpoint
-from stirling.models.agent_tool_models import AgentToolId, PdfCommentAgentParams
-from stirling.services.runtime import AppRuntime
+from lumina.contracts import AiFile, EditPlanResponse, OrchestratorRequest, SupportedCapability
+from lumina.contracts.ledger import Discrepancy, DiscrepancyKind, Severity, Verdict
+from lumina.models import FileId, ToolEndpoint
+from lumina.models.agent_tool_models import AgentToolId, PdfCommentAgentParams
+from lumina.services.runtime import AppRuntime
 
 
 @dataclass
@@ -184,7 +184,7 @@ async def test_orchestrate_resume_uses_verdict_without_calling_classifier(
 ) -> None:
     """Resume turns are detected by Verdict-artifact presence and bypass the
     classifier entirely (saves an LLM call when we already know the answer)."""
-    from stirling.contracts import MathAuditorToolReportArtifact
+    from lumina.contracts import MathAuditorToolReportArtifact
 
     agent = PdfReviewAgent(runtime)
     verdict = _make_verdict([_discrepancy(page=0, stated="$100")])

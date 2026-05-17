@@ -10,11 +10,11 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./stirling/data:/usr/share/tessdata:rw
-      - ./stirling/config:/configs:rw
-      - ./stirling/logs:/logs:rw
-      - ./stirling/customFiles:/customFiles:rw
-      - ./stirling/pipeline:/pipeline:rw
+      - ./lumina/data:/usr/share/tessdata:rw
+      - ./lumina/config:/configs:rw
+      - ./lumina/logs:/logs:rw
+      - ./lumina/customFiles:/customFiles:rw
+      - ./lumina/pipeline:/pipeline:rw
     environment:
       # MODE parameter: BOTH (default), FRONTEND, or BACKEND
       MODE: BOTH

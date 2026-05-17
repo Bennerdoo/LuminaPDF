@@ -200,7 +200,7 @@ export const SaasPlanCard: React.FC<SaasPlanCardProps> = ({
           component={plan.isContactOnly ? "a" : undefined}
           href={
             plan.isContactOnly
-              ? `mailto:contact@stirlingpdf.com?subject=${plan.name} Plan Inquiry`
+              ? `mailto:contact@luminapdf.com?subject=${plan.name} Plan Inquiry`
               : undefined
           }
         >

@@ -162,15 +162,15 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_PUBLIC_URL: ${{ secrets.MAVEN_PUBLIC_URL }}
           DISABLE_ADDITIONAL_FEATURES: ${{ matrix.variant.disable_security }}
-          STIRLING_PDF_DESKTOP_UI: false
+          lumina_PDF_DESKTOP_UI: false
 
       - name: Rename JAR
         run: |
           echo "Version from determine-matrix: ${{ needs.determine-matrix.outputs.version }}"
-          echo "Looking for: app/core/build/libs/stirling-pdf-${{ needs.determine-matrix.outputs.version }}.jar"
+          echo "Looking for: app/core/build/libs/lumina-pdf-${{ needs.determine-matrix.outputs.version }}.jar"
           ls -la app/core/build/libs/
           mkdir -p ./jar-dist
-          cp app/core/build/libs/stirling-pdf-${{ needs.determine-matrix.outputs.version }}.jar ./jar-dist/Stirling-PDF${{ matrix.variant.file_suffix }}.jar
+          cp app/core/build/libs/lumina-pdf-${{ needs.determine-matrix.outputs.version }}.jar ./jar-dist/lumina-PDF${{ matrix.variant.file_suffix }}.jar
 
       - name: Upload JAR artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -473,8 +473,8 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
           VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY || 'sb_publishable_UHz2SVRF5mvdrPHWkRteyA_yNlZTkYb' }}
-          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.stirlingpdf.com' }}
-          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.stirlingpdf.com' }}
+          VITE_SAAS_SERVER_URL: ${{ secrets.VITE_SAAS_SERVER_URL || 'https://app.luminapdf.com' }}
+          VITE_SAAS_BACKEND_API_URL: ${{ secrets.VITE_SAAS_BACKEND_API_URL || 'https://api.luminapdf.com' }}
           # DigiCert KeyLocker env vars consumed by smctl during signCommand
           SM_CODE_SIGNING_CERT_SHA1_HASH: ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}
           CI: true
@@ -495,7 +495,7 @@ jobs:
 
       # Verify the MSI (outer wrapper users download) AND the inner exe extracted
       # from it (what actually gets installed and what AV scans). We don't check
-      # target/.../release/stirling-pdf.exe - that's Tauri's intermediate build
+      # target/.../release/lumina-pdf.exe - that's Tauri's intermediate build
       # artifact. Tauri signs a COPY when bundling into the MSI and leaves the raw
       # cargo output unsigned, so checking it produces false negatives.
       - name: Verify Windows Code Signature
@@ -526,7 +526,7 @@ jobs:
           if (Test-Path $extractDir) { Remove-Item $extractDir -Recurse -Force }
           $proc = Start-Process msiexec.exe -ArgumentList '/a', $msi, '/qn', "TARGETDIR=$extractDir" -Wait -PassThru -NoNewWindow
           if ($proc.ExitCode -eq 0) {
-            $innerExe = Get-ChildItem -Path $extractDir -Filter "stirling-pdf.exe" -Recurse -File | Select-Object -First 1
+            $innerExe = Get-ChildItem -Path $extractDir -Filter "lumina-pdf.exe" -Recurse -File | Select-Object -First 1
             if ($innerExe) {
               $sig = Get-AuthenticodeSignature -FilePath $innerExe.FullName
               Write-Host "Inner EXE (from MSI): Status=$($sig.Status), Signer=$($sig.SignerCertificate.Subject)"
@@ -535,7 +535,7 @@ jobs:
                 $allSigned = $false
               }
             } else {
-              Write-Host "[ERROR] Could not find stirling-pdf.exe inside MSI"
+              Write-Host "[ERROR] Could not find lumina-pdf.exe inside MSI"
               $allSigned = $false
             }
           } else {
@@ -580,21 +580,21 @@ jobs:
           if [ "${{ matrix.platform }}" = "windows-latest" ]; then
             # Only ship the MSI installer on Windows. The loose exe and WiX toolset exes
             # are not the user-facing installer - the MSI contains the signed inner exe.
-            find . -name "*.msi" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.msi" \;
+            find . -name "*.msi" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.msi" \;
           elif [ "${{ matrix.platform }}" = "macos-15" ]; then
-            find . -name "*.dmg" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.dmg" \;
-            find . -name "*.app" -exec cp -r {} "../../../dist/Stirling-PDF-${{ matrix.name }}.app" \;
+            find . -name "*.dmg" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.dmg" \;
+            find . -name "*.app" -exec cp -r {} "../../../dist/lumina-PDF-${{ matrix.name }}.app" \;
           else
-            find . -name "*.deb" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.deb" \;
-            find . -name "*.rpm" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.rpm" \;
-            find . -name "*.AppImage" -exec cp {} "../../../dist/Stirling-PDF-${{ matrix.name }}.AppImage" \;
+            find . -name "*.deb" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.deb" \;
+            find . -name "*.rpm" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.rpm" \;
+            find . -name "*.AppImage" -exec cp {} "../../../dist/lumina-PDF-${{ matrix.name }}.AppImage" \;
           fi
 
       - name: Upload build artifacts
         if: always() && steps.digicert-setup.conclusion != 'failure'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: Stirling-PDF-${{ matrix.name }}
+          name: lumina-PDF-${{ matrix.name }}
           path: ./dist/*
           retention-days: 1
 
@@ -613,7 +613,7 @@ jobs:
       - name: Download all Tauri artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          pattern: Stirling-PDF-*
+          pattern: lumina-PDF-*
           path: ./artifacts/tauri
 
       - name: Download JAR artifact (default)

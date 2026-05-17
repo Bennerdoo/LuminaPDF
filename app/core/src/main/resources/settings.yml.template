@@ -39,10 +39,10 @@ security:
     provider: "" # The name of your Provider
     autoCreateUser: true # set to 'true' to allow auto-creation of non-existing users
     blockRegistration: false # set to 'true' to deny login with SSO without prior registration by an admin
-    registrationId: stirling # The name of your Service Provider (SP) app name. Should match the name in the path for your SSO & SLO URLs
+    registrationId: lumina # The name of your Service Provider (SP) app name. Should match the name in the path for your SSO & SLO URLs
     idpMetadataUri: https://dev-XXXXXXXX.okta.com/app/externalKey/sso/saml/metadata # The uri for your Provider's metadata
-    idpSingleLoginUrl: https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_stirlingpdf_1/externalKey/sso/saml # The URL for initiating SSO. Provided by your Provider
-    idpSingleLogoutUrl: https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_stirlingpdf_1/externalKey/slo/saml # The URL for initiating SLO. Provided by your Provider
+    idpSingleLoginUrl: https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_luminapdf_1/externalKey/sso/saml # The URL for initiating SSO. Provided by your Provider
+    idpSingleLogoutUrl: https://dev-XXXXXXXX.okta.com/app/dev-XXXXXXXX_luminapdf_1/externalKey/slo/saml # The URL for initiating SLO. Provided by your Provider
     idpIssuer: "" # The ID of your Provider
     idpCert: classpath:okta.cert # The certificate your Provider will use to authenticate your app's SAML authentication requests. Provided by your Provider
     privateKey: classpath:saml-private-key.key # Your private key. Generated from your keypair
@@ -218,10 +218,10 @@ system:
       soffice: "" # Defaults to /usr/bin/soffice
   fileUploadLimit: "" # Defaults to "". No limit when string is empty. Set a number, between 0 and 999, followed by one of the following strings to set a limit. "KB", "MB", "GB".
   tempFileManagement:
-    baseTmpDir: "" # Defaults to java.io.tmpdir/stirling-pdf
+    baseTmpDir: "" # Defaults to java.io.tmpdir/lumina-pdf
     libreofficeDir: "" # Defaults to tempFileManagement.baseTmpDir/libreoffice
     systemTempDir: "" # Only used if cleanupSystemTemp is true
-    prefix: stirling-pdf- # Prefix for temp file names
+    prefix: lumina-pdf- # Prefix for temp file names
     maxAgeHours: 24 # Maximum age in hours before temp files are cleaned up
     cleanupIntervalMinutes: 30 # How often to run cleanup (in minutes)
     startupCleanup: true # Clean up old temp files on startup

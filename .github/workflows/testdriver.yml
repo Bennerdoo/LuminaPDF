@@ -72,8 +72,8 @@ jobs:
           context: .
           file: ./docker/embedded/Dockerfile
           push: true
-          cache-from: type=gha,scope=stirling-pdf-latest
-          cache-to: type=gha,mode=max,scope=stirling-pdf-latest
+          cache-from: type=gha,scope=lumina-pdf-latest
+          cache-to: type=gha,mode=max,scope=lumina-pdf-latest
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/test:test-${{ github.sha }}
           build-args: VERSION_TAG=${{ steps.versionNumber.outputs.versionNumber }}
           platforms: linux/amd64
@@ -89,20 +89,20 @@ jobs:
           cat > docker-compose.yml << EOF
           version: '3.3'
           services:
-            stirling-pdf:
-              container_name: stirling-pdf-test-${{ github.sha }}
+            lumina-pdf:
+              container_name: lumina-pdf-test-${{ github.sha }}
               image: ${{ secrets.DOCKER_HUB_USERNAME }}/test:test-${{ github.sha }}
               ports:
                 - "1337:8080"
               volumes:
-                - /stirling/test-${{ github.sha }}/data:/usr/share/tessdata:rw
-                - /stirling/test-${{ github.sha }}/config:/configs:rw
-                - /stirling/test-${{ github.sha }}/logs:/logs:rw
+                - /lumina/test-${{ github.sha }}/data:/usr/share/tessdata:rw
+                - /lumina/test-${{ github.sha }}/config:/configs:rw
+                - /lumina/test-${{ github.sha }}/logs:/logs:rw
               environment:
                 DISABLE_ADDITIONAL_FEATURES: "true"
                 SECURITY_ENABLELOGIN: "false"
                 SYSTEM_DEFAULTLOCALE: en-GB
-                UI_APPNAME: "Stirling-PDF Test"
+                UI_APPNAME: "lumina-PDF Test"
                 UI_HOMEDESCRIPTION: "Test Deployment"
                 UI_APPNAMENAVBAR: "Test"
                 SYSTEM_MAXFILESIZE: "100"
@@ -115,9 +115,9 @@ jobs:
           scp -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null docker-compose.yml ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }}:/tmp/docker-compose.yml
 
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << EOF
-            mkdir -p /stirling/test-${{ github.sha }}/{data,config,logs}
-            mv /tmp/docker-compose.yml /stirling/test-${{ github.sha }}/docker-compose.yml
-            cd /stirling/test-${{ github.sha }}
+            mkdir -p /lumina/test-${{ github.sha }}/{data,config,logs}
+            mv /tmp/docker-compose.yml /lumina/test-${{ github.sha }}/docker-compose.yml
+            cd /lumina/test-${{ github.sha }}
             docker-compose pull
             docker-compose up -d
           EOF
@@ -200,9 +200,9 @@ jobs:
         if: always()
         run: |
           ssh -i ../private.key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.NEW_VPS_USERNAME }}@${{ secrets.NEW_VPS_HOST }} << EOF
-            cd /stirling/test-${{ github.sha }}
+            cd /lumina/test-${{ github.sha }}
             docker-compose down
-            cd /stirling
+            cd /lumina
             rm -rf test-${{ github.sha }}
           EOF
         continue-on-error: true # Ensure cleanup runs even if previous steps fail

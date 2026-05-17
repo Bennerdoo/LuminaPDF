@@ -1,7 +1,7 @@
 import apiClient from "@app/services/apiClient";
 import { fileStorage } from "@app/services/fileStorage";
 import type { FileId } from "@app/types/file";
-import type { StirlingFile } from "@app/types/fileContext";
+import type { luminaFile } from "@app/types/fileContext";
 import type { FileContextActions } from "@app/types/fileContext";
 import {
   getShareBundleEntryRootId,
@@ -72,7 +72,7 @@ export async function importShareLinkToWorkbench(
     const bundle = await loadShareBundleEntries(blob);
     if (bundle) {
       const { manifest, rootOrder, sortedEntries, files } = bundle;
-      const stirlingFiles = await actions.addFilesWithOptions(files, {
+      const luminaFiles = await actions.addFilesWithOptions(files, {
         selectFiles: false,
         autoUnzip: false,
         skipAutoUnzip: false,
@@ -80,8 +80,8 @@ export async function importShareLinkToWorkbench(
       });
 
       const idMap = new Map<string, FileId>();
-      for (let i = 0; i < stirlingFiles.length; i += 1) {
-        idMap.set(sortedEntries[i].logicalId, stirlingFiles[i].fileId);
+      for (let i = 0; i < luminaFiles.length; i += 1) {
+        idMap.set(sortedEntries[i].logicalId, luminaFiles[i].fileId);
       }
 
       const rootIdMap = new Map<string, FileId>();
@@ -120,7 +120,7 @@ export async function importShareLinkToWorkbench(
           isLeaf: entry.isLeaf,
           ...sharedUpdates,
         };
-        actions.updateStirlingFileStub(newId, updates);
+        actions.updateluminaFileStub(newId, updates);
         await fileStorage.updateFileMetadata(newId, updates);
       }
 
@@ -146,13 +146,13 @@ export async function importShareLinkToWorkbench(
   const file = new File([blob], filename, {
     type: contentTypeValue || blob.type,
   });
-  const stirlingFiles = await actions.addFilesWithOptions([file], {
+  const luminaFiles = await actions.addFilesWithOptions([file], {
     selectFiles: true,
     autoUnzip: false,
     skipAutoUnzip: false,
   });
-  const ids = stirlingFiles.map(
-    (stirlingFile: StirlingFile) => stirlingFile.fileId,
+  const ids = luminaFiles.map(
+    (luminaFile: luminaFile) => luminaFile.fileId,
   );
   if (ids.length > 0) {
     const sharedUpdates = {
@@ -165,7 +165,7 @@ export async function importShareLinkToWorkbench(
       remoteShareToken: shareMetadata?.shareToken || token,
     };
     for (const fileId of ids) {
-      actions.updateStirlingFileStub(fileId, sharedUpdates);
+      actions.updateluminaFileStub(fileId, sharedUpdates);
       await fileStorage.updateFileMetadata(fileId, sharedUpdates);
     }
   }

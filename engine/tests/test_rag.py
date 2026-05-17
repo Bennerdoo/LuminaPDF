@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from stirling.models import FileId
-from stirling.rag.capability import RagCapability
-from stirling.rag.chunker import chunk_text
-from stirling.rag.service import RagService
-from stirling.rag.sqlite_vec_store import SqliteVecStore
-from stirling.rag.store import Document, SearchResult
+from lumina.models import FileId
+from lumina.rag.capability import RagCapability
+from lumina.rag.chunker import chunk_text
+from lumina.rag.service import RagService
+from lumina.rag.sqlite_vec_store import SqliteVecStore
+from lumina.rag.store import Document, SearchResult
 
 # ── chunk_text ──────────────────────────────────────────────────────────
 
@@ -140,7 +140,7 @@ class StubEmbeddingService:
         source: str = "",
         base_metadata: dict[str, str] | None = None,
     ) -> list[Document]:
-        from stirling.rag.chunker import chunk_text
+        from lumina.rag.chunker import chunk_text
 
         chunks = chunk_text(text, 100, 10)
         docs = []

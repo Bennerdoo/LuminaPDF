@@ -28,20 +28,20 @@ export interface ProcessedFileMetadata {
 }
 
 /**
- * StirlingFileStub - Metadata record for files in the active workbench session
+ * luminaFileStub - Metadata record for files in the active workbench session
  *
  * Contains UI display data and processing state. Actual File objects stored
  * separately in refs for memory efficiency. Supports multi-tool workflows
  * where files persist across tool operations.
  */
 /**
- * StirlingFileStub - Runtime UI metadata for files in the active workbench session
+ * luminaFileStub - Runtime UI metadata for files in the active workbench session
  *
  * Contains UI display data and processing state. Actual File objects stored
  * separately in refs for memory efficiency. Supports multi-tool workflows
  * where files persist across tool operations.
  */
-export interface StirlingFileStub extends BaseFileMetadata {
+export interface luminaFileStub extends BaseFileMetadata {
   quickKey?: string; // Fast deduplication key: name|size|lastModified
   thumbnailUrl?: string; // Generated thumbnail blob URL for visual display
   blobUrl?: string; // File access blob URL for downloads/processing
@@ -55,7 +55,7 @@ export interface StirlingFileStub extends BaseFileMetadata {
 
 export interface FileContextNormalizedFiles {
   ids: FileId[];
-  byId: Record<FileId, StirlingFileStub>;
+  byId: Record<FileId, luminaFileStub>;
 }
 
 // Helper functions - UUID-based primary keys (zero collisions, synchronous)
@@ -79,13 +79,13 @@ export function createQuickKey(file: File): string {
 }
 
 // Lumina PDF file with embedded UUID - replaces loose File + FileId parameter passing
-export interface StirlingFile extends File {
+export interface luminaFile extends File {
   readonly fileId: FileId;
   readonly quickKey: string; // Fast deduplication key: name|size|lastModified
 }
 
 // Type guard to check if a File object has an embedded fileId
-export function isStirlingFile(file: File | Blob): file is StirlingFile {
+export function isluminaFile(file: File | Blob): file is luminaFile {
   return (
     file instanceof File &&
     "fileId" in file &&
@@ -105,8 +105,8 @@ export function getFormFillFileId(
 ): string | null {
   if (!file) return null;
 
-  if (isStirlingFile(file)) {
-    return `stirling-${file.fileId}`;
+  if (isluminaFile(file)) {
+    return `lumina-${file.fileId}`;
   }
 
   if (file instanceof File) {
@@ -117,12 +117,12 @@ export function getFormFillFileId(
   return `blob-${(file as any).size || 0}`;
 }
 
-// Create a StirlingFile from a regular File object
-export function createStirlingFile(file: File, id?: FileId): StirlingFile {
+// Create a luminaFile from a regular File object
+export function createluminaFile(file: File, id?: FileId): luminaFile {
   // If the file already has Lumina metadata and we aren't trying to override it,
   // return as–is. When a new id is requested we clone the File so we can embed
   // the fresh identifier without mutating the original object.
-  if (isStirlingFile(file)) {
+  if (isluminaFile(file)) {
     if (!id || file.fileId === id) {
       return file;
     }
@@ -152,21 +152,21 @@ export function createStirlingFile(file: File, id?: FileId): StirlingFile {
     configurable: false,
   });
 
-  return file as StirlingFile;
+  return file as luminaFile;
 }
 
-// Extract FileIds from StirlingFile array
-export function extractFileIds(files: StirlingFile[]): FileId[] {
+// Extract FileIds from luminaFile array
+export function extractFileIds(files: luminaFile[]): FileId[] {
   return files.map((file) => file.fileId);
 }
 
-// Extract regular File objects from StirlingFile array
-export function extractFiles(files: StirlingFile[]): File[] {
+// Extract regular File objects from luminaFile array
+export function extractFiles(files: luminaFile[]): File[] {
   return files as File[];
 }
 
-// Check if an object is a File or StirlingFile (replaces instanceof File checks)
-export function isFileObject(obj: any): obj is File | StirlingFile {
+// Check if an object is a File or luminaFile (replaces instanceof File checks)
+export function isFileObject(obj: any): obj is File | luminaFile {
   return (
     obj &&
     typeof obj.name === "string" &&
@@ -177,12 +177,12 @@ export function isFileObject(obj: any): obj is File | StirlingFile {
   );
 }
 
-export function createNewStirlingFileStub(
+export function createNewluminaFileStub(
   file: File,
   id?: FileId,
   thumbnail?: string,
   processedFileMetadata?: ProcessedFileMetadata,
-): StirlingFileStub {
+): luminaFileStub {
   const fileId = id || createFileId();
   return {
     id: fileId,
@@ -200,7 +200,7 @@ export function createNewStirlingFileStub(
   };
 }
 
-export function revokeFileResources(record: StirlingFileStub): void {
+export function revokeFileResources(record: luminaFileStub): void {
   // Only revoke blob: URLs to prevent errors on other schemes
   if (record.thumbnailUrl && record.thumbnailUrl.startsWith("blob:")) {
     try {
@@ -247,7 +247,7 @@ export interface FileContextState {
   // Core file management - lightweight file IDs only
   files: {
     ids: FileId[];
-    byId: Record<FileId, StirlingFileStub>;
+    byId: Record<FileId, luminaFileStub>;
   };
 
   // Pinned files - files that won't be consumed by tools
@@ -267,40 +267,40 @@ export interface FileContextState {
 // Action types for reducer pattern
 export type FileContextAction =
   // File management actions
-  | { type: "ADD_FILES"; payload: { stirlingFileStubs: StirlingFileStub[] } }
+  | { type: "ADD_FILES"; payload: { luminaFileStubs: luminaFileStub[] } }
   | { type: "REMOVE_FILES"; payload: { fileIds: FileId[] } }
   | {
-      type: "UPDATE_FILE_RECORD";
-      payload: { id: FileId; updates: Partial<StirlingFileStub> };
-    }
+    type: "UPDATE_FILE_RECORD";
+    payload: { id: FileId; updates: Partial<luminaFileStub> };
+  }
   | { type: "REORDER_FILES"; payload: { orderedFileIds: FileId[] } }
 
   // Pinned files actions
   | { type: "PIN_FILE"; payload: { fileId: FileId } }
   | { type: "UNPIN_FILE"; payload: { fileId: FileId } }
   | {
-      type: "CONSUME_FILES";
-      payload: {
-        inputFileIds: FileId[];
-        outputStirlingFileStubs: StirlingFileStub[];
-      };
-    }
+    type: "CONSUME_FILES";
+    payload: {
+      inputFileIds: FileId[];
+      outputluminaFileStubs: luminaFileStub[];
+    };
+  }
   | {
-      type: "UNDO_CONSUME_FILES";
-      payload: {
-        inputStirlingFileStubs: StirlingFileStub[];
-        outputFileIds: FileId[];
-      };
-    }
+    type: "UNDO_CONSUME_FILES";
+    payload: {
+      inputluminaFileStubs: luminaFileStub[];
+      outputFileIds: FileId[];
+    };
+  }
 
   // UI actions
   | { type: "SET_SELECTED_FILES"; payload: { fileIds: FileId[] } }
   | { type: "SET_SELECTED_PAGES"; payload: { pageNumbers: number[] } }
   | { type: "CLEAR_SELECTIONS" }
   | {
-      type: "SET_PROCESSING";
-      payload: { isProcessing: boolean; progress: number };
-    }
+    type: "SET_PROCESSING";
+    payload: { isProcessing: boolean; progress: number };
+  }
   | { type: "MARK_FILE_ERROR"; payload: { fileId: FileId } }
   | { type: "CLEAR_FILE_ERROR"; payload: { fileId: FileId } }
   | { type: "CLEAR_ALL_FILE_ERRORS" }
@@ -316,7 +316,7 @@ export interface FileContextActions {
   addFiles: (
     files: File[],
     options?: { insertAfterPageId?: string; selectFiles?: boolean },
-  ) => Promise<StirlingFile[]>;
+  ) => Promise<luminaFile[]>;
   addFilesWithOptions: (
     files: File[],
     options?: {
@@ -331,36 +331,36 @@ export interface FileContextActions {
       ) => Promise<boolean>;
       allowDuplicates?: boolean;
     },
-  ) => Promise<StirlingFile[]>;
-  addStirlingFileStubs: (
-    stirlingFileStubs: StirlingFileStub[],
+  ) => Promise<luminaFile[]>;
+  addluminaFileStubs: (
+    luminaFileStubs: luminaFileStub[],
     options?: { insertAfterPageId?: string; selectFiles?: boolean },
-  ) => Promise<StirlingFile[]>;
+  ) => Promise<luminaFile[]>;
   removeFiles: (
     fileIds: FileId[],
     deleteFromStorage?: boolean,
   ) => Promise<void>;
-  updateStirlingFileStub: (
+  updateluminaFileStub: (
     id: FileId,
-    updates: Partial<StirlingFileStub>,
+    updates: Partial<luminaFileStub>,
   ) => void;
   reorderFiles: (orderedFileIds: FileId[]) => void;
   clearAllFiles: () => Promise<void>;
   clearAllData: () => Promise<void>;
 
-  // File pinning - accepts StirlingFile for safer type checking
-  pinFile: (file: StirlingFile) => void;
-  unpinFile: (file: StirlingFile) => void;
+  // File pinning - accepts luminaFile for safer type checking
+  pinFile: (file: luminaFile) => void;
+  unpinFile: (file: luminaFile) => void;
 
   // File consumption (replace unpinned files with outputs)
   consumeFiles: (
     inputFileIds: FileId[],
-    outputStirlingFiles: StirlingFile[],
-    outputStirlingFileStubs: StirlingFileStub[],
+    outputluminaFiles: luminaFile[],
+    outputluminaFileStubs: luminaFileStub[],
   ) => Promise<FileId[]>;
   undoConsumeFiles: (
     inputFiles: File[],
-    inputStirlingFileStubs: StirlingFileStub[],
+    inputluminaFileStubs: luminaFileStub[],
     outputFileIds: FileId[],
   ) => Promise<void>;
   // Selection management
@@ -389,17 +389,17 @@ export interface FileContextActions {
 
 // File selectors (separate from actions to avoid re-renders)
 export interface FileContextSelectors {
-  getFile: (id: FileId) => StirlingFile | undefined;
-  getFiles: (ids?: FileId[]) => StirlingFile[];
-  getStirlingFileStub: (id: FileId) => StirlingFileStub | undefined;
-  getStirlingFileStubs: (ids?: FileId[]) => StirlingFileStub[];
+  getFile: (id: FileId) => luminaFile | undefined;
+  getFiles: (ids?: FileId[]) => luminaFile[];
+  getluminaFileStub: (id: FileId) => luminaFileStub | undefined;
+  getluminaFileStubs: (ids?: FileId[]) => luminaFileStub[];
   getAllFileIds: () => FileId[];
-  getSelectedFiles: () => StirlingFile[];
-  getSelectedStirlingFileStubs: () => StirlingFileStub[];
+  getSelectedFiles: () => luminaFile[];
+  getSelectedluminaFileStubs: () => luminaFileStub[];
   getPinnedFileIds: () => FileId[];
-  getPinnedFiles: () => StirlingFile[];
-  getPinnedStirlingFileStubs: () => StirlingFileStub[];
-  isFilePinned: (file: StirlingFile) => boolean;
+  getPinnedFiles: () => luminaFile[];
+  getPinnedluminaFileStubs: () => luminaFileStub[];
+  isFilePinned: (file: luminaFile) => boolean;
   getFilesSignature: () => string;
 }
 

@@ -10,7 +10,7 @@
 
 declare global {
   interface Node {
-    __stirlingTranslatorPatched?: boolean;
+    __luminaTranslatorPatched?: boolean;
   }
 }
 
@@ -24,14 +24,14 @@ function isGoogleTranslateActive(): boolean {
 function applyDomPatch(trigger: string): void {
   if (patchApplied) return;
   if (typeof Node === "undefined" || !Node.prototype) return;
-  if (Node.prototype.__stirlingTranslatorPatched) return;
+  if (Node.prototype.__luminaTranslatorPatched) return;
   patchApplied = true;
-  Node.prototype.__stirlingTranslatorPatched = true;
+  Node.prototype.__luminaTranslatorPatched = true;
 
   console.warn(
     `[dom-patch] Browser page translator detected (${trigger}). ` +
-      "Installing removeChild/insertBefore guards to prevent React crashes. " +
-      "The UI may show minor glitches while the translator is active.",
+    "Installing removeChild/insertBefore guards to prevent React crashes. " +
+    "The UI may show minor glitches while the translator is active.",
   );
 
   const originalRemoveChild = Node.prototype.removeChild;

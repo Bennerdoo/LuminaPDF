@@ -11,7 +11,7 @@ import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { fileStorage } from "@app/services/fileStorage";
 import { useFileActions } from "@app/contexts/FileContext";
 import { zipFileService } from "@app/services/zipFileService";
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { downloadFiles } from "@app/utils/downloadUtils";
 import { FileId } from "@app/types/file";
 import { groupFilesByOriginal } from "@app/utils/fileHistoryUtils";
@@ -33,13 +33,13 @@ interface FileManagerContextValue {
   storageFilter: "all" | "local" | "sharedWithMe" | "sharedByMe";
   selectedFileIds: FileId[];
   searchTerm: string;
-  selectedFiles: StirlingFileStub[];
-  filteredFiles: StirlingFileStub[];
+  selectedFiles: luminaFileStub[];
+  filteredFiles: luminaFileStub[];
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   selectedFilesSet: Set<FileId>;
   expandedFileIds: Set<FileId>;
-  fileGroups: Map<FileId, StirlingFileStub[]>;
-  loadedHistoryFiles: Map<FileId, StirlingFileStub[]>;
+  fileGroups: Map<FileId, luminaFileStub[]>;
+  loadedHistoryFiles: Map<FileId, luminaFileStub[]>;
   isLoading: boolean;
   activeFileIds: FileId[];
 
@@ -50,30 +50,30 @@ interface FileManagerContextValue {
   ) => void;
   onLocalFileClick: () => void;
   onFileSelect: (
-    file: StirlingFileStub,
+    file: luminaFileStub,
     index: number,
     shiftKey?: boolean,
   ) => void;
   onFileRemove: (index: number) => void;
-  onHistoryFileRemove: (file: StirlingFileStub) => void;
-  onFileDoubleClick: (file: StirlingFileStub) => void;
+  onHistoryFileRemove: (file: luminaFileStub) => void;
+  onFileDoubleClick: (file: luminaFileStub) => void;
   onOpenFiles: () => void;
   onSearchChange: (value: string) => void;
   onFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectAll: () => void;
   onDeleteSelected: () => void;
   onDownloadSelected: () => void;
-  onDownloadSingle: (file: StirlingFileStub) => void;
+  onDownloadSingle: (file: luminaFileStub) => void;
   onToggleExpansion: (fileId: FileId) => void;
-  onAddToRecents: (file: StirlingFileStub) => void;
-  onUnzipFile: (file: StirlingFileStub) => Promise<void>;
-  onMakeCopy: (file: StirlingFileStub) => Promise<void>;
+  onAddToRecents: (file: luminaFileStub) => void;
+  onUnzipFile: (file: luminaFileStub) => Promise<void>;
+  onMakeCopy: (file: luminaFileStub) => Promise<void>;
   onNewFilesSelect: (files: File[]) => void;
   onGoogleDriveSelect: (files: File[]) => void;
   refreshRecentFiles: () => Promise<void>;
 
   // External props
-  recentFiles: StirlingFileStub[];
+  recentFiles: luminaFileStub[];
   isFileSupported: (fileName: string) => boolean;
   modalHeight: string;
 }
@@ -84,8 +84,8 @@ const FileManagerContext = createContext<FileManagerContextValue | null>(null);
 // Provider component props
 interface FileManagerProviderProps {
   children: React.ReactNode;
-  recentFiles: StirlingFileStub[];
-  onRecentFilesSelected: (files: StirlingFileStub[]) => void; // For selecting stored files
+  recentFiles: luminaFileStub[];
+  onRecentFilesSelected: (files: luminaFileStub[]) => void; // For selecting stored files
   onNewFilesSelect: (files: File[]) => void; // For uploading new local files
   onClose: () => void;
   isFileSupported: (fileName: string) => boolean;
@@ -126,11 +126,11 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
     new Set(),
   );
   const [loadedHistoryFiles, setLoadedHistoryFiles] = useState<
-    Map<FileId, StirlingFileStub[]>
+    Map<FileId, luminaFileStub[]>
   >(new Map()); // Cache for loaded history
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [deletePromptFile, setDeletePromptFile] =
-    useState<StirlingFileStub | null>(null);
+    useState<luminaFileStub | null>(null);
   const deletePromptResolveRef = useRef<
     ((choice: RemoteDeleteChoice) => void) | null
   >(null);
@@ -147,7 +147,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   const fileGroups = useMemo(() => {
     if (!recentFiles || recentFiles.length === 0) return new Map();
 
-    // Convert StirlingFileStub to FileRecord-like objects for grouping utility
+    // Convert luminaFileStub to FileRecord-like objects for grouping utility
     const recordsForGrouping = recentFiles.map((file) => ({
       ...file,
       originalFileId: file.originalFileId,
@@ -215,7 +215,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   );
 
   const requestDeleteChoice = useCallback(
-    (file: StirlingFileStub): Promise<RemoteDeleteChoice> => {
+    (file: luminaFileStub): Promise<RemoteDeleteChoice> => {
       return new Promise((resolve) => {
         deletePromptResolveRef.current = resolve;
         setDeletePromptFile(file);
@@ -253,7 +253,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   }, [onNewFilesSelect, refreshRecentFiles, onClose]);
 
   const handleFileSelect = useCallback(
-    (file: StirlingFileStub, currentIndex: number, shiftKey?: boolean) => {
+    (file: luminaFileStub, currentIndex: number, shiftKey?: boolean) => {
       const fileId = file.id;
       if (!fileId) return;
 
@@ -298,7 +298,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
 
   // Helper function to safely determine which files can be deleted
   const getSafeFilesToDelete = useCallback(
-    (fileIds: FileId[], allStoredStubs: StirlingFileStub[]): FileId[] => {
+    (fileIds: FileId[], allStoredStubs: luminaFileStub[]): FileId[] => {
       const fileMap = new Map(allStoredStubs.map((f) => [f.id, f]));
       const filesToDelete = new Set<FileId>();
       const filesToPreserve = new Set<FileId>();
@@ -317,7 +317,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
 
           // Find all files in this history chain
           const chainFiles = allStoredStubs.filter(
-            (file: StirlingFileStub) =>
+            (file: luminaFileStub) =>
               (file.originalFileId || file.id) === originalFileId,
           );
 
@@ -334,7 +334,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
         if (file.isLeaf !== false && !fileIds.includes(file.id)) {
           // Find all files in this preserved lineage
           const preservedChainFiles = allStoredStubs.filter(
-            (chainFile: StirlingFileStub) =>
+            (chainFile: luminaFileStub) =>
               (chainFile.originalFileId || chainFile.id) === fileOriginalId,
           );
 
@@ -389,7 +389,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
 
   // Shared internal delete logic
   const performFileDelete = useCallback(
-    async (fileToRemove: StirlingFileStub, fileIndex: number) => {
+    async (fileToRemove: luminaFileStub, fileIndex: number) => {
       let deleteChoice: RemoteDeleteChoice = "local";
       if (fileToRemove.remoteStorageId) {
         deleteChoice = await requestDeleteChoice(fileToRemove);
@@ -499,7 +499,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
       const deletedFileId = fileToRemove.id;
 
       // Get all stored files to analyze lineages
-      const allStoredStubs = await fileStorage.getAllStirlingFileStubs();
+      const allStoredStubs = await fileStorage.getAllluminaFileStubs();
 
       // Get safe files to delete (respecting shared lineages)
       const filesToDelete = getSafeFilesToDelete(
@@ -542,7 +542,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
       // Delete safe files from IndexedDB
       try {
         for (const fileId of filesToDelete) {
-          await fileStorage.deleteStirlingFile(fileId as FileId);
+          await fileStorage.deleteluminaFile(fileId as FileId);
         }
       } catch (error) {
         console.error("Failed to delete files from chain:", error);
@@ -592,7 +592,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
 
   // Handle deletion of specific history files (not index-based)
   const handleHistoryFileRemove = useCallback(
-    async (fileToRemove: StirlingFileStub) => {
+    async (fileToRemove: luminaFileStub) => {
       const deletedFileId = fileToRemove.id;
 
       // Clear from expanded state to prevent ghost entries
@@ -624,7 +624,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
 
       // Delete safe files from IndexedDB
       try {
-        await fileStorage.deleteStirlingFile(deletedFileId);
+        await fileStorage.deleteluminaFile(deletedFileId);
       } catch (error) {
         console.error("Failed to delete files from chain:", error);
       }
@@ -636,7 +636,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   );
 
   const handleFileDoubleClick = useCallback(
-    (file: StirlingFileStub) => {
+    (file: luminaFileStub) => {
       if (isFileSupported(file.name)) {
         onRecentFilesSelected([file]);
         onClose();
@@ -720,7 +720,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
     }
   }, [selectedFileIds, filteredFiles]);
 
-  const handleDownloadSingle = useCallback(async (file: StirlingFileStub) => {
+  const handleDownloadSingle = useCallback(async (file: luminaFileStub) => {
     try {
       await downloadFiles([file]);
     } catch (error) {
@@ -752,7 +752,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
         ) {
           try {
             // Get all stored file metadata for chain traversal
-            const allStoredStubs = await fileStorage.getAllStirlingFileStubs();
+            const allStoredStubs = await fileStorage.getAllluminaFileStubs();
             const fileMap = new Map(allStoredStubs.map((f) => [f.id, f]));
 
             // Get the current file's IndexedDB data
@@ -763,16 +763,16 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
             }
 
             // Build complete history chain using IndexedDB metadata
-            const historyFiles: StirlingFileStub[] = [];
+            const historyFiles: luminaFileStub[] = [];
 
             // Find the original file
 
             // Collect only files in this specific branch (ancestors of current file)
-            const chainFiles: StirlingFileStub[] = [];
+            const chainFiles: luminaFileStub[] = [];
             const allFiles = Array.from(fileMap.values());
 
             // Build a map for fast parent lookups
-            const fileIdMap = new Map<FileId, StirlingFileStub>();
+            const fileIdMap = new Map<FileId, luminaFileStub>();
             allFiles.forEach((f) => fileIdMap.set(f.id, f));
 
             // Trace back from current file through parent chain
@@ -792,7 +792,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
               (a, b) => (a.versionNumber || 1) - (b.versionNumber || 1),
             );
 
-            // StirlingFileStubs already have all the data we need - no conversion required!
+            // luminaFileStubs already have all the data we need - no conversion required!
             historyFiles.push(...chainFiles);
 
             // Cache the loaded history files
@@ -819,7 +819,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   );
 
   const handleAddToRecents = useCallback(
-    async (file: StirlingFileStub) => {
+    async (file: luminaFileStub) => {
       try {
         // Mark the file as a leaf node so it appears in recent files
         await fileStorage.markFileAsLeaf(file.id);
@@ -850,17 +850,17 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   );
 
   const handleUnzipFile = useCallback(
-    async (file: StirlingFileStub) => {
+    async (file: luminaFileStub) => {
       try {
         // Load the full file from storage
-        const stirlingFile = await fileStorage.getStirlingFile(file.id);
-        if (!stirlingFile) {
+        const luminaFile = await fileStorage.getluminaFile(file.id);
+        if (!luminaFile) {
           return;
         }
 
         // Extract and store files using shared service method
         const result = await zipFileService.extractAndStoreFilesWithHistory(
-          stirlingFile,
+          luminaFile,
           file,
         );
 
@@ -880,7 +880,7 @@ export const FileManagerProvider: React.FC<FileManagerProviderProps> = ({
   );
 
   const handleMakeCopy = useCallback(
-    async (file: StirlingFileStub) => {
+    async (file: luminaFileStub) => {
       if (!file.remoteStorageId) {
         return;
       }

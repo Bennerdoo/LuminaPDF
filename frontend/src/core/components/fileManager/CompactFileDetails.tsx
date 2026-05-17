@@ -5,13 +5,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useTranslation } from "react-i18next";
 import { getFileSize } from "@app/utils/fileUtils";
-import { StirlingFileStub } from "@app/types/fileContext";
+import { luminaFileStub } from "@app/types/fileContext";
 import { PrivateContent } from "@app/components/shared/PrivateContent";
 
 interface CompactFileDetailsProps {
-  currentFile: StirlingFileStub | null;
+  currentFile: luminaFileStub | null;
   thumbnail: string | null;
-  selectedFiles: StirlingFileStub[];
+  selectedFiles: luminaFileStub[];
   currentFileIndex: number;
   numberOfFiles: number;
   isAnimating: boolean;

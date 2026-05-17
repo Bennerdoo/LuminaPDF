@@ -17,9 +17,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../../stirling/latest/data:/usr/share/tessdata:rw
-      - ../../stirling/latest/config:/configs:rw
-      - ../../stirling/latest/logs:/logs:rw
+      - ../../lumina/latest/data:/usr/share/tessdata:rw
+      - ../../lumina/latest/config:/configs:rw
+      - ../../lumina/latest/logs:/logs:rw
     environment:
       DISABLE_ADDITIONAL_FEATURES: "false"
       SECURITY_ENABLELOGIN: "false"
@@ -32,13 +32,13 @@ services:
       SYSTEM_GOOGLEVISIBILITY: "true"
       SHOW_SURVEY: "true"
     networks:
-      - stirling-network
+      - lumina-network
 
 networks:
-  stirling-network:
+  lumina-network:
     driver: bridge
 
 volumes:
-  stirling-data:
-  stirling-config:
-  stirling-logs:
+  lumina-data:
+  lumina-config:
+  lumina-logs:

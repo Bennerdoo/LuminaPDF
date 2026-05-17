@@ -12,7 +12,7 @@ echo ""
 # Check Keycloak health — Keycloak 24+ moved /health off the main listener,
 # so probe the realm directly which is the meaningful liveness check anyway.
 echo -n "Checking Keycloak health... "
-if curl -sf http://localhost:9080/realms/stirling-oauth > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-oauth > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ Keycloak is not ready${NC}"
@@ -21,7 +21,7 @@ fi
 
 # Check OAuth realm
 echo -n "Checking OAuth realm... "
-if curl -sf http://localhost:9080/realms/stirling-oauth > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-oauth > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ OAuth realm not found${NC}"
@@ -30,7 +30,7 @@ fi
 
 # Check OIDC configuration
 echo -n "Checking OIDC configuration endpoint... "
-if curl -sf http://localhost:9080/realms/stirling-oauth/.well-known/openid-configuration > /dev/null 2>&1; then
+if curl -sf http://localhost:9080/realms/lumina-oauth/.well-known/openid-configuration > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC}"
 else
     echo -e "${RED}✗ OIDC configuration not available${NC}"

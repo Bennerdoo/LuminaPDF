@@ -17,15 +17,15 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../../stirling/latest/data:/usr/share/tessdata:rw
-      - ../../stirling/latest/config:/configs:rw
-      - ../../stirling/latest/logs:/logs:rw
+      - ../../lumina/latest/data:/usr/share/tessdata:rw
+      - ../../lumina/latest/config:/configs:rw
+      - ../../lumina/latest/logs:/logs:rw
     environment:
       DISABLE_ADDITIONAL_FEATURES: "false"
       DOCKER_ENABLE_SECURITY: "true"
       SECURITY_ENABLELOGIN: "true"
       SECURITY_INITIALLOGIN_USERNAME: "admin"
-      SECURITY_INITIALLOGIN_PASSWORD: "stirling"
+      SECURITY_INITIALLOGIN_PASSWORD: "lumina"
       SYSTEM_DEFAULTLOCALE: en-US
       UI_APPNAME: Lumina-PDF
       UI_HOMEDESCRIPTION: Demo site for Lumina-PDF Latest with Security and Login
@@ -36,13 +36,13 @@ services:
       SECURITY_CUSTOMGLOBALAPIKEY: "123456789"
       SHOW_SURVEY: "true"
     networks:
-      - stirling-network
+      - lumina-network
 
 networks:
-  stirling-network:
+  lumina-network:
     driver: bridge
 
 volumes:
-  stirling-data:
-  stirling-config:
-  stirling-logs:
+  lumina-data:
+  lumina-config:
+  lumina-logs:

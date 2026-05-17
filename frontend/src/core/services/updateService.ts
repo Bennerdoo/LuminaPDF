@@ -41,7 +41,7 @@ export interface MachineInfo {
 
 export class UpdateService {
   private readonly baseUrl =
-    "https://supabase.stirling.com/functions/v1/updates";
+    "https://supabase.lumina.com/functions/v1/updates";
 
   /**
    * Compare two version strings
@@ -185,7 +185,7 @@ export class UpdateService {
    */
   async getCurrentVersionFromGitHub(): Promise<string> {
     const url =
-      "https://raw.githubusercontent.com/Stirling-Tools/Lumina-PDF/master/build.gradle";
+      "https://raw.githubusercontent.com/lumina-Tools/Lumina-PDF/master/build.gradle";
 
     try {
       const response = await fetch(url);
