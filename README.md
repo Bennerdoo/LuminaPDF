@@ -12,7 +12,7 @@ Lumina PDF is a powerful, open-source PDF editing platform. Run it as a personal
   </a>
 </p>
 
-![Lumina PDF - Dashboard](images/home-light.png)
+![Lumina PDF - Dashboard](images/home.png)
 
 ## Key Capabilities
 
