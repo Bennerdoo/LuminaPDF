@@ -16,17 +16,7 @@ local.properties
 version.properties
 
 #### lumina-PDF Files ###
-pipeline/*
-customFiles/
-configs/
-watchedFolders/
-clientWebUI/
-!cucumber/
-!cucumber/exampleFiles/
-!cucumber/exampleFiles/example_html.zip
-exampleYmlFiles/lumina/
-/testing/file_snapshots
-SwaggerDoc.json
+
 
 # Gradle
 .gradle
