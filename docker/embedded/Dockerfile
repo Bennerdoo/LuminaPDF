@@ -99,6 +99,8 @@ RUN set -eux; \
     ln -s /pipeline /app/pipeline; \
     chown -h luminapdfuser:luminapdfgroup /app/logs /app/configs /app/customFiles /app/pipeline; \
     chown luminapdfuser:luminapdfgroup /app; \
+    mkdir -p /tmp/Lumina-PDF/heap_dumps; \
+    chown -R luminapdfuser:luminapdfgroup /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF/heap_dumps; \
     fc-cache -f
