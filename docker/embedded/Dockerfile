@@ -60,6 +60,21 @@ FROM ${BASE_IMAGE}
 
 ARG VERSION_TAG
 
+# Remap stirlingpdfuser/stirlingpdfgroup from public base image to luminapdfuser/luminapdfgroup if they exist.
+# Otherwise, guarantee luminapdfuser/luminapdfgroup exist.
+RUN set -eux; \
+    if id -u stirlingpdfuser >/dev/null 2>&1; then \
+      groupmod -n luminapdfgroup stirlingpdfgroup; \
+      usermod -l luminapdfuser -d /home/luminapdfuser -m stirlingpdfuser; \
+    fi; \
+    if ! getent group luminapdfgroup >/dev/null 2>&1; then \
+      groupadd -g 1000 luminapdfgroup 2>/dev/null || groupadd luminapdfgroup; \
+    fi; \
+    if ! id -u luminapdfuser >/dev/null 2>&1; then \
+      useradd -m -u 1000 -g luminapdfgroup -d /home/luminapdfuser -s /bin/bash luminapdfuser 2>/dev/null \
+        || useradd -m -g luminapdfgroup -d /home/luminapdfuser -s /bin/bash luminapdfuser; \
+    fi
+
 WORKDIR /app
 
 # Application layers
