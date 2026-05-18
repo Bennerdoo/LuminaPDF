@@ -59,4 +59,4 @@ Disallow: /configs/
 Disallow: /logs/
 
 # Link to XML Sitemap
-Sitemap: https://luminaPDF.stampforger.com/sitemap.xml
+Sitemap: https://luminapdf.stampforger.com/sitemap.xml

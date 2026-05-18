@@ -10,7 +10,7 @@ Lumina PDF is built on a stateless, high-performance Spring Boot API gateway. Al
 
 ### Base API URL
 All API requests are routed through:
-`https://luminaPDF.stampforger.com/api/v1`
+`https://luminapdf.stampforger.com/api/v1`
 
 ---
 
