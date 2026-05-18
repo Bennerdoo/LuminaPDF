@@ -82,8 +82,8 @@ RUN set -eux; \
     ln -s /configs /app/configs; \
     ln -s /customFiles /app/customFiles; \
     ln -s /pipeline /app/pipeline; \
-    chown -h LUMINApdfuser:LUMINApdfgroup /app/logs /app/configs /app/customFiles /app/pipeline; \
-    chown LUMINApdfuser:LUMINApdfgroup /app; \
+    chown -h luminapdfuser:luminapdfgroup /app/logs /app/configs /app/customFiles /app/pipeline; \
+    chown luminapdfuser:luminapdfgroup /app; \
     chmod 750 /tmp/Lumina-PDF; \
     chmod 750 /tmp/Lumina-PDF/heap_dumps; \
     fc-cache -f
@@ -99,7 +99,7 @@ ENV VERSION_TAG=$VERSION_TAG \
     _JVM_OPTS_BALANCED="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:G1HeapRegionSize=4m -XX:G1PeriodicGCInterval=60000 -XX:+UseStringDeduplication -XX:+UseCompactObjectHeaders -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     _JVM_OPTS_PERFORMANCE="-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/configs/heap_dumps -XX:+UseShenandoahGC -XX:ShenandoahGCMode=generational -XX:+UseCompactObjectHeaders -XX:+UseStringDeduplication -XX:+AlwaysPreTouch -XX:+ExplicitGCInvokesConcurrent -Dspring.threads.virtual.enabled=true -Djava.awt.headless=true" \
     JAVA_CUSTOM_OPTS="" \
-    HOME=/home/LUMINApdfuser \
+    HOME=/home/luminapdfuser \
     PUID=1000 \
     PGID=1000 \
     UMASK=022 \
