@@ -1,0 +1,14 @@
+# GCP Project Settings
+project_id = "your-gcp-project-id"
+region     = "us-central1"
+zone       = "us-central1-a"
+
+# VM Configuration
+vm_name      = "lumina-pdf-server"
+machine_type = "e2-medium"
+
+# Application Settings
+lumina_image          = "frooodle/s-pdf:latest"
+app_name              = "My Lumina-PDF Service"
+security_enable_login = "false"
+system_default_locale = "en-GB"

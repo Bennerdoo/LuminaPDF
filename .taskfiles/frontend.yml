@@ -65,7 +65,7 @@ tasks:
   dev:
     desc: "Start frontend dev server"
     cmds:
-      - task: dev:proprietary
+      - task: dev:saas
         vars: { PORT: '{{.PORT}}', BACKEND_URL: '{{.BACKEND_URL}}', OPEN: '{{.OPEN}}' }
 
   dev:core:
@@ -115,7 +115,7 @@ tasks:
     desc: "Production build (default mode)"
     deps: [prepare]
     cmds:
-      - npx vite build
+      - task: build:saas
 
   build:core:
     desc: "Build for core mode"
@@ -189,7 +189,7 @@ tasks:
   typecheck:
     desc: "Typecheck default build of the app"
     cmds:
-      - task: typecheck:proprietary
+      - task: typecheck:saas
 
   typecheck:core:
     desc: "Typecheck core build variant"

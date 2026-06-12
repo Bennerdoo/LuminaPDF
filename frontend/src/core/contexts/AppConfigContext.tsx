@@ -30,6 +30,7 @@ interface AppConfigContextValue {
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
+  isAuthenticated: boolean | null;
 }
 
 const AppConfigContext = createContext<AppConfigContextValue | undefined>({
@@ -37,6 +38,7 @@ const AppConfigContext = createContext<AppConfigContextValue | undefined>({
   loading: true,
   error: null,
   refetch: async () => {},
+  isAuthenticated: null,
 });
 
 /**
@@ -63,6 +65,7 @@ export const AppConfigProvider: React.FC<AppConfigProviderProps> = ({
   const isBlockingMode = bootstrapMode === "blocking";
   const [config, setConfig] = useState<AppConfig | null>(initialConfig);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   // Track how many times we've attempted to fetch. useRef avoids re-renders that can trigger loops.
   const fetchCountRef = React.useRef(0);
   const [hasResolvedConfig, setHasResolvedConfig] = useState(
@@ -136,6 +139,7 @@ export const AppConfigProvider: React.FC<AppConfigProviderProps> = ({
             (performance.now() - startTime).toFixed(2),
           );
           setConfig(data);
+          setIsAuthenticated(true);
           setHasResolvedConfig(true);
           setLoading(false);
           onConfigLoadedRef.current?.(data);
@@ -154,6 +158,7 @@ export const AppConfigProvider: React.FC<AppConfigProviderProps> = ({
               (performance.now() - startTime).toFixed(2),
             );
             setConfig({ enableLogin: true });
+            setIsAuthenticated(false);
             setHasResolvedConfig(true);
             setLoading(false);
             return;
@@ -207,6 +212,7 @@ export const AppConfigProvider: React.FC<AppConfigProviderProps> = ({
         { path: window.location.pathname },
       );
       setConfig({ enableLogin: true });
+      setIsAuthenticated(false);
       setHasResolvedConfig(true);
       setLoading(false);
       return;
@@ -224,6 +230,7 @@ export const AppConfigProvider: React.FC<AppConfigProviderProps> = ({
     loading,
     error,
     refetch,
+    isAuthenticated,
   };
 
   return (

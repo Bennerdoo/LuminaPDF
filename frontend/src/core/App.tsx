@@ -17,6 +17,10 @@ import "@app/styles/index.css";
 // Import file ID debugging helpers (development only)
 import "@app/utils/fileIdSafety";
 
+import Login from "@app/routes/Login";
+import Signup from "@app/routes/Signup";
+import Landing from "@app/routes/Landing";
+
 // Minimal providers for mobile scanner - no API calls, no authentication
 function MobileScannerProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -46,7 +50,11 @@ export default function App() {
           element={
             <AppProviders>
               <AppLayout>
-                <HomePage />
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/*" element={<Landing />} />
+                </Routes>
                 <Onboarding />
               </AppLayout>
             </AppProviders>
