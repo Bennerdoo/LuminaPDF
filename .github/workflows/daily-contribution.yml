@@ -62,7 +62,7 @@ jobs:
             git add .github/daily-heartbeat.txt
             
             # Commit with [skip ci] to avoid triggering other heavy pipelines
-            git commit -m "chore(contrib): daily contribution heartbeat $i of $NUM_COMMITS [skip ci]"
+            git commit -m "chore(contrib): daily contributer heartbeat $i of $NUM_COMMITS [skip ci]"
             
             # Sleep 1 second to ensure distinct commit timestamps
             sleep 1
