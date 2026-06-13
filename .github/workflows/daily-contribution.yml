@@ -1,0 +1,73 @@
+name: Daily Contribution Bot
+
+on:
+  schedule:
+    - cron: "30 23 * * *" # Runs at 23:30 UTC daily
+  workflow_dispatch:      # Allows manual execution for testing
+
+permissions:
+  contents: write
+
+jobs:
+  make-contributions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup GitHub App Bot
+        id: setup-bot
+        if: env.HAS_APP_SECRETS == 'true'
+        uses: ./.github/actions/setup-bot
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+        env:
+          HAS_APP_SECRETS: ${{ secrets.GH_APP_ID != '' && secrets.GH_APP_PRIVATE_KEY != '' }}
+
+      - name: Configure Fallback Git
+        if: env.HAS_APP_SECRETS != 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        shell: bash
+        env:
+          HAS_APP_SECRETS: ${{ secrets.GH_APP_ID != '' && secrets.GH_APP_PRIVATE_KEY != '' }}
+
+      - name: Generate Random Commits
+        run: |
+          # Generate a random number between 7 and 15
+          NUM_COMMITS=$(( ( RANDOM % 9 ) + 7 ))
+          echo "Generating $NUM_COMMITS contribution commits today..."
+
+          for ((i=1; i<=NUM_COMMITS; i++))
+          do
+            # Append timestamp to the heartbeat file
+            echo "- Heartbeat commit $i/$NUM_COMMITS at $(date -u)" >> .github/daily-heartbeat.txt
+            git add .github/daily-heartbeat.txt
+            
+            # Commit with [skip ci] to avoid triggering other heavy pipelines
+            git commit -m "chore(contrib): daily contribution heartbeat $i of $NUM_COMMITS [skip ci]"
+            
+            # Sleep 1 second to ensure distinct commit timestamps
+            sleep 1
+          done
+        shell: bash
+
+      - name: Push Commits
+        run: |
+          if [ "${{ env.HAS_APP_SECRETS }}" = "true" ]; then
+            echo "Configuring remote url to push with GitHub App token..."
+            git remote set-url origin "https://x-access-token:${{ steps.setup-bot.outputs.token }}@github.com/${{ github.repository }}.git"
+          else
+            echo "Using default GITHUB_TOKEN credentials..."
+          fi
+          git push origin HEAD:main
+        shell: bash
+        env:
+          HAS_APP_SECRETS: ${{ secrets.GH_APP_ID != '' && secrets.GH_APP_PRIVATE_KEY != '' }}
