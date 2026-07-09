@@ -52,7 +52,7 @@ jobs:
       - name: Generate Random Commits
         run: |
           # Generate a random number between 7 and 15
-          NUM_COMMITS=$(( ( RANDOM % 9 ) + 7 ))
+          NUM_COMMITS=$(( ( RANDOM % 15 ) + 9 ))
           echo "Generating $NUM_COMMITS contribution commits today..."
 
           for ((i=1; i<=NUM_COMMITS; i++))
@@ -62,7 +62,7 @@ jobs:
             git add .github/daily-heartbeat.txt
             
             # Commit with [skip ci] to avoid triggering other heavy pipelines
-            git commit -m "chore(contrib): daily contributer heartbeat $i of $NUM_COMMITS [skip ci]"
+            git commit -m "chore(contrib): daily contributer heartbeat updates $i of $NUM_COMMITS by Bennerdo"
             
             # Sleep 1 second to ensure distinct commit timestamps
             sleep 1
