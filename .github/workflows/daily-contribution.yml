@@ -1,9 +1,9 @@
 name: Daily Contribution Bot
 
-on:
-  schedule:
-    - cron: "30 23 * * *" # Runs at 23:30 UTC daily
-  workflow_dispatch:      # Allows manual execution for testing
+#on:
+#  schedule:
+#    - cron: "30 23 * * *" # Runs at 23:30 UTC daily
+#  workflow_dispatch:      # Allows manual execution for testing
     inputs:
       git_author_name:
         description: "Git Author Name (defaults to your GitHub username)"
@@ -14,11 +14,11 @@ on:
         required: false
         default: ""
 
-permissions:
-  contents: write
+#permissions:
+#  contents: write
 
-jobs:
-  make-contributions:
+#jobs:
+ # make-contributions:
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
@@ -49,8 +49,8 @@ jobs:
           git config --global user.email "$GIT_EMAIL"
         shell: bash
 
-      - name: Generate Random Commits
-        run: |
+    #  - name: Generate Random Commits
+     #   run: |
           # Generate a random number between 7 and 15
           NUM_COMMITS=$(( ( RANDOM % 15 ) + 9 ))
           echo "Generating $NUM_COMMITS contribution commits today..."
@@ -69,7 +69,7 @@ jobs:
           done
         shell: bash
 
-      - name: Push Commits
+    #  - name: Push Commits
         run: |
           git push origin HEAD:main
         shell: bash
